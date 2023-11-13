@@ -86,5 +86,17 @@ pub async fn check_status_code(client: &Client, url: &str) -> Result<u16, reqwes
     Ok(response.status().as_u16())
 }
 
+/// Get  Backend Code Template
+pub fn read_backend_code_template_contents() -> String {
+    let path: String = String::from(CODE_TEMPLATE_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
+/// Get  Frontend Code Template
+pub fn read_frontend_code_template_contents() -> String {
+    let path: String = String::from(INDEX_TEMPLATE_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
 
 
