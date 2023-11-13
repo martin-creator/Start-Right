@@ -218,7 +218,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(data.clone())
             .service(
                 // Serve static files from the "static" directory.
-                Files::new("/", "frontend_files/").index_file("index.html")
+                Files::new("/", "frontend/").index_file("index.html")
             )
             .service(
                 // Define the API routes and corresponding handlers.
