@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <!-- Styles for the page -->
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      label {
+        margin-bottom: 5px;
+        color: #007bff;
+      }
+
+      input {
+        padding: 8px;
+        margin-bottom: 15px;
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      li span {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      li button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      li button:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Task Manager</h1>
+
+    <!-- Form for creating tasks -->
+    <form id="taskForm">
+      <label for="taskId">Task ID:</label>
+      <input type="number" id="taskId" required />
+      <label for="taskName">Task Name:</label>
+      <input type="text" id="taskName" required />
+      <!-- Button to trigger the createTask function -->
+      <button type="button" onclick="createTask()">Create Task</button>
+    </form>
+
+    <!-- List to display tasks -->
+    <ul id="taskList"></ul>
+
+    <!-- JavaScript code to interact with the backend -->
+    <script>
+      // Event listener for when the page is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Load tasks when the page is loaded
+        loadTasks();
+      });
+
+      // Function to fetch and display tasks from the backend
+      async function loadTasks() {
+        try {
+          const response = await fetch("http://localhost:8080/tasks");
+          const tasks = await response.json();
+
+          const taskList = document.getElementById("taskList");
+          taskList.innerHTML = "";
+
+          // Loop through tasks and create list items
+          tasks.forEach((task) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<span>ID: ${task.id}, Name: ${task.name}</span> <button onclick="deleteTask(${task.id})">Delete</button>`;
+            taskList.appendChild(li);
+          });
+        } catch (error) {
+          // Handle errors if any occur during fetching
+          console.error("Error fetching tasks:", error);
+        }
+      }
+
+      // Function to create a new task
+      async function createTask() {
+        const taskId = document.getElementById("taskId").value;
+        const taskName = document.getElementById("taskName").value;
+
+        try {
+          const response = await fetch("http://localhost:8080/tasks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json", // Include Accept header for CORS
+            },
+            body: JSON.stringify({
+              id: parseInt(taskId),
+              name: taskName,
+              completed: false,
+            }),
+          });
+
+          if (response.ok) {
+            // Reload tasks and reset input values if successful
+            loadTasks();
+            document.getElementById("taskId").value = "";
+            document.getElementById("taskName").value = "";
+          } else {
+            // Handle errors if task creation fails
+            console.error("Failed to create task:", response.statusText);
+          }
+        } catch (error) {
+          // Handle errors if any occur during the process
+          console.error("Error creating task:", error);
+        }
+      }
+
+      // Function to delete a task
+      async function deleteTask(id) {
+        try {
+          const response = await fetch(`http://localhost:8080/tasks/${id}`, {
+            method: "DELETE",
+          });
+
+          if (response.ok) {
+            // Reload tasks if deletion is successful
+            loadTasks();
+          } else {
+            // Handle errors if task deletion fails
+            console.error("Failed to delete task:", response.statusText);
+          }
+        } catch (error) {
+          // Handle errors if any occur during the process
+          console.error("Error deleting task:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
