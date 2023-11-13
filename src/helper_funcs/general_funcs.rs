@@ -129,6 +129,37 @@ pub fn save_api_endpoints(api_endpoints: &String) {
 }
 
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ai_functions::aifunc_managing::convert_user_input_to_goal;
+
+    #[test]
+    fn tests_extending_ai_function() {
+        let extended_msg: Message =
+            extend_ai_function(convert_user_input_to_goal, "dummy variable");
+        dbg!(&extended_msg);
+        assert_eq!(extended_msg.role, "system".to_string());
+    }
+
+    #[tokio::test]
+    async fn tests_ai_task_request() {
+        let ai_func_param: String =
+            "Build me a webserver for making stock price api requests.".to_string();
+
+        let res: String = ai_task_request(
+            ai_func_param,
+            "Managing Agent",
+            "Defining user requirements",
+            convert_user_input_to_goal,
+        )
+        .await;
+
+        assert!(res.len() > 20);
+    }
+}
+
+
 
 
 
