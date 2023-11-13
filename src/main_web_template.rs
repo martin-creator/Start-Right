@@ -1,8 +1,9 @@
 use actix_cors::Cors;
-use actix_web::{error::ErrorBadRequest, http::header, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
-use serde::{Deserialize, Serialize};
+use actix_web::{ http::header, web, App, HttpResponse, HttpServer, Responder };
+use serde::{ Deserialize, Serialize };
 use std::sync::Mutex;
-use std::{collections::HashMap, fs, io::Write};
+use std::{ collections::HashMap, fs, io::Write };
+use actix_files::Files;
 
 // Define the Task structure for representing tasks in the system.
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -212,34 +213,34 @@ async fn main() -> std::io::Result<()> {
                     .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
                     .allowed_header(header::CONTENT_TYPE)
                     .supports_credentials()
-                    .max_age(3600),
+                    .max_age(3600)
             )
             .app_data(data.clone())
             .service(
+                // Serve static files from the "static" directory.
+                Files::new("/", "frontend_files/").index_file("index.html")
+            )
+            .service(
                 // Define the API routes and corresponding handlers.
-                web::scope("/api/v1")
+                web
+                    ::scope("/api/v1")
                     .service(
-                        web::resource("/tasks")
+                        web
+                            ::resource("/tasks")
                             .route(web::post().to(create_task))
                             .route(web::get().to(read_all_tasks))
-                            .route(web::put().to(update_task)),
+                            .route(web::put().to(update_task))
                     )
                     .service(
-                        web::resource("/tasks/{id}")
+                        web
+                            ::resource("/tasks/{id}")
                             .route(web::get().to(read_task))
-                            .route(web::delete().to(delete_task)),
+                            .route(web::delete().to(delete_task))
                     )
-                    .service(
-                        web::resource("/auth/register")
-                            .route(web::post().to(register)),
-                    )
-                    .service(
-                        web::resource("/auth/login")
-                            .route(web::post().to(login)),
-                    ),
+                    .service(web::resource("/auth/register").route(web::post().to(register)))
+                    .service(web::resource("/auth/login").route(web::post().to(login)))
             )
     })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
+        .bind("127.0.0.1:8080")?
+        .run().await
 }
