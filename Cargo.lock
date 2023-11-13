@@ -1496,6 +1496,7 @@ dependencies = [
  "serde_json",
  "strum",
  "strum_macros",
+ "termcolor",
  "tokio",
  "webbrowser",
 ]
@@ -1573,6 +1574,15 @@ dependencies = [
  "redox_syscall",
  "rustix",
  "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "termcolor"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6093bad37da69aab9d123a8091e4be0aa4a03e4d601ec641c327398315f62b64"
+dependencies = [
+ "winapi-util",
 ]
 
 [[package]]
