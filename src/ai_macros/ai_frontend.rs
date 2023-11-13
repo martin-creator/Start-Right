@@ -126,6 +126,6 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     ///   </body>
     /// </html>
     /// ...
-    /// 
+    
     println!(OUTPUT)
 }
