@@ -7,7 +7,7 @@ macro_rules! get_function_string {
 
 #[macro_use]
 mod ai_macros;
-// mod apis;
+mod llm_external_api_calls;
 mod helper_funcs;
 mod models;
 
