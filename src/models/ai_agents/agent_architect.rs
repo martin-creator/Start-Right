@@ -102,13 +102,13 @@ impl SpecialFunctions for AgentSolutionArchitect {
                         .build()
                         .unwrap();
 
-                    /// Defining urls to check
+                    // Defining urls to check
                     let urls: &Vec<String> = factsheet
                         .external_urls
                         .as_ref()
                         .expect("No URL object on factsheet");
 
-                    /// Find faulty urls
+                    // Find faulty urls
                     for url in urls {
                         let endpoint_str: String = format!("Testing URL Endpoint: {}", url);
                         PrintCommand::UnitTest.print_agent_message(
