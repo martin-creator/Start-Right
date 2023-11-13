@@ -1,5 +1,5 @@
-use crate::models::agent_basic::basic_agent::AgentState;
-use crate::models::general::llm::Message;
+use crate::models::ai_agent_skeleton::basic_agent::AgentState;
+use crate::models::general_http_content::llm_content_structure::Message;
 
 pub trait BasicTraits {
     fn new(objective: String, position: String) -> Self;
