@@ -31,6 +31,7 @@ pub fn print_project_scope(_project_description: &str) {
 }
 
 #[ai_function]
+
 pub fn print_site_urls(_project_description: &str) {
     /// Input: Takes in a project description of a website build
     /// Function: Outputs a list of external public API endpoints that should be used in the building of the website
