@@ -110,6 +110,18 @@ pub fn read_main_index_contents() -> String {
     fs::read_to_string(path).expect("Failed to read code template")
 }
 
+/// Save New Backend Code
+pub fn save_backend_code(contents: &String) {
+    let path: String = String::from(EXEC_MAIN_PATH);
+    fs::write(path, contents).expect("Failed to write main.rs file");
+}
+
+/// Save New Frontend Code
+pub fn save_frontend_code(contents: &String) {
+    let path: String = String::from(MAIN_INDEX_PATH);
+    fs::write(path, contents).expect("Failed to write main.rs file");
+}
+
 
 
 
