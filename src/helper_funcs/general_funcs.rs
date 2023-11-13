@@ -80,3 +80,11 @@ pub async fn ai_task_request_decoded<T: DeserializeOwned>(
     return decoded_response;
 }
 
+/// Check whether request url is valid
+pub async fn check_status_code(client: &Client, url: &str) -> Result<u16, reqwest::Error> {
+    let response: reqwest::Response = client.get(url).send().await?;
+    Ok(response.status().as_u16())
+}
+
+
+
