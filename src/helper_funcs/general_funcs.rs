@@ -122,6 +122,13 @@ pub fn save_frontend_code(contents: &String) {
     fs::write(path, contents).expect("Failed to write main.rs file");
 }
 
+///  Save JSON API Endpoint Schema
+pub fn save_api_endpoints(api_endpoints: &String) {
+    let path: String = String::from(API_SCHEMA_PATH);
+    fs::write(path, api_endpoints).expect("Failed to write API Endpoints to file");
+}
+
+
 
 
 
