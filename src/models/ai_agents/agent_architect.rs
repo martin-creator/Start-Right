@@ -28,7 +28,7 @@ impl AgentSolutionArchitect {
         Self { attributes }
     }
 
-    // Retrieve Project Scope
+    /// Retrieve Project Scope
     async fn call_project_scope(&mut self, factsheet: &mut FactSheet) -> ProjectScope {
         let msg_context: String = format!("{}", factsheet.project_description);
 
@@ -45,7 +45,7 @@ impl AgentSolutionArchitect {
         return ai_response;
     }
 
-    // Retrieve Project Scope
+    /// Functions calls external API to get the project scope
     async fn call_determine_external_urls(
         &mut self,
         factsheet: &mut FactSheet,
