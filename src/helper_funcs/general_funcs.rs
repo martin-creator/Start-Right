@@ -98,5 +98,18 @@ pub fn read_frontend_code_template_contents() -> String {
     fs::read_to_string(path).expect("Failed to read code template")
 }
 
+/// Get Exec Main to write backend code(helps provide backend code to design api schemas)
+pub fn read_exec_main_contents() -> String {
+    let path: String = String::from(EXEC_MAIN_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
+/// Get Main Index to write frontend(helps print files to index)
+pub fn read_main_index_contents() -> String {
+    let path: String = String::from(MAIN_INDEX_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
+
 
 
