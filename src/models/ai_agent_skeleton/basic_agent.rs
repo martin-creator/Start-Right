@@ -1,5 +1,5 @@
-use crate::models::agent_basic::basic_traits::BasicTraits;
-use crate::models::general::llm_content_structure::Message;
+use crate::models::ai_agent_skeleton::basic_traits::BasicTraits;
+use crate::models::general_http_content::llm_content_structure::Message;
 
 #[derive(Debug, PartialEq)]
 /// The state of the agent
