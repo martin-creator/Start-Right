@@ -97,4 +97,21 @@ impl AgentFrontendDeveloper {
         save_frontend_code(&ai_response);
         factsheet.frontend_code = Some(ai_response);
     }
+
+    async fn call_extract_index_html_code(&self) -> String {
+        let frontend_code: String = read_main_index_contents();
+
+        // Structure message context
+        let msg_context: String = format!("CODE_INPUT: {}", frontend_code);
+
+        let ai_response: String = ai_task_request(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_index_html_file),
+            print_index_html_file,
+        )
+        .await;
+
+        ai_response
+    }
 }
