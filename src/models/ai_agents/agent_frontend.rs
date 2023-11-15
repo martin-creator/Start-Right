@@ -1,6 +1,6 @@
 use crate::ai_macros::ai_frontend::{print_fixed_frontend_code, print_frontend_code, print_index_html_file, print_improved_frontend_code};
 use crate::helper_funcs::general_funcs::{
-    check_status_code, read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, read_api_json_contents, MAIN_INDEX_PATH
+    check_status_code, read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, read_api_json_contents, MAIN_INDEX_PATH, WEB_SERVER_PROJECT_PATH
 };
 
 use crate::helper_funcs::cli_funcs::{confirm_safe_code, PrintCommand};
@@ -115,3 +115,203 @@ impl AgentFrontendDeveloper {
         ai_response
     }
 }
+
+#[async_trait]
+impl SpecialFunctions for AgentFrontendDeveloper {
+    fn get_attributes_from_agent(&self) -> &BasicAgent {
+        &self.attributes
+    }
+
+    async fn execute(
+        &mut self,
+        factsheet: &mut FactSheet,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        while self.attributes.state != AgentState::Finished {
+            match &self.attributes.state {
+                AgentState::Discovery => {
+                    self.call_initial_frontend_code(factsheet).await;
+                    self.attributes.state = AgentState::Working;
+                    continue;
+                }
+
+                AgentState::Working => {
+                    if self.bug_count == 0 {
+                        self.call_improved_frontend_code(factsheet).await;
+                    } else {
+                        self.call_fix_frontend_code_bugs(factsheet).await;
+                    }
+                    self.attributes.state = AgentState::UnitTesting;
+                    continue;
+                }
+
+                AgentState::UnitTesting => {
+                    // Guard:: ENSURE AI SAFETY
+                    PrintCommand::UnitTest.print_agent_message(
+                        self.attributes.position.as_str(),
+                        "About to run both frontend and backend code : Requesting user input",
+                    );
+
+                    let is_safe_code: bool = confirm_safe_code();
+
+                    if !is_safe_code {
+                        panic!("Better go work on some AI alignment instead...")
+                    }
+
+                    // Build and Test Code
+                    PrintCommand::UnitTest.print_agent_message(
+                        self.attributes.position.as_str(),
+                        "Frontend and Backend code compilation: building project...",
+                    );
+
+                    // Build Code
+                    let build_backend_server: std::process::Output = Command::new("cargo")
+                        .arg("build")
+                        .current_dir(WEB_SERVER_PROJECT_PATH)
+                        .stdout(Stdio::piped())
+                        .stderr(Stdio::piped())
+                        .output()
+                        .expect("Failed to build backend application");
+
+                    // Determine if build errors
+                    if build_backend_server.status.success() {
+                        self.bug_count = 0;
+                        PrintCommand::UnitTest.print_agent_message(
+                            self.attributes.position.as_str(),
+                            " Frontend & Backend Code Unit Testing: Test server build successful...",
+                        );
+                    } else {
+                        let error_arr: Vec<u8> = build_backend_server.stderr;
+                        let error_str: String = String::from_utf8(error_arr).unwrap();
+
+                        // Update error stats
+                        self.bug_count += 1;
+                        self.bug_errors = Some(error_str);
+
+                        // Exit if too many bugs
+                        if self.bug_count > 2 {
+                            PrintCommand::Issue.print_agent_message(
+                                self.attributes.position.as_str(),
+                                " Frontend Code Testing: Too many bugs found in code",
+                            );
+                            panic!("Error: Too many bugs")
+                        }
+
+                        // Pass back for rework
+                        self.attributes.state = AgentState::Working;
+                        continue;
+                    }
+
+                    /*
+                      Extract Index HTML file
+                    */
+
+                    // Extract API Endpoints
+                    let index_html_str: String = self.call_extract_index_html_code().await;
+
+                    // // Convert API Endpoints into Values
+                    // let api_endpoints: Vec<RouteObject> =
+                    //     serde_json::from_str(api_endpoints_str.as_str())
+                    //         .expect("Failed to decode API Endpoints");
+
+                    // // Define endpoints to check
+                    // let check_endpoints: Vec<RouteObject> = api_endpoints
+                    //     .iter()
+                    //     .filter(|&route_object| {
+                    //         route_object.method == "get" && route_object.is_route_dynamic == "false"
+                    //     })
+                    //     .cloned()
+                    //     .collect();
+
+                    // Store API Endpoints
+                    factsheet.frontend_code = Some(index_html_str.clone());
+
+                    // Run backend application
+                    PrintCommand::UnitTest.print_agent_message(
+                        self.attributes.position.as_str(),
+                        "Restarting Backend Server: Starting web server...",
+                    );
+
+                    // Execute running server
+                    let mut run_backend_server: std::process::Child = Command::new("cargo")
+                        .arg("run --bin main_web_server")
+                        .current_dir(WEB_SERVER_PROJECT_PATH)
+                        .stdout(Stdio::piped())
+                        .stderr(Stdio::piped())
+                        .spawn()
+                        .expect("Failed to run backend application");
+
+                    // Let user know testing on server will take place soon
+                    PrintCommand::UnitTest.print_agent_message(
+                        self.attributes.position.as_str(),
+                        "Backend Code Unit Testing: Launching tests on server in 5 seconds... check http://localhost:8080/ to see your AI generated home page",
+                    );
+
+                    let seconds_sleep: Duration = Duration::from_secs(5);
+                     time::sleep(seconds_sleep).await;
+
+                    // // Check status code
+                    // for endpoint in check_endpoints {
+                    //     // Confirm url testing
+                    //     let testing_msg: String =
+                    //         format!("Testing endpoint '{}'...", endpoint.route);
+                    //     PrintCommand::UnitTest.print_agent_message(
+                    //         self.attributes.position.as_str(),
+                    //         testing_msg.as_str(),
+                    //     );
+
+                        // // Create client with timout
+                        // let client: Client = Client::builder()
+                        //     .timeout(Duration::from_secs(5))
+                        //     .build()
+                        //     .unwrap();
+
+                    //     // Test url
+                    //     let url: String = format!("http://localhost:8080{}", endpoint.route);
+                    //     match check_status_code(&client, &url).await {
+                    //         Ok(status_code) => {
+                    //             if status_code != 200 {
+                    //                 let err_msg: String = format!(
+                    //                     "WARNING: Failed to call backend url endpoint {}",
+                    //                     endpoint.route
+                    //                 );
+                    //                 PrintCommand::Issue.print_agent_message(
+                    //                     self.attributes.position.as_str(),
+                    //                     err_msg.as_str(),
+                    //                 );
+                    //             }
+                    //         }
+                    //         Err(e) => {
+                    //             // kill $(lsof -t -i:8080)
+                    //             run_backend_server
+                    //                 .kill()
+                    //                 .expect("Failed to kill backend web server");
+                    //             let err_msg: String = format!("Error checking backend {}", e);
+                    //             PrintCommand::Issue.print_agent_message(
+                    //                 self.attributes.position.as_str(),
+                    //                 err_msg.as_str(),
+                    //             );
+                    //         }
+                    //     }
+                    // }
+
+                    save_frontend_code(&index_html_str);
+
+                    PrintCommand::UnitTest.print_agent_message(
+                        self.attributes.position.as_str(),
+                        "Frontend  testing complete...",
+                    );
+
+                    run_backend_server
+                        .kill()
+                        .expect("Failed to kill backend web server on completion");
+
+                    self.attributes.state = AgentState::Finished;
+                }
+
+                _ => {}
+            }
+        }
+        Ok(())
+    }
+}
+
