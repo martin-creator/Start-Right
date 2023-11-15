@@ -59,4 +59,42 @@ impl AgentFrontendDeveloper {
         save_frontend_code(&ai_response);
         factsheet.frontend_code = Some(ai_response);
     }
+
+    async fn call_improved_frontend_code(&mut self, factsheet: &mut FactSheet) {
+
+        let msg_context: String = format!(
+            "INDEX_TEMPLATE: {:?} \n  API_JSON Schema {:?} \n PROJECT_DESCRIPTION: {:?} \n",
+            factsheet.frontend_code, factsheet.api_endpoint_schema, factsheet
+        );
+
+        let ai_response: String = ai_task_request(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_improved_frontend_code),
+            print_improved_frontend_code,
+        )
+        .await;
+
+        save_frontend_code(&ai_response);
+        factsheet.frontend_code = Some(ai_response);
+    }
+
+    async fn call_fix_frontend_code_bugs(&mut self, factsheet: &mut FactSheet) {
+        let msg_context: String = format!(
+            "BROKEN_CODE: {:?} \n ERROR_BUGS: {:?} \n
+      THIS FUNCTION ONLY OUTPUTS CODE. JUST OUTPUT THE CODE.",
+            factsheet.frontend_code, self.bug_errors
+        );
+
+        let ai_response: String = ai_task_request(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_fixed_code),
+            print_fixed_code,
+        )
+        .await;
+
+        save_frontend_code(&ai_response);
+        factsheet.frontend_code_code = Some(ai_response);
+    }
 }
