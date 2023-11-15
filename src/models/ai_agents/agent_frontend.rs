@@ -1,6 +1,6 @@
 use crate::ai_macros::ai_frontend::{print_fixed_frontend_code, print_frontend_code, print_index_html_file, print_improved_frontend_code};
 use crate::helper_funcs::general_funcs::{
-    check_status_code, read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, MAIN_INDEX_PATH
+    check_status_code, read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, read_api_json_contents, MAIN_INDEX_PATH
 };
 
 use crate::helper_funcs::cli_funcs::{confirm_safe_code, PrintCommand};
@@ -38,24 +38,25 @@ impl AgentFrontendDeveloper {
     }
 
     async fn call_initial_frontend_code(&mut self, factsheet: &mut FactSheet) {
-        let index_template_str: String = read_main_index_contents();
+        let index_template_str: String = read_frontend_code_template_contents();
+        let api_json_str: String = read_api_json_contents();
 
         //PROJECT_DESCRIPTION, INDEX_TEMPLATE and API_JSON Schema
         // Concatenate Instruction
         let msg_context: String = format!(
             "INDEX_TEMPLATE: {} \n  API_JSON Schema {} \n PROJECT_DESCRIPTION: {} \n",
-            index_template_str, factsheet.project_description
+            index_template_str, api_json_str, factsheet.project_description
         );
 
         let ai_response: String = ai_task_request(
             msg_context,
             &self.attributes.position,
-            get_function_string!(print_backend_webserver_code),
-            print_backend_webserver_code,
+            get_function_string!(print_frontend_code),
+            print_frontend_code,
         )
         .await;
 
-        save_backend_code(&ai_response);
-        factsheet.backend_code = Some(ai_response);
+        save_frontend_code(&ai_response);
+        factsheet.frontend_code = Some(ai_response);
     }
 }
