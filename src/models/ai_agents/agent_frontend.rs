@@ -14,3 +14,10 @@ use reqwest::Client;
 use std::process::{Command, Stdio};
 use std::time::Duration;
 use tokio::time;
+
+#[derive(Debug)]
+pub struct AgentFrontendDeveloper {
+    attributes: BasicAgent,
+    bug_errors: Option<String>,
+    bug_count: u8,
+}
