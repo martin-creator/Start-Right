@@ -89,12 +89,12 @@ impl AgentFrontendDeveloper {
         let ai_response: String = ai_task_request(
             msg_context,
             &self.attributes.position,
-            get_function_string!(print_fixed_code),
-            print_fixed_code,
+            get_function_string!(print_fixed_frontend_code),
+            print_fixed_frontend_code,
         )
         .await;
 
         save_frontend_code(&ai_response);
-        factsheet.frontend_code_code = Some(ai_response);
+        factsheet.frontend_code = Some(ai_response);
     }
 }
