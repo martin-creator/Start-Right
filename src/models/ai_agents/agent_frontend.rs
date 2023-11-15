@@ -1,15 +1,15 @@
 use crate::ai_macros::ai_frontend::{print_fixed_frontend_code, print_frontend_code, print_index_html_file, print_improved_frontend_code};
 use crate::helper_funcs::general_funcs::{
-    check_status_code, read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, read_api_json_contents, MAIN_INDEX_PATH, WEB_SERVER_PROJECT_PATH
+    read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, read_api_json_contents, WEB_SERVER_PROJECT_PATH
 };
 
 use crate::helper_funcs::cli_funcs::{confirm_safe_code, PrintCommand};
 use crate::helper_funcs::general_funcs::ai_task_request;
 use crate::models::ai_agent_skeleton::basic_agent::{AgentState, BasicAgent};
-use crate::models::ai_agents::agent_content_traits::{FactSheet, RouteObject, SpecialFunctions};
+use crate::models::ai_agents::agent_content_traits::{FactSheet,  SpecialFunctions};
 
 use async_trait::async_trait;
-use reqwest::Client;
+// use reqwest::Client;
 use std::process::{Command, Stdio};
 use std::time::Duration;
 use tokio::time;
@@ -315,3 +315,35 @@ impl SpecialFunctions for AgentFrontendDeveloper {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn tests_frontend_developer() {
+        let mut agent: AgentFrontendDeveloper = AgentFrontendDeveloper::new();
+
+        let factsheet_str: &str = r#"
+      {
+        "project_description": "build a website that fetches and tracks fitness progress with timezone information",
+        "project_scope": {
+          "is_crud_required": true,
+          "is_user_login_and_logout": true,
+          "is_external_urls_required": true
+        },
+        "external_urls": [
+          "http://worldtimeapi.org/api/timezone"
+        ],
+        "frontend_code": null,
+        "api_endpoint_schema": null
+      }"#;
+
+        let mut factsheet: FactSheet = serde_json::from_str(factsheet_str).unwrap();
+
+        agent.attributes.state = AgentState::Discovery;
+        agent
+            .execute(&mut factsheet)
+            .await
+            .expect("Failed to execute Frontend Developer agent");
+    }
+}
