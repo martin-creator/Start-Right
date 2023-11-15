@@ -21,3 +21,20 @@ pub struct AgentFrontendDeveloper {
     bug_errors: Option<String>,
     bug_count: u8,
 }
+
+impl AgentFrontendDeveloper {
+    pub fn new() -> Self {
+        let attributes: BasicAgent = BasicAgent {
+            objective: "Develops fronted code for website using API_JSON Schema and prints out index.html file".to_string(),
+            position: "Frontend Developer".to_string(),
+            state: AgentState::Discovery,
+            memory: vec![],
+        };
+
+        Self {
+            attributes,
+            bug_errors: None,
+            bug_count: 0,
+        }
+    }
+}
