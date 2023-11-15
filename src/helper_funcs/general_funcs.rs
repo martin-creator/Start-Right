@@ -128,6 +128,12 @@ pub fn save_api_endpoints(api_endpoints: &String) {
     fs::write(path, api_endpoints).expect("Failed to write API Endpoints to file");
 }
 
+/// Get API_JSON Schema information
+pub fn read_api_json_contents() -> String {
+    let path: String = String::from(API_SCHEMA_PATH);
+    fs::read_to_string(path).expect("Failed to read api_json template")
+}
+
 
 #[cfg(test)]
 mod tests {
