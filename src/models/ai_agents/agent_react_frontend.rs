@@ -36,9 +36,42 @@ use strum::IntoEnumIterator;
 
 // React Frontend Developer
 #[derive(Debug)]
-pub struct AgentFrontendDeveloper {
+pub struct AgentReactFrontendDeveloper {
   pub attributes: BasicAgent,
   pub buildsheet: DesignBuildSheet,
   pub bug_count: u8,
   //pub operation_focus: BuildComponent
 }
+
+
+impl  AgentReactFrontendDeveloper {
+    pub fn new() -> Self {
+
+        // Define attributes
+        let attributes: BasicAgent = BasicAgent {
+          objective: "Develops raect frontned code for website".to_string(),
+          position: "React Frontend Developer".to_string(),
+          state: AgentState::Discovery,
+          memory: vec![]
+        };
+    
+        // Define Buildsheet
+        let buildsheet: DesignBuildSheet = DesignBuildSheet {
+          pages: None,
+          pages_descriptons: None,
+          api_assignments: None,
+          brand_colours: None,
+          build_mode: FrontendBuildMode::Infrastructure
+        };
+    
+        // Return Self
+        Self {
+          attributes,
+          buildsheet,
+          bug_count: 0,
+          //operation_focus: BuildComponent::Logo
+        }
+      }
+    
+}
+
