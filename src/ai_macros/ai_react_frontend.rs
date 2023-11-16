@@ -112,6 +112,7 @@ pub fn print_react_recommended_site_pages_with_apis(_website_specification: &str
   ///   ]
   /// REMEMBER: Not all pages need routes. Also, ALL API ROUTES MUST BE ACCOUNTED FOR
   /// IMPORTANT: This function only prints a JSON response, nothing else. Just JSON.
+  /// IMPORTANT: No commentary or anything else. Just the JSON response.
   println!(OUTPUT)
 }
 
