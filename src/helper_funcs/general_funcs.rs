@@ -18,6 +18,8 @@ pub const MAIN_INDEX_PATH: &str = "frontend_index/index.html";
 
 pub const API_SCHEMA_PATH: &str = "schemas/api_schema.json";
 
+pub const REACT_FRONTEND_PATH: &str = "frontend_react_templates";
+
 
 /// Extended AI function to encourage specific output from LLMS
 pub fn extend_ai_function(ai_func: fn(&str) -> &'static str, func_input: &str) -> Message {
