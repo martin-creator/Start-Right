@@ -1,74 +1,88 @@
 [
   {
-    "route": "/api/v1/goals",
+    "route": "/api/v1/questions",
     "is_route_dynamic": "false",
     "method": "post",
     "request_body": {
       "id": "number",
-      "name": "string",
-      "completed": "bool"
+      "question": "string",
+      "options": "array",
+      "answer": "string"
     },
     "response": "None"
   },
   {
-    "route": "/api/v1/goals",
+    "route": "/api/v1/questions",
     "is_route_dynamic": "false",
     "method": "get",
     "request_body": "None",
     "response": {
       "id": "number",
-      "name": "string",
-      "completed": "bool"
+      "question": "string",
+      "options": "array",
+      "answer": "string"
     }
   },
   {
-    "route": "/api/v1/goals",
+    "route": "/api/v1/questions",
     "is_route_dynamic": "false",
     "method": "put",
     "request_body": {
       "id": "number",
-      "name": "string",
-      "completed": "bool"
+      "question": "string",
+      "options": "array",
+      "answer": "string"
     },
     "response": "None"
   },
   {
-    "route": "/api/v1/goals/{id}",
+    "route": "/api/v1/questions/{id}",
     "is_route_dynamic": "true",
     "method": "get",
     "request_body": "None",
     "response": {
       "id": "number",
-      "name": "string",
-      "completed": "bool"
+      "question": "string",
+      "options": "array",
+      "answer": "string"
     }
   },
   {
-    "route": "/api/v1/goals/{id}",
+    "route": "/api/v1/questions/{id}",
     "is_route_dynamic": "true",
     "method": "delete",
     "request_body": "None",
     "response": "None"
   },
   {
-    "route": "/api/v1/auth/register",
+    "route": "/auth/register",
     "is_route_dynamic": "false",
     "method": "post",
     "request_body": {
       "id": "number",
       "username": "string",
-      "password": "string"
+      "password": "string",
+      "score": "number"
     },
     "response": "None"
   },
   {
-    "route": "/api/v1/auth/login",
+    "route": "/auth/login",
     "is_route_dynamic": "false",
     "method": "post",
     "request_body": {
+      "id": "number",
       "username": "string",
-      "password": "string"
+      "password": "string",
+      "score": "number"
     },
+    "response": "None"
+  },
+  {
+    "route": "/users/{username}/score/{score}",
+    "is_route_dynamic": "true",
+    "method": "put",
+    "request_body": "None",
     "response": "None"
   }
 ]
