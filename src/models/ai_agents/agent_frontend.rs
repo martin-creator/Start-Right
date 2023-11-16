@@ -298,7 +298,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
 
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "Frontend  code saving complete... Visit http://localhost:8080/ to see your AI generated home page",
+                        "Frontend  code saving complete... Run 'cargo run --bin main_web_template' in your terminal and then visit http://localhost:8080/ to see your AI generated home page",
                     );
 
                     // run_backend_server
