@@ -14,6 +14,10 @@ use crate::helper_funcs::general_funcs::{
     REACT_FRONTEND_PATH,
 };
 
+use crate::models::ai_agents::agent_react_structs::{
+    FrontendBuildMode, APIAssignment, PageAPIAssign, SitePages, PageRoutes, DesignBuildSheet 
+};
+
 //use crate::models::agents::agent_frontend_comp::BuildComponent;
 use crate::models::ai_agents::agent_content_traits::{SpecialFunctions, FactSheet};
 use crate::models::ai_agent_skeleton::basic_agent::{BasicAgent, AgentState};
@@ -25,52 +29,9 @@ use std::process::{Command, Stdio};
 use std::collections::HashMap;
 use strum::IntoEnumIterator;
 
-/// To define what stage the frontend developer is at
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub enum FrontendBuildMode {
-  Infrastructure,
-  PageComponents,
-  Completion
-}
+// use super::agent_react_structs::FrontendBuildMode;
 
 
-/// For decoding the serde_json api routes for a given page
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct APIAssignment {
-  pub api_route: String,
-  pub method: String,
-  pub route_type: String,
-}
-
-
-/// Used for creating a type to be used for decoding shorthand
-type PageRoutes = HashMap<String, Vec<APIAssignment>>;
-
-
-/// Used for decoding page names and suggested content
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct PageAPIAssign {
-  pub page: Vec<APIAssignment>
-}
-
-
-/// Used for decoding page names and suggested content
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct SitePages {
-  pub page_name: String,
-  pub suggested_content_sections: serde_json::Value
-}
-
-
-/// Used for DesignBuildSheet
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct DesignBuildSheet {
-  pub pages: Option<Vec<String>>,
-  pub pages_descriptons: Option<Vec<SitePages>>,
-  pub api_assignments: Option<PageRoutes>,
-  pub brand_colours: Option<Vec<String>>,
-  pub build_mode: FrontendBuildMode
-}
 
 
 // React Frontend Developer
@@ -79,5 +40,5 @@ pub struct AgentFrontendDeveloper {
   pub attributes: BasicAgent,
   pub buildsheet: DesignBuildSheet,
   pub bug_count: u8,
-  pub operation_focus: BuildComponent
+  //pub operation_focus: BuildComponent
 }
