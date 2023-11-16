@@ -85,60 +85,101 @@ impl AgentReactFrontendDeveloper {
     }
 
     /// Get pages and page context from description and backend code
-  async fn get_page_context(&mut self, project_description: &String) {
+    async fn get_page_context(&mut self, project_description: &String) {
+        // Extract main backend code
+        let path: String = String::from(EXEC_MAIN_PATH);
+        let backend_code: String = fs
+            ::read_to_string(path)
+            .expect("Something went wrong reading the file");
 
-    // Extract main backend code
-    let path: String = String::from(EXEC_MAIN_PATH);
-    let backend_code: String = fs::read_to_string(path).expect("Something went wrong reading the file");
+        // Structure Message
+        let msg_context: String = format!(
+            "PROJECT_DESCRIPTION: {:?}, CODE_LOGIC: {:?}",
+            project_description,
+            backend_code
+        );
 
-    // Structure Message
-    let msg_context: String = format!("PROJECT_DESCRIPTION: {:?}, CODE_LOGIC: {:?}", project_description, backend_code);
+        // Call AI
+        let ai_response: Vec<SitePages> = ai_task_request_decoded::<Vec<SitePages>>(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_react_recommended_site_pages),
+            print_react_recommended_site_pages
+        ).await;
 
-    // Call AI
-    let ai_response: Vec<SitePages> = ai_task_request_decoded::<Vec<SitePages>>(
-      msg_context, 
-      &self.attributes.position, 
-      get_function_string!(print_react_recommended_site_pages), 
-      print_react_recommended_site_pages).await;
+        // Extract pages
+        let pages: Vec<String> = ai_response
+            .iter()
+            .filter_map(|item| Some(item.page_name.clone()))
+            .collect();
 
-    // Extract pages
-    let pages: Vec<String> = ai_response
-      .iter().filter_map(|item| Some(item.page_name.clone())).collect();
+        // Assign pages to buildsheet
+        self.buildsheet.pages = Some(pages.clone());
+        self.buildsheet.pages_descriptons = Some(ai_response);
+    }
 
-    // Assign pages to buildsheet
-    self.buildsheet.pages = Some(pages.clone());
-    self.buildsheet.pages_descriptons = Some(ai_response);
-  }
+    /// Assign API Routes to pages
+    async fn assign_api_routes(
+        &mut self,
+        project_description: &String,
+        external_api_urls: &Option<Vec<String>>
+    ) {
+        // Extract internal API schema
+        let path: String = String::from(API_SCHEMA_PATH);
+        let internal_api_endpoints: String = fs
+            ::read_to_string(path)
+            .expect("Something went wrong reading the file");
 
-  /// Assign API Routes to pages
-  async fn assign_api_routes(&mut self, project_description: &String, external_api_urls: &Option<Vec<String>>) {
+        // Extract external API endpoints
+        let external_api_endpoints: String = match external_api_urls {
+            Some(endpoints) => format!("{:?}", endpoints),
+            None => String::from(""),
+        };
 
-    // Extract internal API schema
-    let path: String = String::from(API_SCHEMA_PATH);
-    let internal_api_endpoints: String = fs::read_to_string(path).expect("Something went wrong reading the file");
-
-    // Extract external API endpoints
-    let external_api_endpoints: String = match external_api_urls {
-      Some(endpoints) => format!("{:?}", endpoints),
-      None => String::from("")
-    };
-
-    // Structure message for api route assignment
-    let msg_context: String = format!("WEBSITE SPECIFICATION: {{
+        // Structure message for api route assignment
+        let msg_context: String = format!(
+            "WEBSITE SPECIFICATION: {{
       PROJECT_DESCRIPTION: {},
       PAGES: {:?},
       INTERNAL_API_ROUTES: {},
       EXTERNAL_API_ROUTES: {} 
-    }}", project_description, self.buildsheet.pages, internal_api_endpoints, external_api_endpoints);
+    }}",
+            project_description,
+            self.buildsheet.pages,
+            internal_api_endpoints,
+            external_api_endpoints
+        );
 
-    // Make AI request
-    let ai_response: PageRoutes = ai_task_request_decoded::<PageRoutes>(
-      msg_context, 
-      &self.attributes.position, 
-      get_function_string!(print_recommended_site_pages_with_apis), 
-      print_react_recommended_site_pages_with_apis).await;
+        // Make AI request
+        let ai_response: PageRoutes = ai_task_request_decoded::<PageRoutes>(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_recommended_site_pages_with_apis),
+            print_react_recommended_site_pages_with_apis
+        ).await;
 
-    // Add API assignments to buildsheet
-    self.buildsheet.api_assignments = Some(ai_response);
-  }
+        // Add API assignments to buildsheet
+        self.buildsheet.api_assignments = Some(ai_response);
+    }
+
+    /// Define Brand Colours
+    async fn define_brand_colours(&mut self, project_description: &String) {
+        // Structure message
+        let msg_context: String = format!(
+            "PROJECT_DESCRIPTION: {}, WEBSITE_CONTENT: {:?}",
+            project_description,
+            self.buildsheet.pages_descriptons
+        );
+
+        // Call AI
+        let ai_response: Vec<String> = ai_task_request_decoded::<Vec<String>>(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_react_recommended_site_main_colours),
+            print_react_recommended_site_main_colours
+        ).await;
+
+        // Add decoded brand colours
+        self.buildsheet.brand_colours = Some(ai_response);
+    }
 }
