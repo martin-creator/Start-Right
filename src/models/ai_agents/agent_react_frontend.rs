@@ -182,4 +182,79 @@ impl AgentReactFrontendDeveloper {
         // Add decoded brand colours
         self.buildsheet.brand_colours = Some(ai_response);
     }
+
+     /// Fix buggy component code
+  async fn run_code_correction(&self, file_path: String, error_code: String) {
+
+    // Initialize
+    PrintCommand::UnitTest.print_agent_message(self.attributes.position.as_str(), 
+      "Fixing component bugs");
+    let buggy_code: String = read_react_frontend_code_contents(&file_path);
+
+    // Structure message
+    let msg_context: String = format!("ORIGINAL_CODE: {}, ERROR_MESSAGE: {:?}", buggy_code, error_code);
+
+    // Retrieve AI Reponse
+    let ai_response: String = ai_task_request(
+      msg_context, 
+      &self.attributes.position, 
+      get_function_string!(print_react_code_bugs_resolution), 
+      print_react_code_bugs_resolution).await;
+
+    // Save corrected code
+    save_react_frontend_code(&file_path, &ai_response);
+  }
+
+   /// Frontend component test
+   async fn perform_component_test(&mut self) -> Result<(), String> {
+
+    let test_statement = format!("Testing Component: {}", self.operation_focus.name());
+
+    PrintCommand::UnitTest.
+    print_agent_message(
+        self.attributes.position.as_str(), 
+        test_statement.as_str());
+
+    // Build frontend server
+    let build_frontend_server: std::process::Output = Command::new("yarn")
+      .arg("build")
+      .current_dir(REACT_FRONTEND_PATH)
+      .stdout(Stdio::piped())
+      .stderr(Stdio::piped())
+      .output()
+      .expect("Failed to run component test");
+
+    // Determine if build errors
+    if build_frontend_server.status.success() {
+      PrintCommand::UnitTest
+      .print_agent_message(
+        self.attributes.position.as_str(),
+         "Component build test successful");
+      self.bug_count = 0;
+      return Ok(());
+
+    // Handle Build error
+    } else {
+      let error_arr: Vec<u8> = build_frontend_server.stderr;
+      let error_str: String = String::from_utf8(error_arr).unwrap();
+
+      // Check and return error
+      self.bug_count += 1;
+      if self.bug_count >= 2 {
+        PrintCommand::Issue
+        .print_agent_message(
+            self.attributes.position.as_str(), 
+            "Too many code failures");
+        PrintCommand::Issue
+        .print_agent_message(
+            self.attributes.position.as_str(), 
+            "Remember: check frontend builds before retrying");
+        panic!("Too many code failed attempts for {}", self.operation_focus.name());
+      } else {
+        return Err(error_str)
+      }
+    }
+  }
+
 }
+
