@@ -12,6 +12,7 @@ use crate::helper_funcs::general_funcs::{
     read_react_frontend_code_contents,
     WEB_SERVER_PROJECT_PATH,
     REACT_FRONTEND_PATH,
+    EXEC_MAIN_PATH,
 };
 
 use crate::models::ai_agents::agent_react_structs::{
@@ -81,4 +82,30 @@ impl AgentReactFrontendDeveloper {
             FrontendBuildMode::Completion => println!("[Working on Frontend Completion Items]"),
         }
     }
+
+    /// Get pages and page context from description and backend code
+  async fn get_page_context(&mut self, project_description: &String) {
+
+    // Extract main backend code
+    let path: String = String::from(EXEC_MAIN_PATH);
+    let backend_code: String = fs::read_to_string(path).expect("Something went wrong reading the file");
+
+    // Structure Message
+    let msg_context: String = format!("PROJECT_DESCRIPTION: {:?}, CODE_LOGIC: {:?}", project_description, backend_code);
+
+    // Call AI
+    let ai_response: Vec<SitePages> = ai_task_request_decoded::<Vec<SitePages>>(
+      msg_context, 
+      &self.attributes.position, 
+      get_function_string!(print_react_recommended_site_pages), 
+      print_react_recommended_site_pages).await;
+
+    // Extract pages
+    let pages: Vec<String> = ai_response
+      .iter().filter_map(|item| Some(item.page_name.clone())).collect();
+
+    // Assign pages to buildsheet
+    self.buildsheet.pages = Some(pages.clone());
+    self.buildsheet.pages_descriptons = Some(ai_response);
+  }
 }
