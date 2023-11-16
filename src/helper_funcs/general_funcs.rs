@@ -14,7 +14,7 @@ pub const WEB_SERVER_PROJECT_PATH: &str = "src/";
 
 pub const EXEC_MAIN_PATH: &str = "src/main_web_template.rs";
 
-pub const MAIN_INDEX_PATH: &str = "frontend/index.html";
+pub const MAIN_INDEX_PATH: &str = "frontend_index/index.html";
 
 pub const API_SCHEMA_PATH: &str = "schemas/api_schema.json";
 
