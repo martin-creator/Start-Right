@@ -20,6 +20,8 @@ pub fn print_improved_frontend_code(_project_description_and_index_template: &st
     ///   2. Makes sure everything every endpoint provided in the API_JSON schema file is implemnted from a frontend standpoint. If not, add the feature. No code should be implemented later. Everything should be written now.
     ///   3. ONLY writes the code. No commentary.
     /// IMPORTANT: The code should always include CSS , HTML and JAVASCRIPT code. The following libraries are already installed
+    /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
+    /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION
     /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code.  All code should be included in the output. No commentary. No comments.
     println!(OUTPUT)
@@ -44,6 +46,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// "css": This represents the css code
     /// "javascript": This represents the javascript code
     /// IMPORTANT: Only prints out the HTML, CSS and JAVASCRIPT code. No commentary or anything else.
+    /// IMPORTANT: NO CODE SHOULD BE PRINTED AS COMMENTS. ALL CODE SHOULD BE PRINTED AS STRINGS
     /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// MUST READ: All keys are strings. Even bool should be wrapped in double quotes as "bool"
     /// EXAMPLE:
