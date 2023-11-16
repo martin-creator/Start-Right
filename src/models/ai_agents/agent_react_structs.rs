@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use std::collections::HashMap;
 
 /// To define what stage the frontend developer is at
 #[derive(Debug, Serialize, Deserialize, Clone)]
