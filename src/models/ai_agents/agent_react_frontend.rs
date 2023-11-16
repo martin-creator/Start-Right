@@ -258,3 +258,96 @@ impl AgentReactFrontendDeveloper {
 
 }
 
+
+
+#[async_trait]
+impl SpecialFunctions for AgentReactFrontendDeveloper {
+
+  fn get_attributes_from_agent(&self) -> &BasicAgent {
+    &self.attributes
+  }
+
+  async fn execute(&mut self, factsheet: &mut FactSheet) -> Result<(), Box<dyn std::error::Error>> {
+
+    // Extract required project factsheet items
+    let project_description: &String = &factsheet.project_description;
+    let external_api_urls: &Option<Vec<String>> = &factsheet.external_urls;
+
+    // Continue until finished
+    // !!! WARNING !!!
+    while self.attributes.state != AgentState::Finished {
+
+      // Execute logic based on Agent State
+      match &self.attributes.state {
+
+        // Get pages, api assignments and branding
+        AgentState::Discovery => {
+
+          // Confirm Stage
+          self.confirm_stage();
+
+          // Get pages and page context
+          self.get_page_context(&project_description).await;
+
+          // Assign API routes to pages
+          self.assign_api_routes(&project_description, &external_api_urls).await;
+
+          // Define Brand Colours
+          self.define_brand_colours(&project_description).await;
+
+          // Proceed to Working status
+          self.attributes.state = AgentState::Working;
+          continue;
+        },
+
+        // Get pages, api assignments and branding
+        AgentState::Working => {
+          
+          // Loop through components
+          for component in BuildComponent::iter() {
+            
+
+            // !!!! REMOVE ONLY FOR TESTING !!!
+            if component != BuildComponent::PageContent1 {
+              continue;
+            }
+            if component == BuildComponent::PageContent2 {
+              break;
+            }
+
+
+            // Update current operation focus to component
+            self.operation_focus = component.clone();
+            component.create_component(&self, &project_description).await;
+
+            // Unit test component
+            let test_res: Result<(), String> = self.perform_component_test().await;
+            match test_res {
+
+              // Continue to next component
+              Ok(()) => continue,
+
+              // Fix bugs for current component
+              Err(err_str) => {
+                let file_path: String = self.operation_focus.filepath();
+                self.run_code_correction(file_path, err_str).await;
+
+                // Perform one more test
+                let _ = self.perform_component_test().await;
+                continue;
+              }
+            }
+          }
+
+          // Complete
+          self.attributes.state = AgentState::Finished;
+        },
+
+        // Ensure all cases are covered
+        _ => {}
+      }
+    }
+    Ok(())
+  }
+}
+
