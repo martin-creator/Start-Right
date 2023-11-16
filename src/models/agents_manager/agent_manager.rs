@@ -6,6 +6,7 @@ use crate::helper_funcs::general_funcs::ai_task_request;
 use crate::models::ai_agents::agent_architect::AgentSolutionArchitect;
 use crate::models::ai_agents::agent_backend::AgentBackendDeveloper;
 use crate::models::ai_agents::agent_frontend::AgentFrontendDeveloper;
+use crate::models::ai_agents::agent_react_frontend::AgentReactFrontendDeveloper;
 
 #[derive(Debug)]
 pub struct ManagingAgent {
@@ -60,6 +61,7 @@ impl ManagingAgent {
         self.add_agent(Box::new(AgentSolutionArchitect::new()));
         self.add_agent(Box::new(AgentBackendDeveloper::new()));
         self.add_agent(Box::new(AgentFrontendDeveloper::new()));
+        self.add_agent(Box::new(AgentReactFrontendDeveloper::new()));
     }
 
     pub async fn execute_project(&mut self) {
