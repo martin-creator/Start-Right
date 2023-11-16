@@ -298,12 +298,12 @@ impl SpecialFunctions for AgentFrontendDeveloper {
 
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "Frontend  code saving complete...",
+                        "Frontend  code saving complete... Visit http://localhost:8080/ to see your AI generated home page",
                     );
 
-                    run_backend_server
-                        .kill()
-                        .expect("Failed to kill backend web server on completion");
+                    // run_backend_server
+                    //     .kill()
+                    //     .expect("Failed to kill backend web server on completion");
 
                     self.attributes.state = AgentState::Finished;
                 }
