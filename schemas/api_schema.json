@@ -1,0 +1,76 @@
+[
+  {
+    "route": "/api/v1/goals",
+    "is_route_dynamic": "false",
+    "method": "post",
+    "request_body": {
+      "id": "number",
+      "name": "string",
+      "completed": "bool"
+    },
+    "response": "None"
+  },
+  {
+    "route": "/api/v1/goals",
+    "is_route_dynamic": "false",
+    "method": "get",
+    "request_body": "None",
+    "response": [
+      {
+        "id": "number",
+        "name": "string",
+        "completed": "bool"
+      }
+    ]
+  },
+  {
+    "route": "/api/v1/goals",
+    "is_route_dynamic": "false",
+    "method": "put",
+    "request_body": {
+      "id": "number",
+      "name": "string",
+      "completed": "bool"
+    },
+    "response": "None"
+  },
+  {
+    "route": "/api/v1/goals/{id}",
+    "is_route_dynamic": "true",
+    "method": "get",
+    "request_body": "None",
+    "response": {
+      "id": "number",
+      "name": "string",
+      "completed": "bool"
+    }
+  },
+  {
+    "route": "/api/v1/goals/{id}",
+    "is_route_dynamic": "true",
+    "method": "delete",
+    "request_body": "None",
+    "response": "None"
+  },
+  {
+    "route": "/api/v1/auth/register",
+    "is_route_dynamic": "false",
+    "method": "post",
+    "request_body": {
+      "id": "number",
+      "username": "string",
+      "password": "string"
+    },
+    "response": "None"
+  },
+  {
+    "route": "/api/v1/auth/login",
+    "is_route_dynamic": "false",
+    "method": "post",
+    "request_body": {
+      "username": "string",
+      "password": "string"
+    },
+    "response": "None"
+  }
+]
