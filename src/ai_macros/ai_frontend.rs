@@ -3,13 +3,12 @@ use ai_functions::ai_function;
 #[ai_function]
 pub fn print_frontend_code(_project_description_and_index_template: &str) {
     /// INPUT: Takes in a PROJECT_DESCRIPTION, INDEX_TEMPLATE and API_JSON Schema file from backend developer to build  website fronted in HTML, CSS and JAVASCRIPT
-    /// IMPORTANT: The INDEX_TEMPLATE is ONLY an example. If the Project Description requires it, make as many changes as you like.
+    /// IMPORTANT: The INDEX_TEMPLATE is ONLY an example. If the Project Description requires it, make as many changes as you like. Make sure the styling of the code is professional and elegant and makes project.
     /// IMPORTANT: You do not need to follow the frontend code exactly.  Customize the file provided on the frontend to  write  html, css and javacript code that make sense for the users request if required.
     /// FUNCTION: Takes an existing set of code marked as INDEX_TEMPLATE and updates or re-writes it to work for the purpose in the  API_JSON  and PROJECT_DESCRIPTION
-    /// IMPORTANT: The following libraries are already installed
-    ///   reqwest, serde, serde_json, tokio, actix-web, async-trait, actix_cors
-    /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION
-    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code.
+    /// IMPORTANT: The code should always include CSS , HTML and JAVASCRIPT code. The following libraries are already installed
+    /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION.
+    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments.
     println!(OUTPUT)
 }
 
@@ -20,8 +19,9 @@ pub fn print_improved_frontend_code(_project_description_and_index_template: &st
     ///   1. Removes any bugs in the code and adds minor additional functionality
     ///   2. Makes sure everything every endpoint provided in the API_JSON schema file is implemnted from a frontend standpoint. If not, add the feature. No code should be implemented later. Everything should be written now.
     ///   3. ONLY writes the code. No commentary.
-    /// IMPORTANT: The following libraries are already installed. Does not use ANY libraries other than what was provided in the template. You should use only HTML, CSS and JAVASCRIPT to implement the functionality of the API_JSON schema file
-    ///   reqwest, serde, serde_json, tokio, actix-web, async-trait
+    /// IMPORTANT: The code should always include CSS , HTML and JAVASCRIPT code. The following libraries are already installed
+    /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION
+    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code.  All code should be included in the output. No commentary. No comments.
     println!(OUTPUT)
 }
 
@@ -30,6 +30,7 @@ pub fn print_fixed_frontend_code(_frontend_broken_code_with_bugs: &str) {
     /// INPUT: Takes in broken HTML, CSS and JAVASCRIPT BROKEN_CODE and the ERROR_BUGS found
     /// FUNCTION: Removes bugs from code
     /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
+    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments. HTML, CSS, JAVASCRIPT code should be included.
     println!(OUTPUT)
 }
 
