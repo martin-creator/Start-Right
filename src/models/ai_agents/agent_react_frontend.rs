@@ -25,7 +25,7 @@ use crate::models::ai_agents::agent_react_structs::{
     DesignBuildSheet,
 };
 
-//use crate::models::agents::agent_frontend_comp::BuildComponent;
+use crate::models::ai_agents::agent_react_component::BuildComponent;
 use crate::models::ai_agents::agent_content_traits::{ SpecialFunctions, FactSheet };
 use crate::models::ai_agent_skeleton::basic_agent::{ BasicAgent, AgentState };
 use crate::helper_funcs::cli_funcs::PrintCommand;
@@ -44,7 +44,7 @@ pub struct AgentReactFrontendDeveloper {
     pub attributes: BasicAgent,
     pub buildsheet: DesignBuildSheet,
     pub bug_count: u8,
-    //pub operation_focus: BuildComponent
+    pub operation_focus: BuildComponent
 }
 
 impl AgentReactFrontendDeveloper {
