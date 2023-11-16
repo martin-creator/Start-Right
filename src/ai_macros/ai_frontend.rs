@@ -30,6 +30,7 @@ pub fn print_fixed_frontend_code(_frontend_broken_code_with_bugs: &str) {
     /// INPUT: Takes in broken HTML, CSS and JAVASCRIPT BROKEN_CODE and the ERROR_BUGS found
     /// FUNCTION: Removes bugs from code
     /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
+    /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments. HTML, CSS, JAVASCRIPT code should be included.
     println!(OUTPUT)
 }
@@ -43,6 +44,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// "css": This represents the css code
     /// "javascript": This represents the javascript code
     /// IMPORTANT: Only prints out the HTML, CSS and JAVASCRIPT code. No commentary or anything else.
+    /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// MUST READ: All keys are strings. Even bool should be wrapped in double quotes as "bool"
     /// EXAMPLE:
     /// INPUT_CODE:
