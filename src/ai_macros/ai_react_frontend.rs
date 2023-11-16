@@ -131,7 +131,7 @@ pub fn print_react_recommended_site_main_colours(_website_content: &str) {
 
 /// Branding - Logo inner
 #[ai_function]
-pub fn print_svg_logo(_project_description_and_colours: &str) {
+pub fn print_react_svg_logo(_project_description_and_colours: &str) {
   /// INPUT: Takes in a PROJECT_DESCRIPTION and BRAND_COLOURS for a websites frontend
   /// FUNCTION: Creates a basic simple and flat looking LOGO via SVG JSX to best suit the website. Just an icon with no writing
   /// THIS IS AN EXAMPLE OF THE OUTPUT:
@@ -146,7 +146,7 @@ pub fn print_svg_logo(_project_description_and_colours: &str) {
 
 /// Branding - Logo component
 #[ai_function]
-pub fn print_completed_logo_with_brand_name_react_component(_website_specification: &str) {
+pub fn print_react_completed_logo_with_brand_name_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
   /// FUNCTION: Takes the logo from the SVG provided and adds a catchy PascalCase app name.
   /// NOTE: The Logo is based on the WEBSITE_SPECIFICATION information.
@@ -171,7 +171,7 @@ pub fn print_completed_logo_with_brand_name_react_component(_website_specificati
 
 /// Navigation - Header nav bar
 #[ai_function]
-pub fn print_header_navigation_react_component(_website_specification: &str) {
+pub fn print_react_header_navigation_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
   /// FUNCTION: Writes the code for a REACT TYPESCRIPT navigation header bar for a frontend website
   /// OUTPOUT: The navigation header bar includes the following
@@ -203,7 +203,7 @@ pub fn print_header_navigation_react_component(_website_specification: &str) {
 
 /// Navigation - Footer nav bar
 #[ai_function]
-pub fn print_footer_navigation_react_component(_website_specification: &str) {
+pub fn print_react_footer_navigation_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
   /// FUNCTION: Writes only the HTML code for a REACT TYPESCRIPT footer for website
   /// OUTPOUT: The navigation footer bar includes the following
@@ -252,7 +252,7 @@ pub fn print_react_typescript_hook_component(_api_endpoints: &str) {
 
 /// Integration - Wireframing and Content
 #[ai_function]
-pub fn print_html_webpage_content_with_text(_page_content_spec: &str) {
+pub fn print_react_html_webpage_content_with_text(_page_content_spec: &str) {
   /// INPUT: Receives PAGE_SPECIFICATION and high level spec along with api data information that the page will receive
   /// OUTPUT: Writes HTML code only with written content based on PAGE_SPECIFICATION provided
   /// NOTE: The page specification tells the function what type of content to write based on suggestions, 
@@ -318,7 +318,7 @@ pub fn print_create_full_react_component(_page_content_spec: &str) {
 
 /// Integration - Styling
 #[ai_function]
-pub fn print_give_component_fantastic_styling(_page_specification: &str) {
+pub fn print_react_give_component_fantastic_styling(_page_specification: &str) {
   /// INPUT: Receives a REACT_COMPONENT
   /// OUTPUT: Significantly upgrades the styling and corrects any bugs of the component
   /// RULES: 
