@@ -4,10 +4,12 @@ use ai_functions::ai_function;
 pub fn print_frontend_code(_project_description_and_index_template: &str) {
     /// INPUT: Takes in a PROJECT_DESCRIPTION, INDEX_TEMPLATE and API_JSON Schema file from backend developer to build  website fronted in HTML, CSS and JAVASCRIPT
     /// IMPORTANT: The INDEX_TEMPLATE is ONLY an example. If the Project Description requires it, make as many changes as you like. Make sure the styling of the code is professional and elegant and makes project.
+    /// IMPORTANT: Make changes to the styling of the code if you like. Make sure the styling of the code is professional and elegant and makes project.
     /// IMPORTANT: You do not need to follow the frontend code exactly.  Customize the file provided on the frontend to  write  html, css and javacript code that make sense for the users request if required.
     /// FUNCTION: Takes an existing set of code marked as INDEX_TEMPLATE and updates or re-writes it to work for the purpose in the  API_JSON  and PROJECT_DESCRIPTION
     /// IMPORTANT: The code should always include CSS , HTML and JAVASCRIPT code. The following libraries are already installed
     /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION.
+    /// /// IMPORTANT: NO CODE SHOULD BE replaced with placeholder comments. ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
     /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments.
     println!(OUTPUT)
 }
@@ -23,6 +25,7 @@ pub fn print_improved_frontend_code(_project_description_and_index_template: &st
     /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
     /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION
+    /// /// IMPORTANT: NO CODE SHOULD BE replaced with placeholder comments. ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
     /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code.  All code should be included in the output. No commentary. No comments.
     println!(OUTPUT)
 }
@@ -33,6 +36,7 @@ pub fn print_fixed_frontend_code(_frontend_broken_code_with_bugs: &str) {
     /// FUNCTION: Removes bugs from code
     /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
     /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
+    /// IMPORTANT: NO CODE SHOULD BE replaced with placeholder comments. ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
     /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments. HTML, CSS, JAVASCRIPT code should be included.
     println!(OUTPUT)
 }
@@ -48,7 +52,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// IMPORTANT: Only prints out the HTML, CSS and JAVASCRIPT code. No commentary or anything else.
     /// IMPORTANT: NO CODE SHOULD BE PRINTED AS COMMENTS. ALL CODE SHOULD BE PRINTED AS STRINGS
     /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
-    /// MUST READ: All keys are strings. Even bool should be wrapped in double quotes as "bool"
+    /// IMPORTANT: ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
     /// EXAMPLE:
     /// INPUT_CODE:
     /// ...
