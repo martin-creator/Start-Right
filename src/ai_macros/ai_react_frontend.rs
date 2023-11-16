@@ -17,7 +17,7 @@ pub fn print_react_code_bugs_resolution(_existing_code_and_error: &str) {
 
 /// Page Architecture
 #[ai_function]
-pub fn print_recommended_site_pages(_project_description_and_backend_code_logic: &str) {
+pub fn print_react_recommended_site_pages(_project_description_and_backend_code_logic: &str) {
   /// INPUT: Takes in a PROJECT_DESCRIPTION and CODE_LOGIC for a websites backend. This function interprets a page structure solution for the frontend
   /// FUNCTION: Outputs up to 2 recommended pages for an SPA application that would BEST suit the PROJECT_DESCRIPTION and CODE_LOGIC
   /// IMPORTANT: 
