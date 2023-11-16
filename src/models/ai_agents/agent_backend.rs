@@ -137,11 +137,12 @@ impl SpecialFunctions for AgentBackendDeveloper {
                 }
 
                 AgentState::Working => {
-                    if self.bug_count == 0 {
-                        self.call_improved_backend_code(factsheet).await;
-                    } else {
-                        self.call_fix_code_bugs(factsheet).await;
-                    }
+                    // if self.bug_count == 0 {
+                    //     self.call_improved_backend_code(factsheet).await;
+                    // } else {
+                    //     self.call_fix_code_bugs(factsheet).await;
+                    // }
+                    self.call_improved_backend_code(factsheet).await;
                     self.attributes.state = AgentState::UnitTesting;
                     continue;
                 }
@@ -252,50 +253,50 @@ impl SpecialFunctions for AgentBackendDeveloper {
                     let seconds_sleep: Duration = Duration::from_secs(5);
                     time::sleep(seconds_sleep).await;
 
-                    // Check status code
-                    for endpoint in check_endpoints {
-                        // Confirm url testing
-                        let testing_msg: String =
-                            format!("Testing endpoint '{}'...", endpoint.route);
-                        PrintCommand::UnitTest.print_agent_message(
-                            self.attributes.position.as_str(),
-                            testing_msg.as_str(),
-                        );
+                    // // Check status code
+                    // for endpoint in check_endpoints {
+                    //     // Confirm url testing
+                    //     let testing_msg: String =
+                    //         format!("Testing endpoint '{}'...", endpoint.route);
+                    //     PrintCommand::UnitTest.print_agent_message(
+                    //         self.attributes.position.as_str(),
+                    //         testing_msg.as_str(),
+                    //     );
 
-                        // Create client with timout
-                        let client: Client = Client::builder()
-                            .timeout(Duration::from_secs(5))
-                            .build()
-                            .unwrap();
+                    //     // Create client with timout
+                    //     let client: Client = Client::builder()
+                    //         .timeout(Duration::from_secs(5))
+                    //         .build()
+                    //         .unwrap();
 
-                        // Test url
-                        let url: String = format!("http://localhost:8080{}", endpoint.route);
-                        match check_status_code(&client, &url).await {
-                            Ok(status_code) => {
-                                if status_code != 200 {
-                                    let err_msg: String = format!(
-                                        "WARNING: Failed to call backend url endpoint {}",
-                                        endpoint.route
-                                    );
-                                    PrintCommand::Issue.print_agent_message(
-                                        self.attributes.position.as_str(),
-                                        err_msg.as_str(),
-                                    );
-                                }
-                            }
-                            Err(e) => {
-                                // kill $(lsof -t -i:8080)
-                                run_backend_server
-                                    .kill()
-                                    .expect("Failed to kill backend web server");
-                                let err_msg: String = format!("Error checking backend {}", e);
-                                PrintCommand::Issue.print_agent_message(
-                                    self.attributes.position.as_str(),
-                                    err_msg.as_str(),
-                                );
-                            }
-                        }
-                    }
+                    //     // Test url
+                    //     let url: String = format!("http://localhost:8080{}", endpoint.route);
+                    //     match check_status_code(&client, &url).await {
+                    //         Ok(status_code) => {
+                    //             if status_code != 200 {
+                    //                 let err_msg: String = format!(
+                    //                     "WARNING: Failed to call backend url endpoint {}",
+                    //                     endpoint.route
+                    //                 );
+                    //                 PrintCommand::Issue.print_agent_message(
+                    //                     self.attributes.position.as_str(),
+                    //                     err_msg.as_str(),
+                    //                 );
+                    //             }
+                    //         }
+                    //         Err(e) => {
+                    //             // kill $(lsof -t -i:8080)
+                    //             run_backend_server
+                    //                 .kill()
+                    //                 .expect("Failed to kill backend web server");
+                    //             let err_msg: String = format!("Error checking backend {}", e);
+                    //             PrintCommand::Issue.print_agent_message(
+                    //                 self.attributes.position.as_str(),
+                    //                 err_msg.as_str(),
+                    //             );
+                    //         }
+                    //     }
+                    // }
 
                     save_api_endpoints(&api_endpoints_str);
 
