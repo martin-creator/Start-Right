@@ -299,13 +299,13 @@ impl SpecialFunctions for AgentReactFrontendDeveloper {
                 AgentState::Working => {
                     // Loop through components
                     for component in BuildComponent::iter() {
-                        // !!!! REMOVE ONLY FOR TESTING !!!
-                        if component != BuildComponent::PageContent1 {
-                            continue;
-                        }
-                        if component == BuildComponent::PageContent2 {
-                            break;
-                        }
+                        // // !!!! REMOVE ONLY FOR TESTING !!!
+                        // if component != BuildComponent::PageContent1 {
+                        //     continue;
+                        // }
+                        // if component == BuildComponent::PageContent2 {
+                        //     break;
+                        // }
 
                         // Update current operation focus to component
                         self.operation_focus = component.clone();
