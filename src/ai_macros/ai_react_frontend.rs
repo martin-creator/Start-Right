@@ -67,7 +67,7 @@ pub fn print_react_recommended_site_pages(_project_description_and_backend_code_
 
 /// Page Architecture
 #[ai_function]
-pub fn print_recommended_site_pages_with_apis(_website_specification: &str) {
+pub fn print_react_recommended_site_pages_with_apis(_website_specification: &str) {
   /// INPUT: Takes in a PROJECT_DESCRIPTION, and WEBSITE_SPECIFICATION with API_ENDPOINTS and PAGES for a websites frontend build.
   /// FUNCTION: Assignes endpoints to each page
   /// OUTPUT FORMAT: The function outputs in a JSON format as follows:
@@ -118,7 +118,7 @@ pub fn print_recommended_site_pages_with_apis(_website_specification: &str) {
 
 /// Branding - Colour
 #[ai_function]
-pub fn print_recommended_site_main_colours(_website_content: &str) {
+pub fn print_react_recommended_site_main_colours(_website_content: &str) {
   /// INPUT: Takes in a PROJECT_DESCRIPTION and WEBSITE_CONTENT for a frontend website project
   /// FUNCTION: Outputs up to 3 recommended colours that would BEST suit the PROJECT_DESCRIPTION and nature of the website
   /// FORMAT: Prints just a list of strings based on Tailwind css colours, here are some examples:
