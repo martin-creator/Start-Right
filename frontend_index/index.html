@@ -3,156 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Goal Tracker</title>
+  <title>Quiz App</title>
   <style>
-    body {
-      font-family: "Arial", sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f9fa;
-      color: #495057;
-    }
-
-    header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 20px;
-      text-align: center;
-    }
-
-    nav {
-      background-color: #343a40;
-      overflow: hidden;
-    }
-
-    nav a {
-      float: left;
-      display: block;
-      color: #fff;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-
-    nav a:hover {
-      background-color: #ddd;
-      color: #333;
-    }
-
-    h1, h2 {
-      color: #007bff;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    section {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    label {
-      margin-bottom: 5px;
-      color: #007bff;
-    }
-
-    input {
-      padding: 8px;
-      margin-bottom: 15px;
-      width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      margin-bottom: 10px;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    li span {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    li button {
-      background-color: #dc3545;
-      color: #fff;
-      border: none;
-      padding: 8px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    li button:hover {
-      background-color: #c82333;
-    }
+    /* CSS code here */
   </style>
 </head>
 <body>
   <header>
-    <h1>Goal Tracker</h1>
+    <h1>Quiz App</h1>
   </header>
 
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About Us</a>
     <a href="#contact">Contact</a>
-    <a href="#goals">Goals</a>
+    <a href="#quiz">Quiz</a>
   </nav>
 
   <section id="home">
-    <!-- Form for creating goals -->
-    <form id="goalForm">
-      <label for="goalId">Goal ID:</label>
-      <input type="number" id="goalId" required />
-      <label for="goalName">Goal Name:</label>
-      <input type="text" id="goalName" required />
-      <!-- Button to trigger the createGoal function -->
-      <button type="button" onclick="createGoal()">Create Goal</button>
+    <!-- Form for user registration -->
+    <form id="registerForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required />
+      <label for="password">Password:</label>
+      <input type="password" id="password" required />
+      <button type="button" onclick="register()">Register</button>
     </form>
 
-    <!-- List to display goals -->
-    <ul id="goalList"></ul>
+    <!-- Form for user login -->
+    <form id="loginForm">
+      <label for="loginUsername">Username:</label>
+      <input type="text" id="loginUsername" required />
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" required />
+      <button type="button" onclick="login()">Login</button>
+    </form>
   </section>
 
   <!-- About Us Section -->
   <section id="about">
     <h2>About Us</h2>
-    <p>Welcome to Goal Tracker, powered by Startright - Your AI full-stack website code generation tool.</p>
+    <p>Welcome to Quiz App, powered by Startright - Your AI full-stack website code generation tool.</p>
     <p>Startright simplifies the process of building robust web applications. With just one instance, we generate a full-stack boilerplate tailored to your needs.</p>
     <p>Explore the power of AI-driven development and streamline your projects with Startright.</p>
   </section>
@@ -165,88 +56,28 @@
     <p>Phone: +1 (123) 456-7890</p>
   </section>
 
+  <!-- Quiz Section -->
+  <section id="quiz">
+    <!-- Form for creating questions -->
+    <form id="questionForm">
+      <label for="questionId">Question ID:</label>
+      <input type="number" id="questionId" required />
+      <label for="question">Question:</label>
+      <input type="text" id="question" required />
+      <label for="options">Options:</label>
+      <input type="text" id="options" required />
+      <label for="answer">Answer:</label>
+      <input type="text" id="answer" required />
+      <button type="button" onclick="createQuestion()">Create Question</button>
+    </form>
+
+    <!-- List to display questions -->
+    <ul id="questionList"></ul>
+  </section>
+
   <!-- JavaScript code to interact with the backend -->
   <script>
-    // Event listener for when the page is loaded
-    document.addEventListener("DOMContentLoaded", function () {
-      // Load goals when the page is loaded
-      loadGoals();
-    });
-
-    // Function to fetch and display goals from the backend
-    async function loadGoals() {
-      try {
-        const response = await fetch("/api/v1/goals");
-        const goals = await response.json();
-
-        const goalList = document.getElementById("goalList");
-        goalList.innerHTML = "";
-
-        // Loop through goals and create list items
-        goals.forEach((goal) => {
-          const li = document.createElement("li");
-          li.innerHTML = `<span>ID: ${goal.id}, Name: ${goal.name}</span> <button onclick="deleteGoal(${goal.id})">Delete</button>`;
-          goalList.appendChild(li);
-        });
-      } catch (error) {
-        // Handle errors if any occur during fetching
-        console.error("Error fetching goals:", error);
-      }
-    }
-
-    // Function to create a new goal
-    async function createGoal() {
-      const goalId = document.getElementById("goalId").value;
-      const goalName = document.getElementById("goalName").value;
-
-      try {
-        const response = await fetch("/api/v1/goals", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json", // Include Accept header for CORS
-          },
-          body: JSON.stringify({
-            id: parseInt(goalId),
-            name: goalName,
-            completed: false,
-          }),
-        });
-
-        if (response.ok) {
-          // Reload goals and reset input values if successful
-          loadGoals();
-          document.getElementById("goalId").value = "";
-          document.getElementById("goalName").value = "";
-        } else {
-          // Handle errors if goal creation fails
-          console.error("Failed to create goal:", response.statusText);
-        }
-      } catch (error) {
-        // Handle errors if any occur during the process
-        console.error("Error creating goal:", error);
-      }
-    }
-
-    // Function to delete a goal
-    async function deleteGoal(id) {
-      try {
-        const response = await fetch(`/api/v1/goals/${id}`, {
-          method: "DELETE",
-        });
-
-        if (response.ok) {
-          // Reload goals if deletion is successful
-          loadGoals();
-        } else {
-          // Handle errors if goal deletion fails
-          console.error("Failed to delete goal:", response.statusText);
-        }
-      } catch (error) {
-        // Handle errors if any occur during the process
-        console.error("Error deleting goal:", error);
-      }
-    }
+    // JavaScript code here
   </script>
 </body>
 </html>
