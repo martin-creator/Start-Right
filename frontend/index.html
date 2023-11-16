@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Goal Tracker</title>
   <style>
-    /* CSS code remains the same */
+    /* CSS code here */
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #495057;
+    }
+
+    header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #343a40;
+      overflow: hidden;
+    }
+
+    nav a {
+      float: left;
+      display: block;
+      color: #fff;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background-color: #ddd;
+      color: #333;
+    }
+
+    h1, h2 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    section {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-bottom: 5px;
+      color: #007bff;
+    }
+
+    input {
+      padding: 8px;
+      margin-bottom: 15px;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    li span {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    li button {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    li button:hover {
+      background-color: #c82333;
+    }
   </style>
 </head>
 <body>
@@ -63,7 +177,7 @@
     // Function to fetch and display goals from the backend
     async function loadGoals() {
       try {
-        const response = await fetch("http://localhost:8080/api/v1/goals");
+        const response = await fetch("/api/v1/goals");
         const goals = await response.json();
 
         const goalList = document.getElementById("goalList");
@@ -87,7 +201,7 @@
       const goalName = document.getElementById("goalName").value;
 
       try {
-        const response = await fetch("http://localhost:8080/api/v1/goals", {
+        const response = await fetch("/api/v1/goals", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -118,7 +232,7 @@
     // Function to delete a goal
     async function deleteGoal(id) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/goals/${id}`, {
+        const response = await fetch(`/api/v1/goals/${id}`, {
           method: "DELETE",
         });
 
@@ -137,4 +251,3 @@
   </script>
 </body>
 </html>
-```

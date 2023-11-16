@@ -1,14 +1,14 @@
 use actix_cors::Cors;
-use actix_web::{http::header, web, App, HttpServer, Responder, HttpResponse};
-use serde::{Deserialize, Serialize};
+use actix_web::{ http::header, web, App, HttpServer, Responder, HttpResponse };
+use serde::{ Deserialize, Serialize };
 use reqwest::Client as HttpClient;
 use async_trait::async_trait;
 use actix_files::Files;
+use tokio::time::Duration;
 use std::sync::Mutex;
 use std::collections::HashMap;
 use std::fs;
 use std::io::Write;
-use tokio::time::Duration;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct Goal {
@@ -169,6 +169,7 @@ async fn main() -> std::io::Result<()> {
                 Files::new("/", "frontend/").index_file("index.html")
             )
             .service(
+                
                 web
                     ::scope("/api/v1")
                     .service(
@@ -190,10 +191,10 @@ async fn main() -> std::io::Result<()> {
     })
     .bind("localhost:8080")?
     .run();
-// Spawn a background task to sleep after the server has run for 60 seconds.
-tokio::spawn(async move {
-    tokio::time::sleep(Duration::from_secs(60)).await;
-    println!("Server has run for 60 seconds. Now sleeping.");
-});
-server.await
+    // Spawn a background task to sleep after the server has run for 60 seconds.
+    tokio::spawn(async move {
+        tokio::time::sleep(Duration::from_secs(60)).await;
+        println!("Server has run for 60 seconds. Now sleeping.");
+    });
+    server.await
 }
