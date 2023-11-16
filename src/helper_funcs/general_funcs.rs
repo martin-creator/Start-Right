@@ -143,6 +143,12 @@ pub fn save_react_frontend_code(frontend_path: &String, contents: &String) {
       .expect("Something went wrong saving the file");
   }
 
+// Get existing React Frontend Code
+pub fn read_react_frontend_code_contents(frontend_path: &String) -> String {
+    let path: String = format!("{}{}", REACT_FRONTEND_PATH, frontend_path);
+    fs::read_to_string(path).expect("Something went wrong reading the file")
+  }
+
 
 #[cfg(test)]
 mod tests {
