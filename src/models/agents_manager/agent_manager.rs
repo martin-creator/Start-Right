@@ -70,7 +70,7 @@ impl ManagingAgent {
                 agent.execute(&mut self.factsheet).await;
 
             let agent_info: &BasicAgent = agent.get_attributes_from_agent();
-            dbg!(agent_info);
+            //dbg!(agent_info);
         }
     }
 }

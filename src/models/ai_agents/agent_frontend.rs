@@ -11,8 +11,8 @@ use crate::models::ai_agents::agent_content_traits::{FactSheet,  SpecialFunction
 use async_trait::async_trait;
 // use reqwest::Client;
 use std::process::{Command, Stdio};
-use std::time::Duration;
-use tokio::time;
+// use std::time::Duration;
+// use tokio::time;
 
 #[derive(Debug)]
 pub struct AgentFrontendDeveloper {
@@ -222,7 +222,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                     //     .cloned()
                     //     .collect();
 
-                    // Store API Endpoints
+                    // Store frontend code
                     factsheet.frontend_code = Some(index_html_str.clone());
 
                     // Run backend application
@@ -240,14 +240,14 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                         .spawn()
                         .expect("Failed to run backend application");
 
-                    // Let user know testing on server will take place soon
-                    PrintCommand::UnitTest.print_agent_message(
-                        self.attributes.position.as_str(),
-                        "Backend Code Unit Testing: Launching tests on server in 5 seconds... check http://localhost:8080/ to see your AI generated home page",
-                    );
+                    // // Let user know testing on server will take place soon
+                    // PrintCommand::UnitTest.print_agent_message(
+                    //     self.attributes.position.as_str(),
+                    //     "Backend Code Unit Testing: Launching tests on server in 5 seconds... check http://localhost:8080/ to see your AI generated home page",
+                    // );
 
-                    let seconds_sleep: Duration = Duration::from_secs(5);
-                     time::sleep(seconds_sleep).await;
+                    // let seconds_sleep: Duration = Duration::from_secs(5);
+                    //  time::sleep(seconds_sleep).await;
 
                     // // Check status code
                     // for endpoint in check_endpoints {
@@ -298,7 +298,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
 
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "Frontend  testing complete...",
+                        "Frontend  code saving complete...",
                     );
 
                     run_backend_server
