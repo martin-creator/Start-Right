@@ -5,7 +5,7 @@ use reqwest::Client;
 use serde::de::DeserializeOwned;
 use std::fs;
 
-// Webserve template
+
 pub const CODE_TEMPLATE_PATH: &str = "code_templates/main_websever_template.rs";
 
 pub const INDEX_TEMPLATE_PATH: &str = "code_templates/index_template.html";
@@ -77,6 +77,7 @@ pub async fn ai_task_request_decoded<T: DeserializeOwned>(
 ) -> T {
     let llm_response: String =
         ai_task_request(msg_context, agent_position, agent_operation, function_pass).await;
+    print!("LLM RESPONSE: {}", llm_response);
     let decoded_response: T = serde_json::from_str(llm_response.as_str())
         .expect("Failed to decode ai response from serde_json");
     return decoded_response;

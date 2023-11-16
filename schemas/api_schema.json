@@ -15,13 +15,11 @@
     "is_route_dynamic": "false",
     "method": "get",
     "request_body": "None",
-    "response": [
-      {
-        "id": "number",
-        "name": "string",
-        "completed": "bool"
-      }
-    ]
+    "response": {
+      "id": "number",
+      "name": "string",
+      "completed": "bool"
+    }
   },
   {
     "route": "/api/v1/goals",

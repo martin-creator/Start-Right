@@ -1,10 +1,17 @@
 use actix_cors::Cors;
+
 use actix_web::{ http::header, web, App, HttpServer, Responder, HttpResponse };
+
 use serde::{ Deserialize, Serialize };
+
 use reqwest::Client as HttpClient;
+
 use async_trait::async_trait;
+
 use actix_files::Files;
+
 use tokio::time::Duration;
+
 use std::sync::Mutex;
 use std::collections::HashMap;
 use std::fs;
@@ -166,7 +173,7 @@ async fn main() -> std::io::Result<()> {
             )
             .app_data(data.clone())
             .service(
-                Files::new("/", "frontend_index/").index_file("index.html")
+                Files::new("/", "frontend/").index_file("index.html")
             )
             .service(
                 
