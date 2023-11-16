@@ -71,3 +71,13 @@ pub struct DesignBuildSheet {
   pub brand_colours: Option<Vec<String>>,
   pub build_mode: FrontendBuildMode
 }
+
+
+// React Frontend Developer
+#[derive(Debug)]
+pub struct AgentFrontendDeveloper {
+  pub attributes: BasicAgent,
+  pub buildsheet: DesignBuildSheet,
+  pub bug_count: u8,
+  pub operation_focus: BuildComponent
+}
