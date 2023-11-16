@@ -175,7 +175,7 @@ pub fn print_react_completed_logo_with_brand_name_react_component(_website_speci
 pub fn print_react_header_navigation_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
   /// FUNCTION: Writes the code for a REACT TYPESCRIPT navigation header bar for a frontend website
-  /// OUTPOUT: The navigation header bar includes the following
+  /// OUTPUT: The navigation header bar includes the following
   ///   1 - The existing logo which shows as <Logo />, the logo should have an 'import Logo from "./Logo"' at the top of the component
   ///   2 - Page links based on the pages provided in the specification
   ///   3 - This should be responsive based upon the size of the screen using tailwind css. A small screen should have a burger menu with slider
@@ -198,6 +198,7 @@ pub fn print_react_header_navigation_react_component(_website_specification: &st
   /// DO NOT LEAVE ANY CODE UNFINISHED FOR LATER. CODE EVERYTHING INCLUDING THE SLIDER MENU NOW.
   /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
   /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, @mui/icons-material", react, tailwind]
+  /// IMPORTANT: No commentary or anything else. Just the code.
   println!(OUTPUT)
 }
 
@@ -207,7 +208,7 @@ pub fn print_react_header_navigation_react_component(_website_specification: &st
 pub fn print_react_footer_navigation_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
   /// FUNCTION: Writes only the HTML code for a REACT TYPESCRIPT footer for website
-  /// OUTPOUT: The navigation footer bar includes the following
+  /// OUTPUT: The navigation footer bar includes the following
   ///   1 - Page links based on the pages provided in the specification
   ///   2 - Must be responsive and be a small fixed bar to the bottom of the screen if in mobile view
   ///   3 - Takes in a getter and setter prop called currentPage and setCurrentPage respectively
@@ -227,6 +228,7 @@ pub fn print_react_footer_navigation_react_component(_website_specification: &st
   /// export default Footer
   /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
   /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, @mui/icons-material", react, tailwind]
+  /// IMPORTANT: No commentary or anything else. Just the code.
   println!(OUTPUT)
 }
 
@@ -247,6 +249,8 @@ pub fn print_react_typescript_hook_component(_api_endpoints: &str) {
   ///   setError(e as any);
   ///   ...
   ///  }
+  /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
+  /// IMPORTANT: No commentary or anything else. Just the code.
   println!(OUTPUT)
 }
 
@@ -270,7 +274,7 @@ pub fn print_react_html_webpage_content_with_text(_page_content_spec: &str) {
 
 /// Integration - Create Component Template - API Integration
 #[ai_function]
-pub fn print_create_react_component_with_API_integration(_page_specification: &str) {
+pub fn print_create_react_component_with_api_integration(_page_specification: &str) {
   /// INPUT: Receives API_SPECIFICATION information with API_ROUTES and API_HOOK relevant to page if any
   /// OUTPUT: Converts the input into a full REACT TYPESCRIPT based component including handling the required API requests
   /// and presenting the data in the component render section.
@@ -290,6 +294,7 @@ pub fn print_create_react_component_with_API_integration(_page_specification: &s
   ///   )
   /// }
   /// export default PageName  
+  /// IMPORTANT: No commentary or anything else. Just the code.
   println!(OUTPUT)
 }
 
@@ -312,7 +317,8 @@ pub fn print_create_full_react_component(_page_content_spec: &str) {
   ///     </div>
   ///   )
   /// }
-  /// export default MasterPage    
+  /// export default MasterPage
+  /// IMPORTANT: No commentary or anything else. Just the code.    
   println!(OUTPUT)
 }
 
@@ -328,5 +334,6 @@ pub fn print_react_give_component_fantastic_styling(_page_specification: &str) {
   ///   3. Does NOT use any extrernal libraries that are not included in this list: [axios, @mui/icons-material", react, tailwind]
   /// ERROR HANDLING: All error handling includes "as any" to prevent build errors on type issues
   /// OUTPUT: Just prints the code for the full component. Nothing else. No ``` etc. Just the component code.
+  /// IMPORTANT: No commentary or anything else. Just the code.
   println!(OUTPUT)
 }
