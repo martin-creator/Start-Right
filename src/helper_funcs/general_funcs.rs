@@ -136,6 +136,13 @@ pub fn read_api_json_contents() -> String {
     fs::read_to_string(path).expect("Failed to read api_json template")
 }
 
+// Save React Frontend Code
+pub fn save_react_frontend_code(frontend_path: &String, contents: &String) {
+    let path: String = format!("{}{}", REACT_FRONTEND_PATH, frontend_path);
+    fs::write(path, contents)
+      .expect("Something went wrong saving the file");
+  }
+
 
 #[cfg(test)]
 mod tests {
