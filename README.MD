@@ -114,6 +114,21 @@ Explore the following files/folders to gain insight into the generated code:
 
 - **Expanded Language Model Support:** Integrate additional language models such as Google's Palma, Meta's Llama2, and other open-source products.
 - **AI Language Model Compatibility:** Explore compatibility with more AI language models to enhance the development experience further.
+- **Extended Language Support:**
+  - Add support for Python frameworks like Flask and Django.
+  - Include Node.js with Express for backend development.
+  - Integrate Ruby on Rails for a Ruby-based full-stack experience.
+- **Database Variety:**
+  - Extend database support to PostgreSQL and MongoDB for diverse backend options.
+- **UI & UX Enhancement Agents:**
+  - Implement UI and UX agents to improve the design and user experience of generated applications.
+- **DevOps Integration:**
+  - Include necessary agents for DevOps practices, ensuring seamless integration with popular CI/CD pipelines and deployment tools.
+- **Frontend Frameworks:**
+    - Add support for Vue.js and Angular for frontend development.
+- **Mobile App Support:**
+    - Explore mobile app support for Android and iOS.
+
 
 ## License
 
