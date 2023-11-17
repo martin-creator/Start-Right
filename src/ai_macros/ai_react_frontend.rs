@@ -1,18 +1,28 @@
 use ai_functions::ai_function;
 
 
-/// Fix buggy component code
 #[ai_function]
 pub fn print_react_code_bugs_resolution(_existing_code_and_error: &str) {
-  /// INPUT: Takes in existing code causing build failres along with errors caused by the code
-  /// FUNCTION: Writes the new and imporved React typescript component code with bugs fixed
-  /// NOTES: 
-  ///   1. Functions considers that the code is made of React Typescript.
-  ///   2. Function removes anything which does not belong on the page, like ```typescript for example. Code should start with imports.
-  /// Therefore, it is allowed to use //@ts-ignore if that is the appropriate solution rather than guessing the solution
-  /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else.
-  println!(OUTPUT)
+    /// Fixes buggy React TypeScript component code.
+    /// 
+    /// # Input
+    /// Takes in existing code causing build failures along with errors caused by the code.
+    /// 
+    /// # Function
+    /// Writes the new and improved React TypeScript component code with bugs fixed.
+    /// 
+    /// # Notes
+    /// - Assumes that the code is written in React with TypeScript.
+    /// - Removes anything that does not belong on the page, starting with imports. Allows the use of //@ts-ignore if it is an appropriate solution rather than guessing the solution.
+    /// 
+    /// # Important
+    /// - This function only prints a full React component with completed TypeScript code, nothing else.
+    /// - Prints the code without any backticks at the start of the file.
+    /// - Use only these libraries: [axios, react, tailwindcss, react-dom]. No other external libraries should be used.
+    
+    println!(OUTPUT)
 }
+
 
 
 /// Page Architecture
@@ -164,7 +174,7 @@ pub fn print_react_completed_logo_with_brand_name_react_component(_website_speci
   ///   )
   /// }
   /// export default Logo
-  /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, @mui/icons-material", react, tailwind]
+  /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, react, tailwind]
   /// REMEMBER: This function only prints React Typescript component code. Nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
   println!(OUTPUT)
 }
@@ -174,7 +184,7 @@ pub fn print_react_completed_logo_with_brand_name_react_component(_website_speci
 #[ai_function]
 pub fn print_react_header_navigation_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
-  /// FUNCTION: Writes the code for a REACT TYPESCRIPT navigation header bar for a frontend website
+  /// FUNCTION: Writes the code for a REACT TYPESCRIPT navigation header bar for a frontend website. Code should have types
   /// OUTPUT: The navigation header bar includes the following
   ///   1 - The existing logo which shows as <Logo />, the logo should have an 'import Logo from "./Logo"' at the top of the component
   ///   2 - Page links based on the pages provided in the specification
@@ -196,9 +206,10 @@ pub fn print_react_header_navigation_react_component(_website_specification: &st
   /// }
   /// export default Navigation
   /// DO NOT LEAVE ANY CODE UNFINISHED FOR LATER. CODE EVERYTHING INCLUDING THE SLIDER MENU NOW.
+  /// IMPORTANT: You should use only these libraries: [axios, , react, tailwind css, react DOM], no other external libraries should be used. 
   /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
-  /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, @mui/icons-material", react, tailwind]
-  /// IMPORTANT: No commentary or anything else. Just the code.
+  /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, react, tailwind]
+  /// IMPORTANT: No commentary or anything else. Print just the code. Dont include backticks or any comments on the code.
   println!(OUTPUT)
 }
 
@@ -207,7 +218,7 @@ pub fn print_react_header_navigation_react_component(_website_specification: &st
 #[ai_function]
 pub fn print_react_footer_navigation_react_component(_website_specification: &str) {
   /// INPUT: Takes in a WEBSITE_SPECIFICATION for a websites frontend.
-  /// FUNCTION: Writes only the HTML code for a REACT TYPESCRIPT footer for website
+  /// FUNCTION: Writes only the HTML code for a REACT TYPESCRIPT footer for website. Code should have types
   /// OUTPUT: The navigation footer bar includes the following
   ///   1 - Page links based on the pages provided in the specification
   ///   2 - Must be responsive and be a small fixed bar to the bottom of the screen if in mobile view
@@ -227,7 +238,7 @@ pub fn print_react_footer_navigation_react_component(_website_specification: &st
   /// }
   /// export default Footer
   /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
-  /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, @mui/icons-material", react, tailwind]
+  /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, react, tailwind]
   /// IMPORTANT: No commentary or anything else. Just the code.
   println!(OUTPUT)
 }
@@ -242,7 +253,7 @@ pub fn print_react_typescript_hook_component(_api_endpoints: &str) {
   /// COMPONENT TITLE: The components title is "useCall"
   /// API BASE ROUTE: endpoints are called from http://localhost:8080
   /// IMPORTANT: The component is fully working with typescript annotations types declared for everything or //@ts-ignore if unsure
-  /// IMPORTANT: Does NOT use any extrernal libraries not included in this list: [axios, @mui/icons-material", react, tailwind]
+  /// IMPORTANT: Does NOT use any extrernal libraries not included in this list: [axios, react, tailwind]
   /// FORMAT: Just prints the react typescript component, Nothing else. . Just the code and WITHOUT any backticks at the start of the file ```.
   /// ERROR HANDLING: All error handling includes "as any" to prevent build errors on type issues:
   ///  catch (e) {
@@ -264,7 +275,8 @@ pub fn print_react_html_webpage_content_with_text(_page_content_spec: &str) {
   /// the function then makes up the content for the site.
   /// RULES: 
   ///   1. Provides a lot of content, is not afraid to provide expert level wireframing
-  ///   2. Creates a className for each tag as "className" but only gives it very basic responsive flex tailwind behaviour for wireframing
+  ///   2. Rewrites all existing page content to match PAGE_SPECIFICATION. All styling to be done with valid tailwind css
+  ///   2. Creates a className for each tag as "className" but only gives it very basic responsive flex tailwind CSS behaviour for wireframing. The design must be responsive
   ///   3. Starts the html with <section>Content goes here!</section>. Does not bother to write all boilerplate html code as the content is all that matters
   ///   4. Does not write navigation bar or footer content as this already exists. Only the page content
   /// OUTPUT: Just the raw html code within and including the <section>Content goes here!</section> tags as described.
@@ -282,7 +294,8 @@ pub fn print_create_react_component_with_api_integration(_page_specification: &s
   ///   1. Does not leave anything unfinished, writes ALL the code required to convert the Html into a fully working React Typescript component
   ///   2. useCall hook file is saved in the following directory for import "../../hooks/useCall". So import useCall from "../../hooks/useCall"
   ///   3. ALL relevant API Routes will be used as part of this component
-  ///   4. Does NOT use any extrernal libraries that are not included in this list: [axios, @mui/icons-material", react, tailwind]
+  ///   4. Does NOT use any extrernal libraries that are not included in this list: [axios, react, tailwind]
+  ///   5. Ensures all existing page content to match PAGE_SPECIFICATION. All styling to be done with valid tailwind css  and the design must be presentanble
   /// ERROR HANDLING: All error handling includes "as any" to prevent build errors on type issues:
   ///  catch (e as any) { ...
   /// TEMPLATE:
@@ -305,9 +318,11 @@ pub fn print_create_full_react_component(_page_content_spec: &str) {
   /// INPUT: Receives HTML_CONTENT_WIREFRAME and REACT_TYPESCRYPT_COMPONENT code
   /// OUTPUT: Combines ALL HTML_CONTENT and ALL REACT_TYPESCRYPT_COMPONENT into one MasterPage Component
   /// RULES: 
-  ///   1. Does NOT use any extrernal libraries that are not included in this list: [axios, @mui/icons-material", react, tailwind]
+  ///   1. Does NOT use any extrernal libraries that are not included in this list: [axios, react, tailwind]
   ///   2. Ensures that ALL code will work as a React Typescript component
-  ///   3. Adds basic tailwind css styling and @mui/icons-material icons where relevant
+  ///   3. Adds basic tailwind css styling and icons where relevant
+  ///   4. Ensures that all page content is revelant to the general theme of the website
+  ///   5. The final page  should have a good layout and be presentable. All styling should be done with valid tailwind css
   /// TEMPLATE:
   /// import useCall from "../../hooks/useCall"
   /// function MasterPage() {
@@ -329,9 +344,10 @@ pub fn print_react_give_component_fantastic_styling(_page_specification: &str) {
   /// INPUT: Receives a REACT_COMPONENT
   /// OUTPUT: Significantly upgrades the styling and corrects any bugs of the component
   /// RULES: 
-  ///   1. Significantly improves styling with Tailwind and if relevant @mui/icons-material"
+  ///   1. Significantly improves styling with Tailwind and if relevant to make the page presentable
   ///   2. Leaves nothing to do later or unfinished in the code. This is a polished component. Everything must be great.
-  ///   3. Does NOT use any extrernal libraries that are not included in this list: [axios, @mui/icons-material", react, tailwind]
+  ///   3. Does NOT use any extrernal libraries that are not included in this list: [axios, react, tailwind]
+  ///   4. Ensures that all website content has a common theme and is presentable. All styling should be done with valid tailwind css
   /// ERROR HANDLING: All error handling includes "as any" to prevent build errors on type issues
   /// OUTPUT: Just prints the code for the full component. Nothing else. No ``` etc. Just the component code.
   /// IMPORTANT: No commentary or anything else. Just the code.
