@@ -2,44 +2,66 @@ use ai_functions::ai_function;
 
 #[ai_function]
 pub fn print_frontend_code(_project_description_and_index_template: &str) {
-    /// INPUT: Takes in a PROJECT_DESCRIPTION, INDEX_TEMPLATE and API_JSON Schema file from backend developer to build  website fronted in HTML, CSS and JAVASCRIPT
-    /// IMPORTANT: The INDEX_TEMPLATE is ONLY an example. If the Project Description requires it, make as many changes as you like. Make sure the styling of the code is professional and elegant and makes project.
-    /// IMPORTANT: Make changes to the styling of the code if you like. Make sure the styling of the code is professional and elegant and makes project.
-    /// IMPORTANT: You do not need to follow the frontend code exactly.  Customize the file provided on the frontend to  write  html, css and javacript code that make sense for the users request if required.
-    /// FUNCTION: Takes an existing set of code marked as INDEX_TEMPLATE and updates or re-writes it to work for the purpose in the  API_JSON  and PROJECT_DESCRIPTION
-    /// IMPORTANT: The code should always include CSS , HTML and JAVASCRIPT code. The following libraries are already installed
-    /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION.
-    /// /// IMPORTANT: NO CODE SHOULD BE replaced with placeholder comments. ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
-    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments.
+    /// Takes in a PROJECT_DESCRIPTION, INDEX_TEMPLATE, and API_JSON Schema file from the backend developer to build the website frontend in HTML, CSS, and JavaScript.
+    /// 
+    /// # Important
+    /// - The INDEX_TEMPLATE is provided as an example. Customize it as needed for the project, ensuring professional and elegant styling.
+    /// - Generate new CSS styling for the code if required.
+    /// - The frontend code does not need to be an exact match; customize it to align with the user's request and the API_JSON Schema in the PROJECT_DESCRIPTION.
+    /// 
+    /// # Function
+    /// Takes an existing set of code marked as INDEX_TEMPLATE and updates or re-writes it to align with the API_JSON and PROJECT_DESCRIPTION.
+    /// 
+    /// # Libraries
+    /// The code should include CSS, HTML, and JavaScript. The function assumes that the following libraries are already installed; no other external libraries should be used.
+    /// 
+    /// # Important
+    /// - NO CODE SHOULD BE replaced with placeholder comments; ALL CODE SHOULD BE PRINTED.
+    /// - NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS.
+    /// 
+    /// # Output
+    /// Print ONLY the code, nothing else. This function ONLY prints code; all code should be included in the output, with no commentary or comments.
     println!(OUTPUT)
 }
 
 #[ai_function]
 pub fn print_improved_frontend_code(_project_description_and_index_template: &str) {
-    /// INPUT: Takes in a PROJECT_DESCRIPTION, INDEX_TEMPLATE and API_JSON Schema file from backend developer to build  website fronted in HTML, CSS and JAVASCRIPT
-    /// FUNCTION: Performs the following tasks:
-    ///   1. Removes any bugs in the code and adds minor additional functionality
-    ///   2. Makes sure everything every endpoint provided in the API_JSON schema file is implemnted from a frontend standpoint. If not, add the feature. No code should be implemented later. Everything should be written now.
-    ///   3. ONLY writes the code. No commentary.
-    /// IMPORTANT: The code should always include CSS , HTML and JAVASCRIPT code. The following libraries are already installed
-    /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
-    /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
-    /// No other external libraries should be used. Write HTML, CSS and JAVASCRIPT CODE that  implement the functionality of th API_JSON SCHEMA FILE  and the code should also fit with the description from the PROJECT_DESCRIPTION
-    /// /// IMPORTANT: NO CODE SHOULD BE replaced with placeholder comments. ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
-    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code.  All code should be included in the output. No commentary. No comments.
+    /// Takes in a PROJECT_DESCRIPTION, INDEX_TEMPLATE, and API_JSON Schema file from the backend developer to enhance and build the website frontend in HTML, CSS, and JavaScript.
+    /// 
+    /// # Function
+    /// Performs the following tasks:
+    ///   1. Removes any bugs in the code and adds minor additional functionality.
+    ///   2. Implements every endpoint provided in the API_JSON schema file from a frontend standpoint. Ensure all features are added now; no code should be implemented later.
+    ///   3. ONLY writes the code; no commentary.
+    /// 
+    /// # Important
+    /// - The code should include CSS, HTML, and JavaScript.
+    /// - Only prints out the new and improved code; no commentary or anything else.
+    /// - Ensure that all code is printed; no code should be represented by comments. All code should be represented by strings.
+    /// - NO CODE SHOULD BE replaced with placeholder comments; ALL CODE SHOULD BE PRINTED.
+    /// - NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS.
+    /// 
+    /// # Output
+    /// Print ONLY the code, nothing else. All code should be included in the output, with no commentary or comments.
     println!(OUTPUT)
 }
 
+
 #[ai_function]
 pub fn print_fixed_frontend_code(_frontend_broken_code_with_bugs: &str) {
-    /// INPUT: Takes in broken HTML, CSS and JAVASCRIPT BROKEN_CODE and the ERROR_BUGS found
-    /// FUNCTION: Removes bugs from code
-    /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
-    /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
-    /// IMPORTANT: NO CODE SHOULD BE replaced with placeholder comments. ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
-    /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code. All code should be included in the output. No commentary. No comments. HTML, CSS, JAVASCRIPT code should be included.
+    /// Takes in broken HTML, CSS, and JavaScript BROKEN_CODE along with identified ERROR_BUGS and removes the bugs from the code.
+    /// 
+    /// # Important
+    /// - Only prints out the new and improved code; no commentary or anything else.
+    /// - Ensure that all code is printed; no code should be represented by comments. All code should be represented by strings.
+    /// - NO CODE SHOULD BE replaced with placeholder comments; ALL CODE SHOULD BE PRINTED.
+    /// - NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS.
+    /// 
+    /// # Output
+    /// Print ONLY the code, nothing else. This function ONLY prints code, including HTML, CSS, and JavaScript code. All code should be included in the output, with no commentary or comments.
     println!(OUTPUT)
 }
+
 
 #[ai_function]
 pub fn print_index_html_file(_frontend_code_input: &str) {
@@ -53,7 +75,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// IMPORTANT: NO CODE SHOULD BE PRINTED AS COMMENTS. ALL CODE SHOULD BE PRINTED AS STRINGS
     /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// IMPORTANT: ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
-    /// EXAMPLE:
+    /// IMPORTANT: No incomplete code should be printed. All code should be complete and ready to be used.
     /// INPUT_CODE:
     /// ...
     /// <html>
