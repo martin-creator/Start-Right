@@ -11,54 +11,52 @@ use std::fs;
 use std::io::Write;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-struct Question {
+struct Meeting {
     id: u64,
-    question: String,
-    options: Vec<String>,
-    answer: String
+    name: String,
+    completed: bool
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct User {
     id: u64,
     username: String,
-    password: String,
-    score: u64
+    password: String
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct Database {
-    questions: HashMap<u64, Question>,
+    meetings: HashMap<u64, Meeting>,
     users: HashMap<u64, User>
 }
 
 impl Database {
     fn new() -> Self {
         Self {
-            questions: HashMap::new(),
+            meetings: HashMap::new(),
             users: HashMap::new()
         }
     }
 
     // CRUD DATA
-    fn insert_question(&mut self, question: Question) {
-        self.questions.insert(question.id, question);
+    fn insert(&mut self, meeting: Meeting) {
+        self.meetings.insert(meeting.id, meeting);
     }
 
-    fn get_question(&self, id: &u64) -> Option<&Question> {
-        self.questions.get(id)
+    fn get(&self, id: &u64) -> Option<&Meeting> {
+        self.meetings.get(id)
     }
 
-    fn get_all_questions(&self) -> Vec<&Question> {
-        self.questions.values().collect()
+    fn get_all(&self) -> Vec<&Meeting> {
+        self.meetings.values().collect()
     }
 
-    fn delete_question(&mut self, id: &u64) {
-        self.questions.remove(id);
+    fn delete(&mut self, id: &u64) {
+        self.meetings.remove(id);
     }
 
-    fn update_question(&mut self, question: Question) {
-        self.questions.insert(question.id, question);
+    fn update(&mut self, meeting: Meeting) {
+        self.meetings.insert(meeting.id, meeting);
     }
 
     // USER DATA RELATED FUNCTIONS
@@ -68,12 +66,6 @@ impl Database {
 
     fn get_user_by_name(&self, username: &str) -> Option<&User> {
         self.users.values().find(|u| u.username == username)
-    }
-
-    fn update_user_score(&mut self, username: &str, score: u64) {
-        if let Some(user) = self.users.values_mut().find(|u| u.username == username) {
-            user.score = score;
-        }
     }
 
     // DATABASE SAVING
@@ -95,37 +87,37 @@ struct AppState {
     db: Mutex<Database>
 }
 
-async fn create_question(app_state: web::Data<AppState>, question: web::Json<Question>) -> impl Responder {
+async fn create_meeting(app_state: web::Data<AppState>, meeting: web::Json<Meeting>) -> impl Responder {
     let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.insert_question(question.into_inner());
+    db.insert(meeting.into_inner());
     let _ = db.save_to_file();
     HttpResponse::Ok().finish()
 }
 
-async fn read_question(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
+async fn read_meeting(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
     let db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    match db.get_question(&id.into_inner()) {
-        Some(question) => HttpResponse::Ok().json(question),
+    match db.get(&id.into_inner()) {
+        Some(meeting) => HttpResponse::Ok().json(meeting),
         None => HttpResponse::NotFound().finish()
     }
 }
 
-async fn read_all_questions(app_state: web::Data<AppState>) -> impl Responder {
+async fn read_all_meetings(app_state: web::Data<AppState>) -> impl Responder {
     let db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    let questions = db.get_all_questions();
-    HttpResponse::Ok().json(questions)
+    let meetings = db.get_all();
+    HttpResponse::Ok().json(meetings)
 }
 
-async fn update_question(app_state: web::Data<AppState>, question: web::Json<Question>) -> impl Responder {
+async fn update_meeting(app_state: web::Data<AppState>, meeting: web::Json<Meeting>) -> impl Responder {
     let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.update_question(question.into_inner());
+    db.update(meeting.into_inner());
     let _ = db.save_to_file();
     HttpResponse::Ok().finish()
 }
 
-async fn delete_question(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
+async fn delete_meeting(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
     let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.delete_question(&id.into_inner());
+    db.delete(&id.into_inner());
     let _ = db.save_to_file();
     HttpResponse::Ok().finish()
 }
@@ -145,13 +137,6 @@ async fn login(app_state: web::Data<AppState>, user: web::Json<User>) -> impl Re
         },
         _ => HttpResponse::BadRequest().body("Invalid username or password")
     }
-}
-
-async fn update_score(app_state: web::Data<AppState>, username: web::Path<String>, score: web::Path<u64>) -> impl Responder {
-    let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.update_user_score(&username.into_inner(), score.into_inner());
-    let _ = db.save_to_file();
-    HttpResponse::Ok().finish()
 }
 
 #[actix_web::main]
@@ -189,20 +174,19 @@ async fn main() -> std::io::Result<()> {
                     ::scope("/api/v1")
                     .service(
                         web
-                            ::resource("/questions")
-                            .route(web::post().to(create_question))
-                            .route(web::get().to(read_all_questions))
-                            .route(web::put().to(update_question))
+                            ::resource("/meetings")
+                            .route(web::post().to(create_meeting))
+                            .route(web::get().to(read_all_meetings))
+                            .route(web::put().to(update_meeting))
                     )
                     .service(
                         web
-                            ::resource("/questions/{id}")
-                            .route(web::get().to(read_question))
-                            .route(web::delete().to(delete_question))
+                            ::resource("/meetings/{id}")
+                            .route(web::get().to(read_meeting))
+                            .route(web::delete().to(delete_meeting))
                     )
                     .service(web::resource("/auth/register").route(web::post().to(register)))
                     .service(web::resource("/auth/login").route(web::post().to(login)))
-                    .service(web::resource("/users/{username}/score/{score}").route(web::put().to(update_score)))
             )
     })
     .bind("localhost:8080")?

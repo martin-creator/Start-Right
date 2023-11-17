@@ -3,52 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz App</title>
+  <title>Meeting Manager</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-gray-100 text-gray-800">
 
   <header class="bg-blue-500 text-white py-4 text-center">
-    <h1 class="text-2xl font-bold">Quiz App</h1>
+    <h1 class="text-2xl font-bold">Meeting Manager</h1>
   </header>
 
   <nav class="bg-gray-800 text-white">
     <a href="#home" class="block py-2 px-4 hover:bg-gray-700">Home</a>
     <a href="#about" class="block py-2 px-4 hover:bg-gray-700">About Us</a>
     <a href="#contact" class="block py-2 px-4 hover:bg-gray-700">Contact</a>
-    <a href="#quiz" class="block py-2 px-4 hover:bg-gray-700">Quiz</a>
+    <a href="#meetings" class="block py-2 px-4 hover:bg-gray-700">Meetings</a>
   </nav>
 
   <section id="home" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
 
-    <!-- Form for creating questions -->
-    <form id="questionForm" class="flex flex-col items-center mb-4">
-      <label for="questionId" class="mb-2 text-blue-500">Question ID:</label>
-      <input type="number" id="questionId" class="p-2 mb-4 w-64 border rounded-md" required />
+    <!-- Form for creating meetings -->
+    <form id="meetingForm" class="flex flex-col items-center mb-4">
+      <label for="meetingId" class="mb-2 text-blue-500">Meeting ID:</label>
+      <input type="number" id="meetingId" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="questionName" class="mb-2 text-blue-500">Question:</label>
-      <input type="text" id="questionName" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="meetingName" class="mb-2 text-blue-500">Meeting Name:</label>
+      <input type="text" id="meetingName" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="options" class="mb-2 text-blue-500">Options:</label>
-      <input type="text" id="options" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="completed" class="mb-2 text-blue-500">Completed:</label>
+      <input type="checkbox" id="completed" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="answer" class="mb-2 text-blue-500">Answer:</label>
-      <input type="text" id="answer" class="p-2 mb-4 w-64 border rounded-md" required />
-
-      <!-- Button to trigger the createQuestion function -->
-      <button type="button" onclick="createQuestion()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
-        Create Question
+      <!-- Button to trigger the createMeeting function -->
+      <button type="button" onclick="createMeeting()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
+        Create Meeting
       </button>
     </form>
 
-    <!-- List to display questions -->
-    <ul id="questionList" class="list-none"></ul>
+    <!-- List to display meetings -->
+    <ul id="meetingList" class="list-none"></ul>
   </section>
 
   <!-- About Us Section -->
   <section id="about" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
     <h2 class="text-2xl text-blue-500 mb-4">About Us</h2>
-    <p>Welcome to Quiz App, powered by Startright - Your AI full-stack website code generation tool.</p>
+    <p>Welcome to Meeting Manager, powered by Startright - Your AI full-stack website code generation tool.</p>
     <p>Startright simplifies the process of building robust web applications. With just one instance, we generate a full-stack boilerplate tailored to your needs.</p>
     <p>Explore the power of AI-driven development and streamline your projects with Startright.</p>
   </section>
@@ -65,87 +62,84 @@
   <script>
     // Event listener for when the page is loaded
     document.addEventListener("DOMContentLoaded", function () {
-      // Load questions when the page is loaded
-      loadQuestions();
+      // Load meetings when the page is loaded
+      loadMeetings();
     });
 
-    // Function to fetch and display questions from the backend
-    async function loadQuestions() {
+    // Function to fetch and display meetings from the backend
+    async function loadMeetings() {
       try {
-        const response = await fetch("/api/v1/questions");
-        const questions = await response.json();
+        const response = await fetch("/api/v1/meetings");
+        const meetings = await response.json();
 
-        const questionList = document.getElementById("questionList");
-        questionList.innerHTML = "";
+        const meetingList = document.getElementById("meetingList");
+        meetingList.innerHTML = "";
 
-        // Loop through questions and create list items
-        questions.forEach((question) => {
+        // Loop through meetings and create list items
+        meetings.forEach((meeting) => {
           const li = document.createElement("li");
-          li.innerHTML = `<span class="font-bold">ID: ${question.id}, Question: ${question.question}, Options: ${question.options}, Answer: ${question.answer}</span> <button onclick="deleteQuestion(${question.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
-          questionList.appendChild(li);
+          li.innerHTML = `<span class="font-bold">ID: ${meeting.id}, Meeting Name: ${meeting.name}, Completed: ${meeting.completed}</span> <button onclick="deleteMeeting(${meeting.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
+          meetingList.appendChild(li);
         });
       } catch (error) {
         // Handle errors if any occur during fetching
-        console.error("Error fetching questions:", error);
+        console.error("Error fetching meetings:", error);
       }
     }
 
-    // Function to create a new question
-    async function createQuestion() {
-      const questionId = document.getElementById("questionId").value;
-      const questionName = document.getElementById("questionName").value;
-      const options = document.getElementById("options").value.split(",");
-      const answer = document.getElementById("answer").value;
+    // Function to create a new meeting
+    async function createMeeting() {
+      const meetingId = document.getElementById("meetingId").value;
+      const meetingName = document.getElementById("meetingName").value;
+      const completed = document.getElementById("completed").checked;
 
       try {
-        const response = await fetch("/api/v1/questions", {
+        const response = await fetch("/api/v1/meetings", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json", // Include Accept header for CORS
           },
           body: JSON.stringify({
-            id: parseInt(questionId),
-            question: questionName,
-            options: options,
-            answer: answer,
+            id: parseInt(meetingId),
+            name: meetingName,
+            completed: completed,
           }),
         });
 
         if (response.ok) {
-          // Reload questions and reset input values if successful
-          loadQuestions();
-          document.getElementById("questionId").value = "";
-          document.getElementById("questionName").value = "";
-          document.getElementById("options").value = "";
-          document.getElementById("answer").value = "";
+          // Reload meetings and reset input values if successful
+          loadMeetings();
+          document.getElementById("meetingId").value = "";
+          document.getElementById("meetingName").value = "";
+          document.getElementById("completed").checked = false;
         } else {
-          // Handle errors if question creation fails
-          console.error("Failed to create question:", response.statusText);
+          // Handle errors if meeting creation fails
+          console.error("Failed to create meeting:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during question creation
-        console.error("Error creating question:", error);
+        // Handle errors if any occur during meeting creation
+        console.error("Error creating meeting:", error);
       }
     }
 
-    // Function to delete a question
-    async function deleteQuestion(questionId) {
+    // Function to delete a meeting
+    async function deleteMeeting(meetingId) {
       try {
-        const response = await fetch(`/api/v1/questions/${questionId}`, {
+        const response = await fetch(`/api/v1/meetings/${meetingId}`, {
           method: "DELETE",
         });
 
         if (response.ok) {
-          // Reload questions if deletion is successful
-          loadQuestions();
+          // Reload meetings if deletion is successful
+          loadMeetings();
         } else {
-          // Handle errors if question deletion fails
-          console.error("Failed to delete question:", response.statusText);
+          // Handle errors if meeting deletion fails
+          console.error("Failed to delete meeting:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during question deletion
-        console.error("Error deleting question:", error);
+        // Handle errors if any occur during meeting deletion
+        console.error("Error deleting meeting:", error);
       }
     }
   </script>

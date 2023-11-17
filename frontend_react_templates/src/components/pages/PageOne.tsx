@@ -31,51 +31,32 @@ function MasterPage() {
   };
 
   return (
-    <div className="w-full">
-      <section>
-        <div className="px-4 py-12 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-center text-white font-bold">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl">
-            Catchy title: Track your fitness progress like never before!
-          </h1>
-          <h2 className="mt-4 text-2xl md:text-4xl lg:text-5xl">
-            Subtitle: Our state-of-the-art platform offers all the tools you
-            need to reach your goals.
-          </h2>
+    <div className="w-full h-full bg-gray-100">
+      <section className="flex flex-col items-center justify-center py-10">
+        <div className="banner_section flex flex-col items-center justify-center mb-10">
+          <h1 className="text-4xl font-bold text-blue-700">Welcome to Our Website</h1>
+          <p className="text-lg text-gray-600">This is a platform where you can manage your meetings and accounts efficiently.</p>
         </div>
-        <div className="px-4 py-12 bg-gray-200 text-center text-black font-semibold">
-          <p className="text-lg md:text-xl lg:text-2xl mb-6">
-            Don't miss your chance to join our growing community and achieve
-            your fitness dreams! Sign up today and take the first step towards a
-            healthier you.
-          </p>
-          <button className="rounded-full py-2 px-6 text-white bg-purple-600 hover:bg-purple-700 focus:outline-none">
-            Sign up now
-          </button>
+        <div className="login_section flex flex-col items-center justify-center mb-10">
+          <h2 className="text-3xl font-bold text-blue-700">Log In</h2>
+          <form className="flex flex-col items-center">
+            <input type="text" placeholder="Username" className="my-2 p-2 border rounded w-64"/>
+            <input type="password" placeholder="Password" className="my-2 p-2 border rounded w-64"/>
+            <button type="submit" className="my-2 p-2 border rounded bg-blue-500 text-white w-64">Log In</button>
+          </form>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 py-12">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold">
-              Comprehensive progress tracking
-            </h3>
-            <p className="text-lg mt-4">
-              Monitor your workouts, nutrition, and more to ensure you stay on
-              track with your fitness journey.
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl font-bold">Personalized workout plans</h3>
-            <p className="text-lg mt-4">
-              Customize your training routine based on your goals, preferences,
-              and fitness level.
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl font-bold">Nutritional guidance</h3>
-            <p className="text-lg mt-4">
-              Detailed meal plans and grocery lists to fuel your body and
-              maximize your results.
-            </p>
-          </div>
+        <div className="meeting_overview_section flex flex-col items-center justify-center mb-10">
+          <h2 className="text-3xl font-bold text-blue-700">Recent Meetings</h2>
+          <p className="text-lg text-gray-600">Here you can see an overview of your most recent meetings.</p>
+        </div>
+        <div className="register_section flex flex-col items-center justify-center">
+          <h2 className="text-3xl font-bold text-blue-700">Register</h2>
+          <form className="flex flex-col items-center">
+            <input type="text" placeholder="Username" className="my-2 p-2 border rounded w-64"/>
+            <input type="email" placeholder="Email" className="my-2 p-2 border rounded w-64"/>
+            <input type="password" placeholder="Password" className="my-2 p-2 border rounded w-64"/>
+            <button type="submit" className="my-2 p-2 border rounded bg-blue-500 text-white w-64">Register</button>
+          </form>
         </div>
       </section>
     </div>

@@ -2,84 +2,78 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
 
-function PageName() {
-  const [questions, setQuestions] = useState([]);
-  const [question, setQuestion] = useState(null);
+function MasterPage() {
+  const [meetings, setMeetings] = useState([]);
+  const [meeting, setMeeting] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchQuestions = async () => {
+  const fetchMeetings = async () => {
     try {
-      const response:any = await axios.get('/api/v1/questions');
-      setQuestions(response.data);
+      const response:any = await axios.get('/api/v1/meetings');
+      setMeetings(response.data);
     } catch (e:any) {
       setError(e.message);
     }
   };
 
-  const fetchQuestion = async (id:any) => {
+  const fetchMeeting = async (id:any) => {
     try {
-      const response:any = await axios.get(`/api/v1/questions/${id}`);
-      setQuestion(response.data);
+      const response:any = await axios.get(`/api/v1/meetings/${id}`);
+      setMeeting(response.data);
     } catch (e:any) {
       setError(e.message);
     }
   };
 
-  const createQuestion = async (questionData:any) => {
+  const createMeeting = async (meetingData:any) => {
     try {
-      await axios.post('/api/v1/questions', questionData);
-      fetchQuestions();
+      await axios.post('/api/v1/meetings', meetingData);
+      fetchMeetings();
     } catch (e:any) {
       setError(e.message);
     }
   };
 
-  const updateQuestion = async (id:any, questionData:any) => {
+  const updateMeeting = async (id:any, meetingData:any) => {
     try {
-      await axios.put(`/api/v1/questions/${id}`, questionData);
-      fetchQuestions();
+      await axios.put(`/api/v1/meetings/${id}`, meetingData);
+      fetchMeetings();
     } catch (e:any) {
       setError(e.message);
     }
   };
 
-  const deleteQuestion = async (id:any) => {
+  const deleteMeeting = async (id:any) => {
     try {
-      await axios.delete(`/api/v1/questions/${id}`);
-      fetchQuestions();
+      await axios.delete(`/api/v1/meetings/${id}`);
+      fetchMeetings();
     } catch (e) {
       setError(e.message);
     }
   };
 
   useEffect(() => {
-    fetchQuestions();
+    fetchMeetings();
   }, []);
 
   return (
-    <div className="font-sans text-gray-900 antialiased">
-      <section className="flex flex-col items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-        <div className="progress_section flex flex-col items-center justify-center text-center">
-            <h2 className="text-2xl font-extrabold text-gray-900">Your Progress</h2>
-            <p className="mt-2 text-sm text-gray-600">You are currently on question 5 of 10.</p>
+    <div className="w-full h-full bg-gray-100">
+      <section className="flex flex-col items-center justify-center p-4">
+        <div className="meeting_details_section flex flex-col items-center justify-center p-4 bg-white shadow-lg rounded-lg w-3/4">
+            <h1 className="text-2xl font-bold text-blue-600">Meeting Details</h1>
+            <p className="text-lg text-gray-600">Here you can find all the details about the specific meeting, including its name and whether it has been completed.</p>
         </div>
-        <div className="question_section flex flex-col items-center justify-center text-center mt-8">
-            <h2 className="text-2xl font-extrabold text-gray-900">Current Question</h2>
-            <p className="mt-2 text-sm text-gray-600">What is the capital of France?</p>
-            <div className="answers flex flex-col items-center justify-center mt-4">
-                <button className="answer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">A. Paris</button>
-                <button className="answer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">B. London</button>
-                <button className="answer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">C. Rome</button>
-                <button className="answer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">D. Madrid</button>
-            </div>
+        <div className="update_meeting_section flex flex-col items-center justify-center p-4 bg-white shadow-lg rounded-lg w-3/4 mt-4">
+            <h1 className="text-2xl font-bold text-blue-600">Update Meeting</h1>
+            <p className="text-lg text-gray-600">In this section, you can update the details of the meeting as per your requirements.</p>
         </div>
-        <div className="score_section flex flex-col items-center justify-center text-center mt-8">
-            <h2 className="text-2xl font-extrabold text-gray-900">Your Score</h2>
-            <p className="mt-2 text-sm text-gray-600">You have correctly answered 3 out of 4 questions so far.</p>
+        <div className="delete_meeting_section flex flex-col items-center justify-center p-4 bg-white shadow-lg rounded-lg w-3/4 mt-4">
+            <h1 className="text-2xl font-bold text-blue-600">Delete Meeting</h1>
+            <p className="text-lg text-gray-600">If you no longer need the meeting, you can delete it in this section.</p>
         </div>
       </section>
     </div>
   );
 }
 
-export default PageName;
+export default MasterPage;
