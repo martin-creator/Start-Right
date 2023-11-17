@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-// import { Home, FitnessCenter, RestaurantMenu } from "@mui/icons-material";
 import "tailwindcss/tailwind.css";
 
 function MasterPage() {
@@ -77,6 +76,47 @@ function MasterPage() {
               maximize your results.
             </p>
           </div>
+        </div>
+      </section>
+      <section className="banner_section flex justify-center items-center text-center">
+        <h1 className="text-4xl font-bold">Welcome to our Quiz!</h1>
+        <p className="text-xl">Test your knowledge and challenge your friends.</p>
+      </section>
+
+      <section className="login_section flex justify-center items-center text-center">
+        <div className="login_form">
+          <h2 className="text-2xl font-bold">Login</h2>
+          <form>
+            <input type="text" className="input_field" placeholder="Username" />
+            <input type="password" className="input_field" placeholder="Password" />
+            <button type="submit" className="submit_button">Login</button>
+          </form>
+        </div>
+        <div className="register_form">
+          <h2 className="text-2xl font-bold">Register</h2>
+          <form>
+            <input type="text" className="input_field" placeholder="Username" />
+            <input type="password" className="input_field" placeholder="Password" />
+            <button type="submit" className="submit_button">Register</button>
+          </form>
+        </div>
+      </section>
+
+      <section className="quiz_preview_section flex justify-center items-center text-center">
+        <h2 className="text-2xl font-bold">Quiz Preview</h2>
+        <div className="quiz_question">
+          <p className="question_text">What is the capital of France?</p>
+          <button className="answer_button">Paris</button>
+          <button className="answer_button">London</button>
+          <button className="answer_button">Berlin</button>
+          <button className="answer_button">Madrid</button>
+        </div>
+        <div className="quiz_question">
+          <p className="question_text">Who wrote 'To Kill a Mockingbird'?</p>
+          <button className="answer_button">Harper Lee</button>
+          <button className="answer_button">J.K. Rowling</button>
+          <button className="answer_button">George Orwell</button>
+          <button className="answer_button">Ernest Hemingway</button>
         </div>
       </section>
     </div>

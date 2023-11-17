@@ -1,147 +1,120 @@
-import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-type ForexPricePostRequest = {
+interface QuestionRequestBody {
   id: number;
-  name: string;
-  value: number;
-};
+  question: string;
+  options: string[];
+  answer: string;
+}
 
-type ForexPriceGetResponse = {
+interface QuestionResponse {
   id: number;
-  name: string;
-  value: number;
-}[];
+  question: string;
+  options: string[];
+  answer: string;
+}
 
-type ForexPriceGetByIdResponse = {
-  id: number;
-  name: string;
-  value: number;
-};
-
-type ForexPricePutRequest = {
-  id: number;
-  name: string;
-  value: number;
-};
-
-type RegisterRequest = {
+interface RegisterRequestBody {
   id: number;
   username: string;
   password: string;
-};
+  score: number;
+}
 
-type LoginRequest = {
-  id: number;
+interface LoginRequestBody {
   username: string;
   password: string;
-};
+}
 
-type UseCallReturn = {
-  postForexPrice: (requestBody: ForexPricePostRequest) => Promise<void>;
-  getAllForexPrices: () => Promise<ForexPriceGetResponse>;
-  getForexPriceById: (id: number) => Promise<ForexPriceGetByIdResponse>;
-  updateForexPrice: (
-    id: number,
-    requestBody: ForexPricePutRequest
-  ) => Promise<void>;
-  register: (requestBody: RegisterRequest) => Promise<void>;
-  login: (requestBody: LoginRequest) => Promise<void>;
-  loading: boolean;
-  error: any;
-};
-
-export const useCall = (): UseCallReturn => {
-  const [loading, setLoading] = useState(false);
+const useCall = () => {
+  const [data, setData] = useState<any>(null);
   const [error, setError] = useState<any>(null);
 
-  const postForexPrice = async (
-    requestBody: ForexPricePostRequest
-  ): Promise<void> => {
-    setLoading(true);
+  const postQuestion = async (body: QuestionRequestBody) => {
     try {
-      await axios.post("http://localhost:8080/forex_price", requestBody);
-      setLoading(false);
+      const response = await axios.post('http://localhost:8080/api/v1/questions', body);
+      setData(response.data);
     } catch (e) {
       setError(e as any);
-      setLoading(false);
     }
   };
 
-  const getAllForexPrices = async (): Promise<ForexPriceGetResponse> => {
-    setLoading(true);
+  const getQuestions = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/forex_price");
-      setLoading(false);
-      return response.data as ForexPriceGetResponse;
+      const response = await axios.get('http://localhost:8080/api/v1/questions');
+      setData(response.data as QuestionResponse[]);
     } catch (e) {
       setError(e as any);
-      setLoading(false);
-      return [];
     }
   };
 
-  const getForexPriceById = async (
-    id: number
-  ): Promise<ForexPriceGetByIdResponse> => {
-    setLoading(true);
+  const putQuestion = async (body: QuestionRequestBody) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/forex_price/${id}`
-      );
-      setLoading(false);
-      return response.data as ForexPriceGetByIdResponse;
+      const response = await axios.put('http://localhost:8080/api/v1/questions', body);
+      setData(response.data);
     } catch (e) {
       setError(e as any);
-      setLoading(false);
-      return {} as ForexPriceGetByIdResponse;
     }
   };
 
-  const updateForexPrice = async (
-    id: number,
-    requestBody: ForexPricePutRequest
-  ): Promise<void> => {
-    setLoading(true);
+  const getQuestionById = async (id: number) => {
     try {
-      await axios.put(`http://localhost:8080/forex_price/${id}`, requestBody);
-      setLoading(false);
+      const response = await axios.get(`http://localhost:8080/api/v1/questions/${id}`);
+      setData(response.data as QuestionResponse);
     } catch (e) {
       setError(e as any);
-      setLoading(false);
     }
   };
 
-  const register = async (requestBody: RegisterRequest): Promise<void> => {
-    setLoading(true);
+  const deleteQuestionById = async (id: number) => {
     try {
-      await axios.post("http://localhost:8080/register", requestBody);
-      setLoading(false);
+      const response = await axios.delete(`http://localhost:8080/api/v1/questions/${id}`);
+      setData(response.data);
     } catch (e) {
       setError(e as any);
-      setLoading(false);
     }
   };
 
-  const login = async (requestBody: LoginRequest): Promise<void> => {
-    setLoading(true);
+  const register = async (body: RegisterRequestBody) => {
     try {
-      await axios.post("http://localhost:8080/login", requestBody);
-      setLoading(false);
+      const response = await axios.post('http://localhost:8080/auth/register', body);
+      setData(response.data);
     } catch (e) {
       setError(e as any);
-      setLoading(false);
+    }
+  };
+
+  const login = async (body: LoginRequestBody) => {
+    try {
+      const response = await axios.post('http://localhost:8080/auth/login', body);
+      setData(response.data);
+    } catch (e) {
+      setError(e as any);
+    }
+  };
+
+  const updateScore = async (username: string, score: number) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/users/${username}/score/${score}`);
+      setData(response.data);
+    } catch (e) {
+      setError(e as any);
     }
   };
 
   return {
-    postForexPrice,
-    getAllForexPrices,
-    getForexPriceById,
-    updateForexPrice,
+    data,
+    error,
+    postQuestion,
+    getQuestions,
+    putQuestion,
+    getQuestionById,
+    deleteQuestionById,
     register,
     login,
-    loading,
-    error,
+    updateScore,
   };
 };
+
+export default useCall;
