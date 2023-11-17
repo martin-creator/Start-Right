@@ -181,7 +181,7 @@ async fn main() -> std::io::Result<()> {
             )
             .app_data(data.clone())
             .service(
-                Files::new("/", "frontend/").index_file("index.html")
+                Files::new("/", "frontend_index/").index_file("index.html")
             )
             .service(
                 
