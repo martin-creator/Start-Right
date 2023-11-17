@@ -3,163 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Manager</title>
-  <style>
-    body {
-      font-family: "Arial", sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f9fa;
-      color: #495057;
-    }
-
-    header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 20px;
-      text-align: center;
-    }
-
-    nav {
-      background-color: #343a40;
-      overflow: hidden;
-    }
-
-    nav a {
-      float: left;
-      display: block;
-      color: #fff;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-
-    nav a:hover {
-      background-color: #ddd;
-      color: #333;
-    }
-
-    h1, h2 {
-      color: #007bff;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    section {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    label {
-      margin-bottom: 5px;
-      color: #007bff;
-    }
-
-    input {
-      padding: 8px;
-      margin-bottom: 15px;
-      width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      margin-bottom: 10px;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    li span {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    li button {
-      background-color: #dc3545;
-      color: #fff;
-      border: none;
-      padding: 8px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    li button:hover {
-      background-color: #c82333;
-    }
-  </style>
+  <title>Quiz App</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <header>
-    <h1>Task Manager</h1>
+<body class="font-sans bg-gray-100 text-gray-800">
+
+  <header class="bg-blue-500 text-white py-4 text-center">
+    <h1 class="text-2xl font-bold">Quiz App</h1>
   </header>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About Us</a>
-    <a href="#contact">Contact</a>
-    <a href="#tasks">Tasks</a>
+  <nav class="bg-gray-800 text-white">
+    <a href="#home" class="block py-2 px-4 hover:bg-gray-700">Home</a>
+    <a href="#about" class="block py-2 px-4 hover:bg-gray-700">About Us</a>
+    <a href="#contact" class="block py-2 px-4 hover:bg-gray-700">Contact</a>
+    <a href="#quiz" class="block py-2 px-4 hover:bg-gray-700">Quiz</a>
   </nav>
 
-  <section id="home">
-    <!-- Form for creating tasks -->
-    <form id="taskForm">
-      <label for="taskId">Task ID:</label>
-      <input type="number" id="taskId" required />
-      <label for="taskName">Task Name:</label>
-      <input type="text" id="taskName" required />
-      <!-- Button to trigger the createTask function -->
-      <button type="button" onclick="createTask()">Create Task</button>
+  <section id="home" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
+
+    <!-- Form for creating questions -->
+    <form id="questionForm" class="flex flex-col items-center mb-4">
+      <label for="questionId" class="mb-2 text-blue-500">Question ID:</label>
+      <input type="number" id="questionId" class="p-2 mb-4 w-64 border rounded-md" required />
+
+      <label for="questionName" class="mb-2 text-blue-500">Question:</label>
+      <input type="text" id="questionName" class="p-2 mb-4 w-64 border rounded-md" required />
+
+      <label for="options" class="mb-2 text-blue-500">Options:</label>
+      <input type="text" id="options" class="p-2 mb-4 w-64 border rounded-md" required />
+
+      <label for="answer" class="mb-2 text-blue-500">Answer:</label>
+      <input type="text" id="answer" class="p-2 mb-4 w-64 border rounded-md" required />
+
+      <!-- Button to trigger the createQuestion function -->
+      <button type="button" onclick="createQuestion()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
+        Create Question
+      </button>
     </form>
 
-    <!-- List to display tasks -->
-    <ul id="taskList"></ul>
+    <!-- List to display questions -->
+    <ul id="questionList" class="list-none"></ul>
   </section>
 
   <!-- About Us Section -->
-  <section id="about">
-    <h2>About Us</h2>
-    <p>Welcome to Task Manager, powered by Startright - Your AI full-stack website code generation tool.</p>
+  <section id="about" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
+    <h2 class="text-2xl text-blue-500 mb-4">About Us</h2>
+    <p>Welcome to Quiz App, powered by Startright - Your AI full-stack website code generation tool.</p>
     <p>Startright simplifies the process of building robust web applications. With just one instance, we generate a full-stack boilerplate tailored to your needs.</p>
     <p>Explore the power of AI-driven development and streamline your projects with Startright.</p>
   </section>
 
   <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact Us</h2>
+  <section id="contact" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
+    <h2 class="text-2xl text-blue-500 mb-4">Contact Us</h2>
     <p>If you have any questions or feedback, feel free to reach out to us.</p>
     <p>Email: info@startright.com</p>
     <p>Phone: +1 (123) 456-7890</p>
@@ -169,82 +65,87 @@
   <script>
     // Event listener for when the page is loaded
     document.addEventListener("DOMContentLoaded", function () {
-      // Load tasks when the page is loaded
-      loadTasks();
+      // Load questions when the page is loaded
+      loadQuestions();
     });
 
-    // Function to fetch and display tasks from the backend
-    async function loadTasks() {
+    // Function to fetch and display questions from the backend
+    async function loadQuestions() {
       try {
-        const response = await fetch("http://localhost:8080/tasks");
-        const tasks = await response.json();
+        const response = await fetch("/api/v1/questions");
+        const questions = await response.json();
 
-        const taskList = document.getElementById("taskList");
-        taskList.innerHTML = "";
+        const questionList = document.getElementById("questionList");
+        questionList.innerHTML = "";
 
-        // Loop through tasks and create list items
-        tasks.forEach((task) => {
+        // Loop through questions and create list items
+        questions.forEach((question) => {
           const li = document.createElement("li");
-          li.innerHTML = `<span>ID: ${task.id}, Name: ${task.name}</span> <button onclick="deleteTask(${task.id})">Delete</button>`;
-          taskList.appendChild(li);
+          li.innerHTML = `<span class="font-bold">ID: ${question.id}, Question: ${question.question}, Options: ${question.options}, Answer: ${question.answer}</span> <button onclick="deleteQuestion(${question.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
+          questionList.appendChild(li);
         });
       } catch (error) {
         // Handle errors if any occur during fetching
-        console.error("Error fetching tasks:", error);
+        console.error("Error fetching questions:", error);
       }
     }
 
-    // Function to create a new task
-    async function createTask() {
-      const taskId = document.getElementById("taskId").value;
-      const taskName = document.getElementById("taskName").value;
+    // Function to create a new question
+    async function createQuestion() {
+      const questionId = document.getElementById("questionId").value;
+      const questionName = document.getElementById("questionName").value;
+      const options = document.getElementById("options").value.split(",");
+      const answer = document.getElementById("answer").value;
 
       try {
-        const response = await fetch("http://localhost:8080/tasks", {
+        const response = await fetch("/api/v1/questions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json", // Include Accept header for CORS
           },
           body: JSON.stringify({
-            id: parseInt(taskId),
-            name: taskName,
-            completed: false,
+            id: parseInt(questionId),
+            question: questionName,
+            options: options,
+            answer: answer,
           }),
         });
 
         if (response.ok) {
-          // Reload tasks and reset input values if successful
-          loadTasks();
-          document.getElementById("taskId").value = "";
-          document.getElementById("taskName").value = "";
+          // Reload questions and reset input values if successful
+          loadQuestions();
+          document.getElementById("questionId").value = "";
+          document.getElementById("questionName").value = "";
+          document.getElementById("options").value = "";
+          document.getElementById("answer").value = "";
         } else {
-          // Handle errors if task creation fails
-          console.error("Failed to create task:", response.statusText);
+          // Handle errors if question creation fails
+          console.error("Failed to create question:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during the process
-        console.error("Error creating task:", error);
+        // Handle errors if any occur during question creation
+        console.error("Error creating question:", error);
       }
     }
 
-    // Function to delete a task
-    async function deleteTask(id) {
+    // Function to delete a question
+    async function deleteQuestion(questionId) {
       try {
-        const response = await fetch(`http://localhost:8080/tasks/${id}`, {
+        const response = await fetch(`/api/v1/questions/${questionId}`, {
           method: "DELETE",
         });
 
         if (response.ok) {
-          // Reload tasks if deletion is successful
-          loadTasks();
+          // Reload questions if deletion is successful
+          loadQuestions();
         } else {
-          // Handle errors if task deletion fails
-          console.error("Failed to delete task:", response.statusText);
+          // Handle errors if question deletion fails
+          console.error("Failed to delete question:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during the process
-        console.error("Error deleting task:", error);
+        // Handle errors if any occur during question deletion
+        console.error("Error deleting question:", error);
       }
     }
   </script>
