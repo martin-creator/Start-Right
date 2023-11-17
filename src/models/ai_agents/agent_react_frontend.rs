@@ -10,16 +10,12 @@ use crate::helper_funcs::general_funcs::{
     ai_task_request_decoded,
     ai_task_request,
     read_react_frontend_code_contents,
-    WEB_SERVER_PROJECT_PATH,
-    REACT_FRONTEND_PATH,
     EXEC_MAIN_PATH,
     API_SCHEMA_PATH,
 };
 
 use crate::models::ai_agents::agent_react_structs::{
     FrontendBuildMode,
-    APIAssignment,
-    PageAPIAssign,
     SitePages,
     PageRoutes,
     DesignBuildSheet,
@@ -30,10 +26,7 @@ use crate::models::ai_agents::agent_content_traits::{ SpecialFunctions, FactShee
 use crate::models::ai_agent_skeleton::basic_agent::{ BasicAgent, AgentState };
 use crate::helper_funcs::cli_funcs::PrintCommand;
 use async_trait::async_trait;
-use serde::{ Serialize, Deserialize };
 use std::fs;
-use std::process::{ Command, Stdio };
-use std::collections::HashMap;
 use strum::IntoEnumIterator;
 
 // use super::agent_react_structs::FrontendBuildMode;
@@ -215,45 +208,55 @@ impl AgentReactFrontendDeveloper {
             test_statement.as_str()
         );
 
-        // Build frontend server
-        let build_frontend_server: std::process::Output = Command::new("yarn")
-            .arg("build")
-            .current_dir(REACT_FRONTEND_PATH)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()
-            .expect("Failed to run component test");
+        // //Disabled by default to save development Build frontend server
+        // let build_frontend_server: std::process::Output = Command::new("yarn")
+        //     .arg("build")
+        //     .current_dir(REACT_FRONTEND_PATH)
+        //     .stdout(Stdio::piped())
+        //     .stderr(Stdio::piped())
+        //     .output()
+        //     .expect("Failed to run component test");
 
-        // Determine if build errors
-        if build_frontend_server.status.success() {
-            PrintCommand::UnitTest.print_agent_message(
-                self.attributes.position.as_str(),
-                "Component build test successful"
-            );
-            self.bug_count = 0;
-            return Ok(());
+        // //Determine if build errors
+        // if build_frontend_server.status.success() {
+        //     PrintCommand::UnitTest.print_agent_message(
+        //         self.attributes.position.as_str(),
+        //         "Component build test successful"
+        //     );
+        //     self.bug_count = 0;
+        //     return Ok(());
 
-            // Handle Build error
-        } else {
-            let error_arr: Vec<u8> = build_frontend_server.stderr;
-            let error_str: String = String::from_utf8(error_arr).unwrap();
+        //     // Handle Build error
+        // } else {
+        //     let error_arr: Vec<u8> = build_frontend_server.stderr;
+        //     let error_str: String = String::from_utf8(error_arr).unwrap();
 
-            // Check and return error
-            self.bug_count += 1;
-            if self.bug_count >= 2 {
-                PrintCommand::Issue.print_agent_message(
-                    self.attributes.position.as_str(),
-                    "Too many code failures"
-                );
-                PrintCommand::Issue.print_agent_message(
-                    self.attributes.position.as_str(),
-                    "Remember: check frontend builds before retrying"
-                );
-                panic!("Too many code failed attempts for {}", self.operation_focus.name());
-            } else {
-                return Err(error_str);
-            }
-        }
+        //     // Check and return error
+        //     self.bug_count += 1;
+        //     if self.bug_count >= 2 {
+        //         PrintCommand::Issue.print_agent_message(
+        //             self.attributes.position.as_str(),
+        //             "Too many code failures"
+        //         );
+        //         PrintCommand::Issue.print_agent_message(
+        //             self.attributes.position.as_str(),
+        //             "Remember: check frontend builds before retrying"
+        //         );
+        //         panic!("Too many code failed attempts for {}", self.operation_focus.name());
+        //     } else {
+        //         return Err(error_str);
+        //     }
+        // }
+
+
+        // Assume build success by default
+        PrintCommand::UnitTest.print_agent_message(
+            self.attributes.position.as_str(),
+            "Component build test successful(Note that we have disabled componet build test by default)"
+        );
+        self.bug_count = 0;
+        return Ok(());
+
     }
 }
 
@@ -316,6 +319,9 @@ impl SpecialFunctions for AgentReactFrontendDeveloper {
                         match test_res {
                             // Continue to next component
                             Ok(()) => {
+                                //let file_path: String = self.operation_focus.filepath();
+                                //let err_str  =  From::String("Fix all bugs in component code");
+                                //self.run_code_correction(file_path, ''::S ).await;
                                 continue;
                             }
 

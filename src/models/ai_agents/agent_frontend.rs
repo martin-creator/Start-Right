@@ -232,7 +232,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                     );
 
                     // Execute running server
-                    let mut run_backend_server: std::process::Child = Command::new("cargo")
+                    let mut _run_backend_server: std::process::Child = Command::new("cargo")
                         .arg("run --bin main_web_server")
                         .current_dir(WEB_SERVER_PROJECT_PATH)
                         .stdout(Stdio::piped())
