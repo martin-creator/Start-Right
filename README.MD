@@ -5,6 +5,19 @@
 
 StartRight is a cutting-edge AI-driven fullstack template app generation tool that aims to revolutionize your development process. With a focus on simplicity, flexibility, and customization, StartRight currently supports HTML, Tailwind CSS, and JavaScript or React for the frontend, complemented by Rust Actix for backend CRUD operations. Our roadmap includes plans to extend support for additional programming languages and frameworks.
 
+## Table of Contents
+
+1. [StartRight: AI Fullstack Template App Generation Tool](#startright-ai-fullstack-template-app-generation-tool)
+    - [Features](#features)
+    - [Installation Instructions](#installation-instructions)
+    - [Usage](#usage)
+    - [Project Structure](#project-structure)
+    - [Best Coding Practices supported by StartRight on Backend](#best-coding-practices-supported-by-startright-on-backend)
+    - [Future Enhancements](#future-enhancements)
+    - [License](#license)
+    - [Authors](#authors)
+
+
 ## Features
 
 ### 1. AI Assistance
