@@ -5,7 +5,7 @@ use crate::ai_macros::ai_react_frontend::{
     print_react_footer_navigation_react_component,
     print_react_typescript_hook_component,
     print_react_html_webpage_content_with_text,
-    print_create_react_component_with_API_integration,
+    print_create_react_component_with_api_integration,
     print_create_full_react_component,
     print_react_give_component_fantastic_styling
   };
@@ -181,8 +181,8 @@ use crate::ai_macros::ai_react_frontend::{
           let react_api_component_content: String = ai_task_request(
             msg_context, 
             "Component Page Writer", 
-            get_function_string!(print_create_react_component_with_API_integration), 
-            print_create_react_component_with_API_integration).await;
+            get_function_string!(print_create_react_component_with_api_integration), 
+            print_create_react_component_with_api_integration).await;
   
           // Initialize create full react component
           let msg_context: String = format!("API_COMPONENT: {} HTML_WIREFRAME: {},
