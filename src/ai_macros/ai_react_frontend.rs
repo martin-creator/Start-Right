@@ -206,9 +206,10 @@ pub fn print_react_header_navigation_react_component(_website_specification: &st
   /// }
   /// export default Navigation
   /// DO NOT LEAVE ANY CODE UNFINISHED FOR LATER. CODE EVERYTHING INCLUDING THE SLIDER MENU NOW.
-  /// IMPORTANT: You should use only these libraries: [axios, , react, tailwind css, react DOM], no other external libraries should be used. 
+  /// IMPORTANT: You should use only these valid codes or dependencies imports from libraries: [axios, , react, tailwind css, react DOM], no other external libraries should be used. 
   /// IMPORTANT: This function only prints a full react component with completed typescript code, nothing else. Just the code and WITHOUT any backticks at the start of the file ```.
   /// IMPORTANT: Tailwind CSS is used for styling. Does NOT use any extrernal libraries not included in this list: [axios, react, tailwind]
+  /// IMPORTANT: Dont use any icon libraries. Just use the icons provided in the tailwind css library
   /// IMPORTANT: No commentary or anything else. Print just the code. Dont include backticks or any comments on the code.
   println!(OUTPUT)
 }
@@ -279,6 +280,7 @@ pub fn print_react_html_webpage_content_with_text(_page_content_spec: &str) {
   ///   2. Creates a className for each tag as "className" but only gives it very basic responsive flex tailwind CSS behaviour for wireframing. The design must be responsive
   ///   3. Starts the html with <section>Content goes here!</section>. Does not bother to write all boilerplate html code as the content is all that matters
   ///   4. Does not write navigation bar or footer content as this already exists. Only the page content
+  ///   5. Ensures that all page content is revelant to the general theme of the website and removes content that is not relevant to the general theme.
   /// OUTPUT: Just the raw html code within and including the <section>Content goes here!</section> tags as described.
   println!(OUTPUT)
 }
@@ -321,7 +323,7 @@ pub fn print_create_full_react_component(_page_content_spec: &str) {
   ///   1. Does NOT use any extrernal libraries that are not included in this list: [axios, react, tailwind]
   ///   2. Ensures that ALL code will work as a React Typescript component
   ///   3. Adds basic tailwind css styling and icons where relevant
-  ///   4. Ensures that all page content is revelant to the general theme of the website
+  ///   4. Ensures that all page content is revelant to the general theme of the website and removes content that is not relevant to the general theme.
   ///   5. The final page  should have a good layout and be presentable. All styling should be done with valid tailwind css
   /// TEMPLATE:
   /// import useCall from "../../hooks/useCall"
