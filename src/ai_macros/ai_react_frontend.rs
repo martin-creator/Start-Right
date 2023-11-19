@@ -322,9 +322,9 @@ pub fn print_create_full_react_component(_page_content_spec: &str) {
   ///   1. Does NOT use any extrernal libraries that are not included in this list: [axios, react, tailwind]
   ///   2. Ensures that ALL code will work as a React Typescript component
   ///   3. Adds basic tailwind css styling and icons where relevant
-  ///   4. Ensures that all page content is revelant to the general theme of the website and removes content that is not relevant to the general theme.
+  ///   4. Ensures that all page content is revelant to the general theme of the website and removes content that is not relevant to the general theme
   ///   5. The final page  should have a good layout and be presentable. All styling should be done with valid tailwind css
-  ///   6. IMPORTANT: Pay close attention to the functionality in the API routes and ensure that the content in the React component aligns with that functionality. If the content and functionality do not align, then write the entire rendered component html content from scratch to match the functionality of the API routes.
+  ///   6. IMPORTANT: Pay close attention to the functionality in the API routes and ensure that the content in the  returned or rendered React component aligns with that functionality. If the content and functionality do not align, then write the entire rendered or returned component html content from scratch to match the functionality of the API routes
   /// TEMPLATE:
   /// import useCall from "../../hooks/useCall"
   /// function MasterPage() {
