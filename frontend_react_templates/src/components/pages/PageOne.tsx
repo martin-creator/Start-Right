@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "tailwindcss/tailwind.css";
 
 function MasterPage() {
+  const [registerData, setRegisterData] = useState({});
+  const [loginData, setLoginData] = useState({});
+
   const registerAPI = async (data: any) => {
     try {
       const response = await axios.post("/register", data);
@@ -47,18 +50,18 @@ function MasterPage() {
         </div>
         <div className="login_section flex flex-col items-center justify-center mt-10">
           <h2 className="text-3xl font-bold">Student Login</h2>
-          <form className="flex flex-col items-center justify-center mt-2">
-            <input type="text" placeholder="Username" className="mt-2 p-2 border rounded w-64"/>
-            <input type="password" placeholder="Password" className="mt-2 p-2 border rounded w-64"/>
+          <form className="flex flex-col items-center justify-center mt-2" onSubmit={(e) => { e.preventDefault(); loginAPI(loginData); }}>
+            <input type="text" placeholder="Username" className="mt-2 p-2 border rounded w-64" onChange={(e) => setLoginData({ ...loginData, username: e.target.value })} />
+            <input type="password" placeholder="Password" className="mt-2 p-2 border rounded w-64" onChange={(e) => setLoginData({ ...loginData, password: e.target.value })} />
             <button type="submit" className="mt-2 p-2 border rounded bg-blue-500 text-white w-64">Login</button>
           </form>
         </div>
         <div className="register_section flex flex-col items-center justify-center mt-10">
           <h2 className="text-3xl font-bold">New Student Registration</h2>
-          <form className="flex flex-col items-center justify-center mt-2">
-            <input type="text" placeholder="Full Name" className="mt-2 p-2 border rounded w-64"/>
-            <input type="email" placeholder="Email" className="mt-2 p-2 border rounded w-64"/>
-            <input type="password" placeholder="Password" className="mt-2 p-2 border rounded w-64"/>
+          <form className="flex flex-col items-center justify-center mt-2" onSubmit={(e) => { e.preventDefault(); registerAPI(registerData); }}>
+            <input type="text" placeholder="Full Name" className="mt-2 p-2 border rounded w-64" onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })} />
+            <input type="email" placeholder="Email" className="mt-2 p-2 border rounded w-64" onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })} />
+            <input type="password" placeholder="Password" className="mt-2 p-2 border rounded w-64" onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })} />
             <button type="submit" className="mt-2 p-2 border rounded bg-blue-500 text-white w-64">Register</button>
           </form>
         </div>

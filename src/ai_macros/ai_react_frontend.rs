@@ -274,6 +274,7 @@ pub fn print_react_html_webpage_content_with_text(_page_content_spec: &str) {
   /// OUTPUT: Writes HTML code only with written content based on PAGE_SPECIFICATION provided
   /// NOTE: The page specification tells the function what type of content to write based on suggestions, 
   /// the function then makes up the content for the site
+  /// IMPORTANT: Pay close attention to the functionality in the API routes and ensure that the content in the  returned or rendered React component aligns with that functionality. If the content and functionality do not align, then write the entire rendered or returned component html content from scratch to match the functionality of the API routes
   /// RULES: 
   ///   1. Provides a lot of content, is not afraid to provide expert level wireframing
   ///   2. Rewrites all existing page content to match PAGE_SPECIFICATION. All styling to be done with valid tailwind css. All cotennt should match project goals
