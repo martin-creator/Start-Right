@@ -4,22 +4,28 @@ type Props = {
 }
 
 const Footer: React.FC<Props> = ({setCurrentPage, currentPage}) => {
-  const pages = ['home_page', 'meeting_page'];
-  const colors = ['#32a852', '#0fa0d1', '#d10fcb'];
+  const pages = ["home_page", "station_management_page"];
+  const colors = ["#1f2937", "#4b5563", "#9ca3af"];
+
+  const handleClick = (page: string) => {
+    setCurrentPage(page);
+  }
 
   return (
-    <div className="fixed bottom-0 w-full bg-gray-200 p-4 flex justify-around items-center">
-      {pages.map((page, index) => (
-        <button 
-          key={index} 
-          onClick={() => setCurrentPage(page)}
-          className={`p-2 rounded ${currentPage === page ? colors[index % colors.length] : 'text-gray-500'}`}
-        >
-          {page}
-        </button>
-      ))}
+    <div className="fixed bottom-0 w-full bg-gray-800 text-white p-4">
+      <div className="container mx-auto flex justify-around">
+        {pages.map((page, index) => (
+          <div 
+            key={index} 
+            onClick={() => handleClick(page)}
+            className={`cursor-pointer ${currentPage === page ? 'text-' + colors[index] : ''}`}
+          >
+            {page.replace('_', ' ')}
+          </div>
+        ))}
+      </div>
     </div>
-  );
+  )
 }
 
 export default Footer;

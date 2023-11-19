@@ -8,6 +8,7 @@ pub fn print_frontend_code(_project_description_and_index_template: &str) {
     /// - The INDEX_TEMPLATE is provided as an example. Customize it as needed for the project, ensuring professional and elegant styling.
     /// - Generate new tailwind css styling for the code if required.
     /// - The frontend code does not need to be an exact match; customize it to align with the user's request and the API_JSON Schema in the PROJECT_DESCRIPTION.
+    /// - API BASE ROUTE: endpoints are called from http://localhost:8080
     ///
     /// # Function
     /// Takes an existing set of code marked as INDEX_TEMPLATE and updates or re-writes it to align with the API_JSON and PROJECT_DESCRIPTION.
@@ -40,9 +41,12 @@ pub fn print_improved_frontend_code(_project_description_and_index_template: &st
     /// - Ensure that all code is printed; no code should be represented by comments. All code should be represented by strings.
     /// - NO CODE SHOULD BE replaced with placeholder comments; ALL CODE SHOULD BE PRINTED.
     /// - NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS.
+    /// - No incomplete code should be printed. All code should be complete and ready to be used.
+    /// - All code should be printed now and ready to be used. No code should be implemented later.
     ///
     /// # Output
     /// Print ONLY the code, nothing else. All code should be included in the output, with no commentary or comments.
+    /// IMPORTANT: All code should be printed now and ready to be used. No code should be implemented later.
     println!(OUTPUT)
 }
 
@@ -55,9 +59,11 @@ pub fn print_fixed_frontend_code(_frontend_broken_code_with_bugs: &str) {
     /// - Ensure that all code is printed; no code should be represented by comments. All code should be represented by strings.
     /// - NO CODE SHOULD BE replaced with placeholder comments; ALL CODE SHOULD BE PRINTED.
     /// - NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS.
+    /// - No incomplete code should be printed. All code should be complete and ready to be used.
     ///
     /// # Output
     /// Print ONLY the code, nothing else. This function ONLY prints code, including HTML, tailwind css, and JavaScript code. All code should be included in the output, with no commentary or comments.
+    /// IMPORTANT: All code should be printed now and ready to be used. No code should be implemented later.
     println!(OUTPUT)
 }
 
@@ -74,6 +80,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// IMPORTANT: Ensure that all code is printed. No code should be represented by comments. All code should be represented by strings.
     /// IMPORTANT: ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
     /// IMPORTANT: No incomplete code should be printed. All code should be complete and ready to be used.
+    /// IMPORTANT: All code should be printed now and ready to be used. No code should be implemented later.
     /// INPUT_CODE:
     /// ...
     /// <html>

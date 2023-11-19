@@ -1,85 +1,69 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-interface Meeting {
+interface StationRequestBody {
   id: number;
   name: string;
-  completed: boolean;
+  trains: object;
 }
 
-interface User {
+interface StationResponse {
   id: number;
-  username: string;
-  password: string;
+  name: string;
+  trains: object;
 }
 
 const useCall = () => {
-  const [data, setData] = useState<Meeting[] | Meeting | null>(null);
+  const [data, setData] = useState<StationResponse | null>(null);
   const [error, setError] = useState<any>(null);
 
-  const postMeeting = async (meeting: Meeting) => {
+  const postStation = async (body: StationRequestBody) => {
     try {
-      await axios.post('http://localhost:8080/api/v1/meetings', meeting);
+      await axios.post('http://localhost:8080/api/v1/stations', body);
     } catch (e) {
       setError(e as any);
     }
   };
 
-  const getMeetings = async () => {
+  const getStations = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/meetings');
+      const response = await axios.get('http://localhost:8080/api/v1/stations');
       setData(response.data);
     } catch (e) {
       setError(e as any);
     }
   };
 
-  const putMeeting = async (meeting: Meeting) => {
+  const putStation = async (body: StationRequestBody) => {
     try {
-      await axios.put('http://localhost:8080/api/v1/meetings', meeting);
+      await axios.put('http://localhost:8080/api/v1/stations', body);
     } catch (e) {
       setError(e as any);
     }
   };
 
-  const getMeetingById = async (id: number) => {
+  const getStation = async (id: number) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/meetings/${id}`);
+      const response = await axios.get(`http://localhost:8080/api/v1/stations/${id}`);
       setData(response.data);
     } catch (e) {
       setError(e as any);
     }
   };
 
-  const deleteMeetingById = async (id: number) => {
+  const deleteStation = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8080/api/v1/meetings/${id}`);
-    } catch (e) {
-      setError(e as any);
-    }
-  };
-
-  const register = async (user: User) => {
-    try {
-      await axios.post('http://localhost:8080/api/v1/auth/register', user);
-    } catch (e) {
-      setError(e as any);
-    }
-  };
-
-  const login = async (user: User) => {
-    try {
-      await axios.post('http://localhost:8080/api/v1/auth/login', user);
+      await axios.delete(`http://localhost:8080/api/v1/stations/${id}`);
     } catch (e) {
       setError(e as any);
     }
   };
 
   useEffect(() => {
-    getMeetings();
+    getStations();
   }, []);
 
-  return { data, error, postMeeting, getMeetings, putMeeting, getMeetingById, deleteMeetingById, register, login };
+  return { data, error, postStation, getStations, putStation, getStation, deleteStation };
 };
 
 export default useCall;

@@ -11,64 +11,51 @@ use std::fs;
 use std::io::Write;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-struct Meeting {
+struct Train {
     id: u64,
     name: String,
-    completed: bool
+    status: String
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-struct User {
+struct Station {
     id: u64,
-    username: String,
-    password: String
+    name: String,
+    trains: HashMap<u64, Train>
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct Database {
-    meetings: HashMap<u64, Meeting>,
-    users: HashMap<u64, User>
+    stations: HashMap<u64, Station>
 }
 
 impl Database {
     fn new() -> Self {
         Self {
-            meetings: HashMap::new(),
-            users: HashMap::new()
+            stations: HashMap::new()
         }
     }
 
-    // CRUD DATA
-    fn insert(&mut self, meeting: Meeting) {
-        self.meetings.insert(meeting.id, meeting);
+    fn insert(&mut self, station: Station) {
+        self.stations.insert(station.id, station);
     }
 
-    fn get(&self, id: &u64) -> Option<&Meeting> {
-        self.meetings.get(id)
+    fn get(&self, id: &u64) -> Option<&Station> {
+        self.stations.get(id)
     }
 
-    fn get_all(&self) -> Vec<&Meeting> {
-        self.meetings.values().collect()
+    fn get_all(&self) -> Vec<&Station> {
+        self.stations.values().collect()
     }
 
     fn delete(&mut self, id: &u64) {
-        self.meetings.remove(id);
+        self.stations.remove(id);
     }
 
-    fn update(&mut self, meeting: Meeting) {
-        self.meetings.insert(meeting.id, meeting);
+    fn update(&mut self, station: Station) {
+        self.stations.insert(station.id, station);
     }
 
-    // USER DATA RELATED FUNCTIONS
-    fn insert_user(&mut self, user: User) {
-        self.users.insert(user.id, user);
-    }
-
-    fn get_user_by_name(&self, username: &str) -> Option<&User> {
-        self.users.values().find(|u| u.username == username)
-    }
-
-    // DATABASE SAVING
     fn save_to_file(&self) -> std::io::Result<()> {
         let data: String = serde_json::to_string(&self)?;
         let mut file: fs::File = fs::File::create("database.json")?;
@@ -87,56 +74,39 @@ struct AppState {
     db: Mutex<Database>
 }
 
-async fn create_meeting(app_state: web::Data<AppState>, meeting: web::Json<Meeting>) -> impl Responder {
+async fn create_station(app_state: web::Data<AppState>, station: web::Json<Station>) -> impl Responder {
     let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.insert(meeting.into_inner());
+    db.insert(station.into_inner());
     let _ = db.save_to_file();
     HttpResponse::Ok().finish()
 }
 
-async fn read_meeting(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
+async fn read_station(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
     let db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
     match db.get(&id.into_inner()) {
-        Some(meeting) => HttpResponse::Ok().json(meeting),
+        Some(station) => HttpResponse::Ok().json(station),
         None => HttpResponse::NotFound().finish()
     }
 }
 
-async fn read_all_meetings(app_state: web::Data<AppState>) -> impl Responder {
+async fn read_all_stations(app_state: web::Data<AppState>) -> impl Responder {
     let db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    let meetings = db.get_all();
-    HttpResponse::Ok().json(meetings)
+    let stations = db.get_all();
+    HttpResponse::Ok().json(stations)
 }
 
-async fn update_meeting(app_state: web::Data<AppState>, meeting: web::Json<Meeting>) -> impl Responder {
+async fn update_station(app_state: web::Data<AppState>, station: web::Json<Station>) -> impl Responder {
     let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.update(meeting.into_inner());
+    db.update(station.into_inner());
     let _ = db.save_to_file();
     HttpResponse::Ok().finish()
 }
 
-async fn delete_meeting(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
+async fn delete_station(app_state: web::Data<AppState>, id: web::Path<u64>) -> impl Responder {
     let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
     db.delete(&id.into_inner());
     let _ = db.save_to_file();
     HttpResponse::Ok().finish()
-}
-
-async fn register(app_state: web::Data<AppState>, user: web::Json<User>) -> impl Responder {
-    let mut db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    db.insert_user(user.into_inner());
-    let _ = db.save_to_file();
-    HttpResponse::Ok().finish()
-}
-
-async fn login(app_state: web::Data<AppState>, user: web::Json<User>) -> impl Responder {
-    let db: std::sync::MutexGuard<Database> = app_state.db.lock().unwrap();
-    match db.get_user_by_name(&user.username) {
-        Some(stored_user) if stored_user.password == user.password => {
-            HttpResponse::Ok().body("Logged in!")
-        },
-        _ => HttpResponse::BadRequest().body("Invalid username or password")
-    }
 }
 
 #[actix_web::main]
@@ -169,29 +139,25 @@ async fn main() -> std::io::Result<()> {
                 Files::new("/", "frontend_index/").index_file("index.html")
             )
             .service(
-                
                 web
                     ::scope("/api/v1")
                     .service(
                         web
-                            ::resource("/meetings")
-                            .route(web::post().to(create_meeting))
-                            .route(web::get().to(read_all_meetings))
-                            .route(web::put().to(update_meeting))
+                            ::resource("/stations")
+                            .route(web::post().to(create_station))
+                            .route(web::get().to(read_all_stations))
+                            .route(web::put().to(update_station))
                     )
                     .service(
                         web
-                            ::resource("/meetings/{id}")
-                            .route(web::get().to(read_meeting))
-                            .route(web::delete().to(delete_meeting))
+                            ::resource("/stations/{id}")
+                            .route(web::get().to(read_station))
+                            .route(web::delete().to(delete_station))
                     )
-                    .service(web::resource("/auth/register").route(web::post().to(register)))
-                    .service(web::resource("/auth/login").route(web::post().to(login)))
             )
     })
     .bind("localhost:8080")?
     .run();
-    // Spawn a background task to sleep after the server has run for 60 seconds.
     tokio::spawn(async move {
         tokio::time::sleep(Duration::from_secs(60)).await;
         println!("Server has run for 60 seconds. Now sleeping.");
