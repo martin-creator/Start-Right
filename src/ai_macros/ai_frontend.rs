@@ -83,6 +83,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// IMPORTANT: No incomplete code should be printed. All code should be complete and ready to be used.
     /// IMPORTANT: All code should be printed now and ready to be used. No code should be implemented later.
     /// IMPORTANT: NO BACKTICKS SHOULD BE USED IN THE CODE like `this` or `that`
+    /// IMPORTANT: Just print the code. No commentary or anything else.
     /// INPUT_CODE:
     /// ...
     /// <html>
