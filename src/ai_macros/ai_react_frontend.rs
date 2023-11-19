@@ -273,14 +273,13 @@ pub fn print_react_html_webpage_content_with_text(_page_content_spec: &str) {
   /// INPUT: Receives PAGE_SPECIFICATION and high level spec along with api data information that the page will receive
   /// OUTPUT: Writes HTML code only with written content based on PAGE_SPECIFICATION provided
   /// NOTE: The page specification tells the function what type of content to write based on suggestions, 
-  /// the function then makes up the content for the site. The function should write all content from scratch, no old content should be used.
+  /// the function then makes up the content for the site
   /// RULES: 
   ///   1. Provides a lot of content, is not afraid to provide expert level wireframing
   ///   2. Rewrites all existing page content to match PAGE_SPECIFICATION. All styling to be done with valid tailwind css. All cotennt should match project goals
   ///   2. Creates a className for each tag as "className" but only gives it very basic responsive flex tailwind CSS behaviour for wireframing. The design must be responsive
   ///   3. Starts the html with <section>Content goes here!</section>. Does not bother to write all boilerplate html code as the content is all that matters
   ///   4. Does not write navigation bar or footer content as this already exists. Only the page content
-  ///   5. Ensures that all page content is revelant to the Page Specification.
   /// OUTPUT: Just the raw html code within and including the <section>Content goes here!</section> tags as described.
   println!(OUTPUT)
 }
@@ -325,6 +324,7 @@ pub fn print_create_full_react_component(_page_content_spec: &str) {
   ///   3. Adds basic tailwind css styling and icons where relevant
   ///   4. Ensures that all page content is revelant to the general theme of the website and removes content that is not relevant to the general theme.
   ///   5. The final page  should have a good layout and be presentable. All styling should be done with valid tailwind css
+  ///   6. IMPORTANT: Pay close attention to the functionality in the API routes and ensure that the content in the React component aligns with that functionality. If the content and functionality do not align, then write the entire rendered component html content from scratch to match the functionality of the API routes.
   /// TEMPLATE:
   /// import useCall from "../../hooks/useCall"
   /// function MasterPage() {
