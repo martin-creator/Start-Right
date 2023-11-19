@@ -19,6 +19,7 @@ pub fn print_frontend_code(_project_description_and_index_template: &str) {
     /// # Important
     /// - NO CODE SHOULD BE replaced with placeholder comments; ALL CODE SHOULD BE PRINTED.
     /// - NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS.
+    /// - NO BACKTICKS SHOULD BE USED IN THE CODE like `this` or `that`.
     ///
     /// # Output
     /// Print ONLY the code, nothing else. This function ONLY prints code; all code should be included in the output, with no commentary or comments.
@@ -81,6 +82,7 @@ pub fn print_index_html_file(_frontend_code_input: &str) {
     /// IMPORTANT: ALL CODE SHOULD BE PRINTED. NO CODE SHOULD BE COMMENTED OUT OR REPRESENTED BY COMMENTS
     /// IMPORTANT: No incomplete code should be printed. All code should be complete and ready to be used.
     /// IMPORTANT: All code should be printed now and ready to be used. No code should be implemented later.
+    /// IMPORTANT: NO BACKTICKS SHOULD BE USED IN THE CODE like `this` or `that`
     /// INPUT_CODE:
     /// ...
     /// <html>
