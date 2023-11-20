@@ -14,15 +14,8 @@ mod models;
 use helper_funcs::cli_funcs::{get_user_response, confirm_type_app, client_on_boarding, run_after_initialization};
 use models::agents_manager::agent_manager::ManagingAgent;
 
-
-
-
-
-
 #[tokio::main]
 async fn main() {
-    // print_logo();
-    // print_welcome_message();
 
     client_on_boarding();
     // Get user input for the project name
@@ -55,10 +48,6 @@ async fn main() {
         let _usr_req: String = get_user_response("What project are we website are we building?");
 
     }
-
-
-
-
 
     run_after_initialization();
 }
