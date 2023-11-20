@@ -3,30 +3,48 @@ import axios from "axios";
 import "tailwindcss/tailwind.css";
 
 function MasterPage() {
-  const [registerData, setRegisterData] = useState({});
-  const [loginData, setLoginData] = useState({});
+  const [farmData, setFarmData] = useState({});
+  const [farmId, setFarmId] = useState(null);
 
-  const registerAPI = async (data: any) => {
+  const createFarmAPI = async (data: any) => {
     try {
-      const response = await axios.post("/register", data);
+      const response = await axios.post("/api/v1/farms", data);
       // Process response from API call
     } catch (e: any) {
       // Handle error during API call
     }
   };
 
-  const loginAPI = async (data: any) => {
+  const getFarmsAPI = async () => {
     try {
-      const response = await axios.post("/login", data);
+      const response = await axios.get("/api/v1/farms");
       // Process response from API call
     } catch (e: any) {
       // Handle error during API call
     }
   };
 
-  const externalAPI = async () => {
+  const updateFarmAPI = async (data: any) => {
     try {
-      const response = await axios.get("https://ipapi.co/json");
+      const response = await axios.put("/api/v1/farms", data);
+      // Process response from API call
+    } catch (e: any) {
+      // Handle error during API call
+    }
+  };
+
+  const getFarmByIdAPI = async (id: string) => {
+    try {
+      const response = await axios.get(`/api/v1/farms/${id}`);
+      // Process response from API call
+    } catch (e: any) {
+      // Handle error during API call
+    }
+  };
+
+  const deleteFarmAPI = async (id: string) => {
+    try {
+      const response = await axios.delete(`/api/v1/farms/${id}`);
       // Process response from API call
     } catch (e: any) {
       // Handle error during API call
@@ -36,29 +54,16 @@ function MasterPage() {
   return (
     <div className="w-full h-full bg-gray-100">
       <section className="flex flex-col items-center justify-center py-10">
-        <div className="banner_section flex flex-col items-center justify-center mb-10">
-          <h1 className="text-4xl font-bold text-blue-700">Welcome to Our Nutrition and Allergy Tracker!</h1>
-          <p className="text-xl">Your health is our priority. Let's start tracking your nutrition requirements and allergies.</p>
+        <div className="farm_section flex flex-col items-center justify-center mb-10">
+          <h1 className="text-4xl font-bold text-blue-700">Welcome to Our Farm Management!</h1>
+          <p className="text-xl">Manage your farms efficiently and effectively.</p>
         </div>
-        <div className="about_section flex flex-col items-center justify-center mt-10">
-          <h2 className="text-3xl font-bold">Why Track Nutrition and Allergies?</h2>
-          <p className="text-lg">Understanding your nutrition requirements and allergies is crucial for maintaining a healthy lifestyle. Our website provides a simple and efficient way to keep track of your dietary needs.</p>
-        </div>
-        <div className="login_section flex flex-col items-center justify-center mt-10">
-          <h2 className="text-3xl font-bold">Login</h2>
-          <form className="flex flex-col items-center justify-center mt-2" onSubmit={(e) => { e.preventDefault(); loginAPI(loginData); }}>
-            <input type="text" placeholder="Username" className="mt-2 p-2 border rounded w-64" onChange={(e) => setLoginData({ ...loginData, username: e.target.value })} />
-            <input type="password" placeholder="Password" className="mt-2 p-2 border rounded w-64" onChange={(e) => setLoginData({ ...loginData, password: e.target.value })} />
-            <button type="submit" className="mt-2 p-2 border rounded bg-blue-500 text-white w-64">Login</button>
-          </form>
-        </div>
-        <div className="register_section flex flex-col items-center justify-center mt-10">
-          <h2 className="text-3xl font-bold">Register</h2>
-          <form className="flex flex-col items-center justify-center mt-2" onSubmit={(e) => { e.preventDefault(); registerAPI(registerData); }}>
-            <input type="text" placeholder="Full Name" className="mt-2 p-2 border rounded w-64" onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })} />
-            <input type="email" placeholder="Email" className="mt-2 p-2 border rounded w-64" onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })} />
-            <input type="password" placeholder="Password" className="mt-2 p-2 border rounded w-64" onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })} />
-            <button type="submit" className="mt-2 p-2 border rounded bg-blue-500 text-white w-64">Register</button>
+        <div className="farm_management_section flex flex-col items-center justify-center mt-10">
+          <h2 className="text-3xl font-bold">Farm Management</h2>
+          <form className="flex flex-col items-center justify-center mt-2" onSubmit={(e) => { e.preventDefault(); createFarmAPI(farmData); }}>
+            <input type="text" placeholder="Farm Name" className="mt-2 p-2 border rounded w-64" onChange={(e) => setFarmData({ ...farmData, name: e.target.value })} />
+            <input type="text" placeholder="Farm Location" className="mt-2 p-2 border rounded w-64" onChange={(e) => setFarmData({ ...farmData, location: e.target.value })} />
+            <button type="submit" className="mt-2 p-2 border rounded bg-blue-500 text-white w-64">Create Farm</button>
           </form>
         </div>
       </section>

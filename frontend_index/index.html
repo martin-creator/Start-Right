@@ -1,54 +1,58 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nutrition Tracker</title>
+  <title>Farm Tracker</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-gray-100 text-gray-800">
 
   <header class="bg-blue-500 text-white py-4 text-center">
-    <h1 class="text-2xl font-bold">Nutrition Tracker</h1>
+    <h1 class="text-2xl font-bold">Farm Tracker</h1>
   </header>
 
   <nav class="bg-gray-800 text-white">
     <a href="#home" class="block py-2 px-4 hover:bg-gray-700">Home</a>
     <a href="#about" class="block py-2 px-4 hover:bg-gray-700">About Us</a>
     <a href="#contact" class="block py-2 px-4 hover:bg-gray-700">Contact</a>
-    <a href="#nutrition" class="block py-2 px-4 hover:bg-gray-700">Nutrition</a>
+    <a href="#farms" class="block py-2 px-4 hover:bg-gray-700">Farms</a>
   </nav>
 
   <section id="home" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
 
-    <!-- Form for creating nutrition entries -->
-    <form id="nutritionForm" class="flex flex-col items-center mb-4">
-      <label for="nutritionId" class="mb-2 text-blue-500">Nutrition ID:</label>
-      <input type="number" id="nutritionId" class="p-2 mb-4 w-64 border rounded-md" required />
+    <!-- Form for creating farms -->
+    <form id="farmForm" class="flex flex-col items-center mb-4">
+      <label for="farmId" class="mb-2 text-blue-500">Farm ID:</label>
+      <input type="number" id="farmId" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="nutritionName" class="mb-2 text-blue-500">Name:</label>
-      <input type="text" id="nutritionName" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="farmName" class="mb-2 text-blue-500">Farm Name:</label>
+      <input type="text" id="farmName" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="requirements" class="mb-2 text-blue-500">Requirements:</label>
-      <input type="text" id="requirements" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="cowCount" class="mb-2 text-blue-500">Cow Count:</label>
+      <input type="number" id="cowCount" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="allergies" class="mb-2 text-blue-500">Allergies:</label>
-      <input type="text" id="allergies" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="goatCount" class="mb-2 text-blue-500">Goat Count:</label>
+      <input type="number" id="goatCount" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <!-- Button to trigger the createNutrition function -->
-      <button type="button" onclick="createNutrition()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
-        Create Nutrition Entry
+      <label for="production" class="mb-2 text-blue-500">Production:</label>
+      <input type="number" id="production" class="p-2 mb-4 w-64 border rounded-md" required />
+
+      <!-- Button to trigger the createFarm function -->
+      <button type="button" onclick="createFarm()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
+        Create Farm
       </button>
     </form>
 
-    <!-- List to display nutrition entries -->
-    <ul id="nutritionList" class="list-none"></ul>
+    <!-- List to display farms -->
+    <ul id="farmList" class="list-none"></ul>
   </section>
 
   <!-- About Us Section -->
   <section id="about" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
     <h2 class="text-2xl text-blue-500 mb-4">About Us</h2>
-    <p>Welcome to Nutrition Tracker, powered by Startright - Your AI full-stack website code generation tool.</p>
+    <p>Welcome to Farm Tracker, powered by Startright - Your AI full-stack website code generation tool.</p>
     <p>Startright simplifies the process of building robust web applications. With just one instance, we generate a full-stack boilerplate tailored to your needs.</p>
     <p>Explore the power of AI-driven development and streamline your projects with Startright.</p>
   </section>
@@ -65,89 +69,93 @@
   <script>
     // Event listener for when the page is loaded
     document.addEventListener("DOMContentLoaded", function () {
-      // Load nutrition entries when the page is loaded
-      loadNutritionEntries();
+      // Load farms when the page is loaded
+      loadFarms();
     });
 
-    // Function to fetch and display nutrition entries from the backend
-    async function loadNutritionEntries() {
+    // Function to fetch and display farms from the backend
+    async function loadFarms() {
       try {
-        const response = await fetch("/api/v1/nutrition");
-        const nutritionEntries = await response.json();
+        const response = await fetch("http://localhost:8080/api/v1/farms");
+        const farms = await response.json();
 
-        const nutritionList = document.getElementById("nutritionList");
-        nutritionList.innerHTML = "";
+        const farmList = document.getElementById("farmList");
+        farmList.innerHTML = "";
 
-        // Loop through nutrition entries and create list items
-        nutritionEntries.forEach((entry) => {
+        // Loop through farms and create list items
+        farms.forEach((farm) => {
           const li = document.createElement("li");
-          li.innerHTML = `<span class="font-bold">ID: ${entry.id}, Name: ${entry.name}, Requirements: ${entry.requirements}, Allergies: ${entry.allergies}</span> <button onclick="deleteNutritionEntry(${entry.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
-          nutritionList.appendChild(li);
+          li.innerHTML = `<span class="font-bold">ID: ${farm.id}, Farm Name: ${farm.name}, Cow Count: ${farm.cow_count}, Goat Count: ${farm.goat_count}, Production: ${farm.production}</span> <button onclick="deleteFarm(${farm.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
+          farmList.appendChild(li);
         });
       } catch (error) {
         // Handle errors if any occur during fetching
-        console.error("Error fetching nutrition entries:", error);
+        console.error("Error fetching farms:", error);
       }
     }
 
-    // Function to create a new nutrition entry
-    async function createNutrition() {
-      const nutritionId = document.getElementById("nutritionId").value;
-      const nutritionName = document.getElementById("nutritionName").value;
-      const requirements = document.getElementById("requirements").value;
-      const allergies = document.getElementById("allergies").value;
+    // Function to create a new farm
+    async function createFarm() {
+      const farmId = document.getElementById("farmId").value;
+      const farmName = document.getElementById("farmName").value;
+      const cowCount = document.getElementById("cowCount").value;
+      const goatCount = document.getElementById("goatCount").value;
+      const production = document.getElementById("production").value;
 
       try {
-        const response = await fetch("/api/v1/nutrition", {
+        const response = await fetch("http://localhost:8080/api/v1/farms", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json", // Include Accept header for CORS
           },
           body: JSON.stringify({
-            id: parseInt(nutritionId),
-            name: nutritionName,
-            requirements: requirements,
-            allergies: allergies,
+            id: parseInt(farmId),
+            name: farmName,
+            cow_count: parseInt(cowCount),
+            goat_count: parseInt(goatCount),
+            production: parseInt(production),
           }),
         });
 
         if (response.ok) {
-          // Reload nutrition entries and reset input values if successful
-          loadNutritionEntries();
-          document.getElementById("nutritionId").value = "";
-          document.getElementById("nutritionName").value = "";
-          document.getElementById("requirements").value = "";
-          document.getElementById("allergies").value = "";
+          // Reload farms and reset input values if successful
+          loadFarms();
+          document.getElementById("farmId").value = "";
+          document.getElementById("farmName").value = "";
+          document.getElementById("cowCount").value = "";
+          document.getElementById("goatCount").value = "";
+          document.getElementById("production").value = "";
         } else {
-          // Handle errors if nutrition entry creation fails
-          console.error("Failed to create nutrition entry:", response.statusText);
+          // Handle errors if farm creation fails
+          console.error("Failed to create farm:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during nutrition entry creation
-        console.error("Error creating nutrition entry:", error);
+        // Handle errors if any occur during farm creation
+        console.error("Error creating farm:", error);
       }
     }
 
-    // Function to delete a nutrition entry
-    async function deleteNutritionEntry(nutritionId) {
+    // Function to delete a farm
+    async function deleteFarm(farmId) {
       try {
-        const response = await fetch(`/api/v1/nutrition/${nutritionId}`, {
+        const response = await fetch(`http://localhost:8080/api/v1/farms/${farmId}`, {
           method: "DELETE",
         });
 
         if (response.ok) {
-          // Reload nutrition entries if deletion is successful
-          loadNutritionEntries();
+          // Reload farms if deletion is successful
+          loadFarms();
         } else {
-          // Handle errors if nutrition entry deletion fails
-          console.error("Failed to delete nutrition entry:", response.statusText);
+          // Handle errors if farm deletion fails
+          console.error("Failed to delete farm:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during nutrition entry deletion
-        console.error("Error deleting nutrition entry:", error);
+        // Handle errors if any occur during farm deletion
+        console.error("Error deleting farm:", error);
       }
     }
   </script>
 </body>
 </html>
+```

@@ -6,40 +6,35 @@ type Props = {
   setCurrentPage: (page: string) => void;
 }
 
-const Navigation: React.FC<Props> = ({setCurrentPage, currentPage}) => {
+const Navigation: React.FC<Props> = ({ currentPage, setCurrentPage }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleMenuClick = () => {
-    setIsOpen(!isOpen);
-  }
+  const pages = ["home_page", "farm_detail_page"];
 
-  const handleLinkClick = (page: string) => {
+  const handlePageChange = (page: string) => {
     setCurrentPage(page);
     setIsOpen(false);
   }
 
   return (
     <nav className="bg-white px-6 py-4 shadow">
-      <div className="flex flex-col md:flex-row justify-between items-center">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
         <div className="flex justify-between items-center">
           <div>
             <Logo />
           </div>
           <div className="md:hidden">
-            <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu" onClick={handleMenuClick}>
+            <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu" onClick={() => setIsOpen(!isOpen)}>
               <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
-                <path fillRule="evenodd" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                <path fillRule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 110-2z"></path>
               </svg>
             </button>
           </div>
         </div>
-        <div className={`md:flex items-center ${isOpen ? 'block' : 'hidden'}`}>
-          <div className="flex flex-col md:flex-row md:mx-6">
-            <a className={`my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0 ${currentPage === 'home_page' ? 'text-indigo-500' : ''}`} 
-               href="#" onClick={() => handleLinkClick('home_page')}>Home</a>
-            <a className={`my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0 ${currentPage === 'user_dashboard' ? 'text-indigo-500' : ''}`} 
-               href="#" onClick={() => handleLinkClick('user_dashboard')}>Dashboard</a>
-          </div>
+        <div className={`md:flex ${isOpen ? 'block' : 'hidden'}`}>
+          {pages.map((page, index) => (
+            <a key={index} onClick={() => handlePageChange(page)} className={`mt-3 md:mt-0 md:ml-6 text-gray-600 hover:text-gray-700 ${currentPage === page ? 'text-blue-700' : ''}`}>{page}</a>
+          ))}
         </div>
       </div>
     </nav>
