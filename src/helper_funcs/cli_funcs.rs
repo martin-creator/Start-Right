@@ -4,9 +4,7 @@ use crossterm::{
         ResetColor,
         Print,
         SetForegroundColor,
-        SetAttribute,
-        PrintStyledContent,
-        StyledContent,
+        SetAttribute
     },
     ExecutableCommand,
 };
@@ -116,9 +114,6 @@ pub fn confirm_type_app() -> &'static str {
         stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
         println!("");
         print!("What kind of app are we building today? (Respond with numbers) \n");
-        println!(" At the moment we can build fullstack apps or just backend apps. \n");
-        println!(" You can only build a frontend app if you build a backend app first. \n");
-
         // Reset Color
         stdout.execute(ResetColor).unwrap();
 
@@ -144,9 +139,9 @@ pub fn confirm_type_app() -> &'static str {
 
         // Match response
         match human_response.as_str() {
-            "1" => "fullstack",
-            "2" => "backend",
-            "3" => "restart",
+            "1" => return "fullstack",
+            "2" =>  return "backend",
+            "3" =>  return "restart",
             _ => {
                 println!("Invalid input. Please select '1' or '2' or '3'");
                 continue;
@@ -223,12 +218,40 @@ pub fn client_on_boarding() -> &'static str {
 
     print_colored_text(
         &mut stdout,
+        Color::DarkBlue,
+        "
+    --> Setup: Make sure that you have configured the following
+       - You have added your the OPEN_AI_KEY & OPEN_AI_ORG in the '/.env'.
+       - Update your index.html template here 'code_templates/index_template.html'(optional), 
+       - Update your main_webserver_template here 'code_templates/main_websever_template.rs'(optional)
+       - Update your react app template here 'frontend_react_templates/'(optional)
+    "
+    );
+
+    print_colored_text(
+        &mut stdout,
         Color::DarkYellow,
         "
     --> Useful Links:
        - Learn about GPT-4 models: https://platform.openai.com/docs/models
        - Learn about GPT-4 pricing: https://openai.com/pricing
        - How to find your OpenAI keys and organization keys: https://www.google.com/search?sca_esv=583956873
+    "
+    );
+
+
+    print_colored_text(
+        &mut stdout,
+        Color::Grey,
+        "
+    --> Authors Contact Details:
+        Feel free to reach out to us for any questions, suggestions, or feedback.
+       - Martin Lubowa (martinlubowa@outlook.com)
+       - Moreen Irungu (irungumaureen1@gmail.com)
+       - Git repo: https://github.com/martin-creator/Start-Right
+
+
+       &&&&&&&&****** Happy Coding! ******&&&&&&&&
     "
     );
 
@@ -260,27 +283,39 @@ fn print_colored_logo(stdout: &mut impl Write, color: Color, text: &str) {
 }
 
 ///  Run after successful initialization
-fn run_after_initialization(user_choice: &str) {
+pub fn run_after_initialization() {
     let mut stdout = stdout();
 
     print_ascii_art(&mut stdout);
-    print_colored_text(&mut stdout, Color::Green, "🚀 Congratulations!");
+    print_colored_text(&mut stdout, Color::Green, "####################################### Congratulations! #######################################\n");
     print_colored_footer(
         &mut stdout,
         Color::Cyan,
-        "🎉 Your StartRight project has been fully initialized."
+        "******** Your StartRight project has been fully initialized.********\n"
     );
 
     print_colored_footer(
         &mut stdout,
         Color::Yellow,
-        "🔥 You are now ready to kickstart your fullstack development journey!"
+        "******** You are now ready to kickstart your fullstack development journey!********\n"
+    );
+
+    print_colored_footer(
+        &mut stdout,
+        Color::Blue,
+        "To run your webserver :  cd src &&  run 'cargo run --bin main_webserver_template'********\n"
+    );
+
+    print_colored_footer(
+        &mut stdout,
+        Color::Blue,
+        "To react app :  cd frontend_react_templates && run 'npm run dev' ********\n"
     );
 
     print_colored_footer(
         &mut stdout,
         Color::Yellow,
-        "🔥 You are now ready to kickstart your development journey!"
+        "******** You are now ready to kickstart your development journey!********\n"
     );
 
     // Add any additional actions or messages you want to perform after initialization here.
@@ -308,7 +343,10 @@ fn print_ascii_art(stdout: &mut std::io::Stdout) {
    ||   ||   ||   ||   ||
    ||   ||   ||   ||   ||
    ||   ||   ||   ||   ||
-   ||   ||   ||   ||   ||"#;
+   ||   ||   ||   ||   ||
+   
+   
+   "#;
 
     stdout.execute(Print(art)).unwrap().execute(SetForegroundColor(Color::Reset)).unwrap();
     writeln!(stdout).unwrap(); // Move to the next line
