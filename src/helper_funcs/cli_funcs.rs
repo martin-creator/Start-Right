@@ -1,8 +1,16 @@
 use crossterm::{
-    style::{Color, ResetColor, SetForegroundColor},
+    style::{
+        Color,
+        ResetColor,
+        Print,
+        SetForegroundColor,
+        SetAttribute,
+        PrintStyledContent,
+        StyledContent,
+    },
     ExecutableCommand,
 };
-use std::io::{stdin, stdout};
+use std::io::{ stdin, stdout, Write };
 
 #[derive(PartialEq, Debug)]
 pub enum PrintCommand {
@@ -50,9 +58,7 @@ pub fn get_user_response(question: &str) -> String {
 
     // Read user input
     let mut user_response: String = String::new();
-    stdin()
-        .read_line(&mut user_response)
-        .expect("Failed to read response");
+    stdin().read_line(&mut user_response).expect("Failed to read response");
 
     // Trim whitespace and return
     return user_response.trim().to_string();
@@ -82,35 +88,34 @@ pub fn confirm_safe_code() -> bool {
 
         // Read user input
         let mut human_response: String = String::new();
-        stdin()
-            .read_line(&mut human_response)
-            .expect("Failed to read response");
+        stdin().read_line(&mut human_response).expect("Failed to read response");
 
         // Trim whitespace and convert to lowercase
         let human_response: String = human_response.trim().to_lowercase();
 
         // Match response
         match human_response.as_str() {
-            "1" | "ok" | "y" => return true,
-            "2" | "no" | "n" => return false,
+            "1" | "ok" | "y" => {
+                return true;
+            }
+            "2" | "no" | "n" => {
+                return false;
+            }
             _ => {
-                println!("Invalid input. Please select '1' or '2'")
+                println!("Invalid input. Please select '1' or '2'");
             }
         }
     }
-
-    
 }
 
-
 /// Get human user response that code is safe to execute from terminal
-pub fn confirm_type_app() -> bool {
+pub fn confirm_type_app() -> &'static str {
     let mut stdout: std::io::Stdout = stdout();
     loop {
         // Print the question in specified color
         stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
         println!("");
-        print!("What kind of app are we building today? \n");
+        print!("What kind of app are we building today? (Respond with numbers) \n");
         println!(" At the moment we can build fullstack apps or just backend apps. \n");
         println!(" You can only build a frontend app if you build a backend app first. \n");
 
@@ -119,38 +124,195 @@ pub fn confirm_type_app() -> bool {
 
         //Present Options with different colors
         stdout.execute(SetForegroundColor(Color::Green)).unwrap();
-        println!("[1] Fullstack App [Fronted(HTML, JAVASCRIPT, TAILWINDCSS)+ (REACT) + Backend(RUST, ACTIX)]");
+        println!(
+            "[1] Fullstack App [Fronted(HTML, JAVASCRIPT, TAILWINDCSS)+ (REACT) + Backend(RUST, ACTIX)]"
+        );
         stdout.execute(SetForegroundColor(Color::DarkRed)).unwrap();
         println!("[2] BACKEND APP [RUST, ACTIX]");
         stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
-        println!("Rewrite prompt for generating web app");
+        println!("[3] Rewrite prompt for generating web app");
 
         // Reset Color
         stdout.execute(ResetColor).unwrap();
 
         // Read user input
         let mut human_response: String = String::new();
-        stdin()
-            .read_line(&mut human_response)
-            .expect("Failed to read response");
+        stdin().read_line(&mut human_response).expect("Failed to read response");
 
         // Trim whitespace and convert to lowercase
         let human_response: String = human_response.trim().to_lowercase();
 
         // Match response
         match human_response.as_str() {
-            "1" | "ok" | "y" => return true,
-            "2" | "no" | "n" => return false,
-            "3" | "no" | "n" => return true,
+            "1" => "fullstack",
+            "2" => "backend",
+            "3" => "restart",
             _ => {
-                println!("Invalid input. Please select '1' or '2'")
+                println!("Invalid input. Please select '1' or '2' or '3'");
+                continue;
             }
-        }
+        };
     }
-
-    
 }
 
+/// Print welcome message
+pub fn client_on_boarding() -> &'static str {
+    let mut stdout = stdout();
+
+    print_colored_text(
+        &mut stdout,
+        Color::Cyan,
+        "
+    ---------------------------------------------
+    |  ____/\\  |__   __|  ____|                  |
+    | |__ /  \\    | |  | |__     __  ___  ______|
+    |    / /\\ \\   | |  |  __|   / _` \\ \\/ / __| |
+    |   / ____ \\  | |  | |____ | (_| |>  <\\__ \\_|
+    |  /_/    \\_\\ |_|  |______| \\__,_/_/\\_\\___(_)
+    |                                           |
+    ---------------------------------------------
+    "
+    );
+
+    print_colored_logo(
+        &mut stdout,
+        Color::DarkYellow,
+        " *****************************|  STARTRIGHT 2023 |***************************** "
+    );
+
+    print_colored_text(
+        &mut stdout,
+        Color::DarkMagenta,
+        "
+    Welcome to StartRight - AI Kickstart! 🛠️
+    
+         Developers, focus on creativity, not syntax! 🎨
+         Kickstart your projects with ready-to-use templates and accelerate your development.
+         Our AI-driven app automates boilerplate code, making coding efficient and enjoyable.
+    
+         Currently Supporting: Rust Backend with Actix. 🦀 
+         We have plans of adding support for other languages and frameworks like 
+                - Python 
+                - Ruby
+                - JavaScript
+                - Go
+         and frameworks such as 
+                - Flask 
+                - Node.js/Express
+                - Django
+                -Ruby on Rails
+        among others.
+
+        We shall be adding support for databases and ORMs like PostgreSQL, MySQL, and MongoDB.
+    
+         *Join us in enhancing StartRight! Let's innovate together!
+    "
+    );
+
+    print_colored_text(
+        &mut stdout,
+        Color::Green,
+        "
+    --> Instructions: You will need your own OpenAI API keys.
+       - You will need both your organization ID and secret key to generate apps for this application.
+       - We currently support GPT-4 and the latest GPT-4 turbo, 
+       - We plan to add support for other models like Llama2, Palm, among others.
+       - For the best results, we advise using GPT-4 or more!
+    "
+    );
+
+    print_colored_text(
+        &mut stdout,
+        Color::DarkYellow,
+        "
+    --> Useful Links:
+       - Learn about GPT-4 models: https://platform.openai.com/docs/models
+       - Learn about GPT-4 pricing: https://openai.com/pricing
+       - How to find your OpenAI keys and organization keys: https://www.google.com/search?sca_esv=583956873
+    "
+    );
+
+    loop {
+        // Your existing code for user response here...
+
+        // For the purpose of this example, I'm returning a placeholder value.
+        return "done";
+    }
+}
+
+fn print_colored_text(stdout: &mut impl Write, color: Color, text: &str) {
+    stdout.execute(SetForegroundColor(color)).unwrap();
+    writeln!(stdout, "{}", text).unwrap();
+    stdout.execute(ResetColor).unwrap();
+}
+
+fn print_colored_logo(stdout: &mut impl Write, color: Color, text: &str) {
+    stdout
+        .execute(SetForegroundColor(color))
+        .unwrap()
+        .execute(SetAttribute(crossterm::style::Attribute::Bold))
+        .unwrap()
+        .execute(Print(text))
+        .unwrap()
+        .execute(SetAttribute(crossterm::style::Attribute::Reset))
+        .unwrap();
+    writeln!(stdout).unwrap(); // Move to the next line
+}
+
+///  Run after successful initialization
+fn run_after_initialization(user_choice: &str) {
+    let mut stdout = stdout();
+
+    print_ascii_art(&mut stdout);
+    print_colored_text(&mut stdout, Color::Green, "🚀 Congratulations!");
+    print_colored_footer(
+        &mut stdout,
+        Color::Cyan,
+        "🎉 Your StartRight project has been fully initialized."
+    );
+
+    print_colored_footer(
+        &mut stdout,
+        Color::Yellow,
+        "🔥 You are now ready to kickstart your fullstack development journey!"
+    );
+
+    print_colored_footer(
+        &mut stdout,
+        Color::Yellow,
+        "🔥 You are now ready to kickstart your development journey!"
+    );
+
+    // Add any additional actions or messages you want to perform after initialization here.
+}
+
+fn print_colored_footer(stdout: &mut std::io::Stdout, color: Color, text: &str) {
+    stdout
+        .execute(SetForegroundColor(color))
+        .unwrap()
+        .execute(Print(text))
+        .unwrap()
+        .execute(SetForegroundColor(Color::Reset))
+        .unwrap();
+    writeln!(stdout).unwrap(); // Move to the next line
+}
+
+fn print_ascii_art(stdout: &mut std::io::Stdout) {
+    let art =
+        r#"
+         _    __
+  *    / \_ *    / \
+*    /     \    /     \
+   /  _    _\  /  _   _ \
+   / / \  / \ / / \ / \ \
+   ||   ||   ||   ||   ||
+   ||   ||   ||   ||   ||
+   ||   ||   ||   ||   ||
+   ||   ||   ||   ||   ||"#;
+
+    stdout.execute(Print(art)).unwrap().execute(SetForegroundColor(Color::Reset)).unwrap();
+    writeln!(stdout).unwrap(); // Move to the next line
+}
 
 #[cfg(test)]
 mod tests {
@@ -158,7 +320,9 @@ mod tests {
 
     #[test]
     fn tests_prints_agent_msg() {
-        PrintCommand::AICall
-            .print_agent_message("Managing Agent", "Testing testing, processing something");
+        PrintCommand::AICall.print_agent_message(
+            "Managing Agent",
+            "Testing testing, processing something"
+        );
     }
 }
