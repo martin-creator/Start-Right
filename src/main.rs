@@ -11,8 +11,11 @@ mod llm_external_api_calls;
 mod helper_funcs;
 mod models;
 
-use helper_funcs::cli_funcs::get_user_response;
+use helper_funcs::cli_funcs::{get_user_response, confirm_type_app, client_on_boarding};
 use models::agents_manager::agent_manager::ManagingAgent;
+
+
+
 
 
 fn print_welcome_message() {
@@ -71,20 +74,22 @@ fn print_logo() {
 
 #[tokio::main]
 async fn main() {
-    print_logo();
-    print_welcome_message();
+    // print_logo();
+    // print_welcome_message();
 
-
+    let client_on_boarding: &'static str = client_on_boarding();
     
 
     // Get user input for the project name
     let usr_req: String = get_user_response("What project are we starting today?");
 
     // Do you want to build a full stack app or just a backend?
-    let usr_app_type: String = get_user_response("What type of app are we building today?");
+    let usr_app_type:&str = confirm_type_app();
+
+    print!("You selected: {}", usr_app_type);
 
     // add logic to determine if we are building a full stack app or just a backend
-    
+
     // Create and initialize the ManagingAgent
     let mut manage_agent: ManagingAgent = ManagingAgent::new(usr_req)
         .await
