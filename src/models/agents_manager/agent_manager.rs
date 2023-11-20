@@ -56,8 +56,17 @@ impl ManagingAgent {
     fn add_agent(&mut self, agent: Box<dyn SpecialFunctions>) {
         self.agents.push(agent);
     }
+    
+
+    fn create_backend_agents(&mut self) {
+        self.add_agent(Box::new(AgentSolutionArchitect::new()));
+        self.add_agent(Box::new(AgentBackendDeveloper::new()));
+    }
+
 
     fn create_agents(&mut self) {
+        // Add if statement to run only the backend or frontend agents
+        // frontend agents cannot be run without backend agents
         self.add_agent(Box::new(AgentSolutionArchitect::new()));
         self.add_agent(Box::new(AgentBackendDeveloper::new()));
         self.add_agent(Box::new(AgentFrontendDeveloper::new()));
