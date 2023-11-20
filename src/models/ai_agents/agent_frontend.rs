@@ -1,16 +1,25 @@
-use crate::ai_macros::ai_frontend::{print_fixed_frontend_code, print_frontend_code, print_index_html_file, print_improved_frontend_code};
+use crate::ai_macros::ai_frontend::{
+    print_fixed_frontend_code,
+    print_frontend_code,
+    print_index_html_file,
+    print_improved_frontend_code,
+};
 use crate::helper_funcs::general_funcs::{
-    read_frontend_code_template_contents,   read_main_index_contents,  save_frontend_code, read_api_json_contents, WEB_SERVER_PROJECT_PATH
+    read_frontend_code_template_contents,
+    read_main_index_contents,
+    save_frontend_code,
+    read_api_json_contents,
+    WEB_SERVER_PROJECT_PATH,
 };
 
-use crate::helper_funcs::cli_funcs::{confirm_safe_code, PrintCommand};
+use crate::helper_funcs::cli_funcs::{ confirm_safe_code, PrintCommand };
 use crate::helper_funcs::general_funcs::ai_task_request;
-use crate::models::ai_agent_skeleton::basic_agent::{AgentState, BasicAgent};
-use crate::models::ai_agents::agent_content_traits::{FactSheet,  SpecialFunctions};
+use crate::models::ai_agent_skeleton::basic_agent::{ AgentState, BasicAgent };
+use crate::models::ai_agents::agent_content_traits::{ FactSheet, SpecialFunctions };
 
 use async_trait::async_trait;
 // use reqwest::Client;
-use std::process::{Command, Stdio};
+use std::process::{ Command, Stdio };
 // use std::time::Duration;
 // use tokio::time;
 
@@ -45,35 +54,36 @@ impl AgentFrontendDeveloper {
         // Concatenate Instruction
         let msg_context: String = format!(
             "INDEX_TEMPLATE: {} \n  API_JSON Schema {} \n PROJECT_DESCRIPTION: {} \n",
-            index_template_str, api_json_str, factsheet.project_description
+            index_template_str,
+            api_json_str,
+            factsheet.project_description
         );
 
         let ai_response: String = ai_task_request(
             msg_context,
             &self.attributes.position,
             get_function_string!(print_frontend_code),
-            print_frontend_code,
-        )
-        .await;
+            print_frontend_code
+        ).await;
 
         save_frontend_code(&ai_response);
         factsheet.frontend_code = Some(ai_response);
     }
 
     async fn call_improved_frontend_code(&mut self, factsheet: &mut FactSheet) {
-
         let msg_context: String = format!(
             "INDEX_TEMPLATE: {:?} \n  API_JSON Schema {:?} \n PROJECT_DESCRIPTION: {:?} \n",
-            factsheet.frontend_code, factsheet.api_endpoint_schema, factsheet
+            factsheet.frontend_code,
+            factsheet.api_endpoint_schema,
+            factsheet
         );
 
         let ai_response: String = ai_task_request(
             msg_context,
             &self.attributes.position,
             get_function_string!(print_improved_frontend_code),
-            print_improved_frontend_code,
-        )
-        .await;
+            print_improved_frontend_code
+        ).await;
 
         save_frontend_code(&ai_response);
         factsheet.frontend_code = Some(ai_response);
@@ -83,16 +93,16 @@ impl AgentFrontendDeveloper {
         let msg_context: String = format!(
             "BROKEN_CODE: {:?} \n ERROR_BUGS: {:?} \n
       THIS FUNCTION ONLY OUTPUTS CODE. JUST OUTPUT THE CODE.",
-            factsheet.frontend_code, self.bug_errors
+            factsheet.frontend_code,
+            self.bug_errors
         );
 
         let ai_response: String = ai_task_request(
             msg_context,
             &self.attributes.position,
             get_function_string!(print_fixed_frontend_code),
-            print_fixed_frontend_code,
-        )
-        .await;
+            print_fixed_frontend_code
+        ).await;
 
         save_frontend_code(&ai_response);
         factsheet.frontend_code = Some(ai_response);
@@ -108,9 +118,8 @@ impl AgentFrontendDeveloper {
             msg_context,
             &self.attributes.position,
             get_function_string!(print_index_html_file),
-            print_index_html_file,
-        )
-        .await;
+            print_index_html_file
+        ).await;
 
         ai_response
     }
@@ -124,7 +133,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
 
     async fn execute(
         &mut self,
-        factsheet: &mut FactSheet,
+        factsheet: &mut FactSheet
     ) -> Result<(), Box<dyn std::error::Error>> {
         while self.attributes.state != AgentState::Finished {
             match &self.attributes.state {
@@ -148,19 +157,19 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                     // Guard:: ENSURE AI SAFETY
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "About to run both frontend and backend code : Requesting user input",
+                        "About to run both frontend and backend code : Requesting user input"
                     );
 
                     let is_safe_code: bool = confirm_safe_code();
 
                     if !is_safe_code {
-                        panic!("Better go work on some AI alignment instead...")
+                        panic!("Better go work on some AI alignment instead...");
                     }
 
                     // Build and Test Code
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "Frontend and Backend code compilation: building project...",
+                        "Frontend and Backend code compilation: building project..."
                     );
 
                     // Build Code
@@ -177,7 +186,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                         self.bug_count = 0;
                         PrintCommand::UnitTest.print_agent_message(
                             self.attributes.position.as_str(),
-                            " Frontend & Backend Code Unit Testing: Test server build successful...",
+                            " Frontend & Backend Code Unit Testing: Test server build successful..."
                         );
                     } else {
                         let error_arr: Vec<u8> = build_backend_server.stderr;
@@ -191,9 +200,9 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                         if self.bug_count > 2 {
                             PrintCommand::Issue.print_agent_message(
                                 self.attributes.position.as_str(),
-                                " Frontend Code Testing: Too many bugs found in code",
+                                " Frontend Code Testing: Too many bugs found in code"
                             );
-                            panic!("Error: Too many bugs")
+                            panic!("Error: Too many bugs");
                         }
 
                         // Pass back for rework
@@ -228,7 +237,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                     // Run backend application
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "Restarting Backend Server: Starting web server...",
+                        "Restarting Backend Server: Starting web server..."
                     );
 
                     // Execute running server
@@ -259,11 +268,11 @@ impl SpecialFunctions for AgentFrontendDeveloper {
                     //         testing_msg.as_str(),
                     //     );
 
-                        // // Create client with timout
-                        // let client: Client = Client::builder()
-                        //     .timeout(Duration::from_secs(5))
-                        //     .build()
-                        //     .unwrap();
+                    // // Create client with timout
+                    // let client: Client = Client::builder()
+                    //     .timeout(Duration::from_secs(5))
+                    //     .build()
+                    //     .unwrap();
 
                     //     // Test url
                     //     let url: String = format!("http://localhost:8080{}", endpoint.route);
@@ -298,7 +307,7 @@ impl SpecialFunctions for AgentFrontendDeveloper {
 
                     PrintCommand::UnitTest.print_agent_message(
                         self.attributes.position.as_str(),
-                        "Frontend  code saving complete... Run 'cargo run --bin main_web_template' in your terminal and then visit http://localhost:8080/ to see your AI generated home page",
+                        "Frontend  code saving complete... Run 'cargo run --bin main_web_template' in your terminal and then visit http://localhost:8080/ to see your AI generated home page"
                     );
 
                     // run_backend_server
@@ -323,7 +332,8 @@ mod tests {
     async fn tests_frontend_developer() {
         let mut agent: AgentFrontendDeveloper = AgentFrontendDeveloper::new();
 
-        let factsheet_str: &str = r#"
+        let factsheet_str: &str =
+            r#"
       {
         "project_description": "build a website that fetches and tracks fitness progress with timezone information",
         "project_scope": {
@@ -341,9 +351,6 @@ mod tests {
         let mut factsheet: FactSheet = serde_json::from_str(factsheet_str).unwrap();
 
         agent.attributes.state = AgentState::Discovery;
-        agent
-            .execute(&mut factsheet)
-            .await
-            .expect("Failed to execute Frontend Developer agent");
+        agent.execute(&mut factsheet).await.expect("Failed to execute Frontend Developer agent");
     }
 }
