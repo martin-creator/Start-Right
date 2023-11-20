@@ -1,69 +1,101 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-interface StationRequestBody {
+interface NutritionPostRequestBody {
   id: number;
   name: string;
-  trains: object;
+  requirements: string;
+  allergies: string;
 }
 
-interface StationResponse {
+interface NutritionGetResponseBody {
   id: number;
   name: string;
-  trains: object;
+  requirements: string;
+  allergies: string;
+}
+
+interface NutritionPutRequestBody {
+  id: number;
+  name: string;
+  requirements: string;
+  allergies: string;
+}
+
+interface NutritionIdGetResponseBody {
+  id: number;
+  name: string;
+  requirements: string;
+  allergies: string;
+}
+
+interface AuthRegisterPostRequestBody {
+  id: number;
+  username: string;
+  password: string;
+}
+
+interface AuthLoginPostRequestBody {
+  username: string;
+  password: string;
 }
 
 const useCall = () => {
-  const [data, setData] = useState<StationResponse | null>(null);
+  const [data, setData] = useState<any>(null);
   const [error, setError] = useState<any>(null);
 
-  const postStation = async (body: StationRequestBody) => {
+  const callApi = async (
+    route: string,
+    method: string,
+    requestBody: any
+  ) => {
     try {
-      await axios.post('http://localhost:8080/api/v1/stations', body);
-    } catch (e) {
-      setError(e as any);
-    }
-  };
-
-  const getStations = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/v1/stations');
+      const response = await axios({
+        method,
+        url: `http://localhost:8080${route}`,
+        data: requestBody,
+      });
       setData(response.data);
-    } catch (e) {
-      setError(e as any);
-    }
-  };
-
-  const putStation = async (body: StationRequestBody) => {
-    try {
-      await axios.put('http://localhost:8080/api/v1/stations', body);
-    } catch (e) {
-      setError(e as any);
-    }
-  };
-
-  const getStation = async (id: number) => {
-    try {
-      const response = await axios.get(`http://localhost:8080/api/v1/stations/${id}`);
-      setData(response.data);
-    } catch (e) {
-      setError(e as any);
-    }
-  };
-
-  const deleteStation = async (id: number) => {
-    try {
-      await axios.delete(`http://localhost:8080/api/v1/stations/${id}`);
     } catch (e) {
       setError(e as any);
     }
   };
 
   useEffect(() => {
-    getStations();
+    // Call APIs here
+    callApi('/api/v1/nutrition', 'post', {
+      id: 1,
+      name: 'Test',
+      requirements: 'Test',
+      allergies: 'Test',
+    } as NutritionPostRequestBody);
+
+    callApi('/api/v1/nutrition', 'get', null);
+
+    callApi('/api/v1/nutrition', 'put', {
+      id: 1,
+      name: 'Test',
+      requirements: 'Test',
+      allergies: 'Test',
+    } as NutritionPutRequestBody);
+
+    callApi('/api/v1/nutrition/1', 'get', null);
+
+    callApi('/api/v1/nutrition/1', 'delete', null);
+
+    callApi('/api/v1/auth/register', 'post', {
+      id: 1,
+      username: 'Test',
+      password: 'Test',
+    } as AuthRegisterPostRequestBody);
+
+    callApi('/api/v1/auth/login', 'post', {
+      username: 'Test',
+      password: 'Test',
+    } as AuthLoginPostRequestBody);
   }, []);
 
-  return { data, error, postStation, getStations, putStation, getStation, deleteStation };
+  return { data, error };
 };
 
 export default useCall;

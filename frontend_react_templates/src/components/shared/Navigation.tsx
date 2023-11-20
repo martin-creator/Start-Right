@@ -9,47 +9,39 @@ type Props = {
 const Navigation: React.FC<Props> = ({setCurrentPage, currentPage}) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const pages = ["home_page", "station_management_page"];
+  const handleMenuClick = () => {
+    setIsOpen(!isOpen);
+  }
 
-  const handlePageChange = (page: string) => {
+  const handleLinkClick = (page: string) => {
     setCurrentPage(page);
     setIsOpen(false);
   }
 
   return (
-    <nav className="bg-white shadow">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out">
-              <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+    <nav className="bg-white px-6 py-4 shadow">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex justify-between items-center">
+          <div>
+            <Logo />
+          </div>
+          <div className="md:hidden">
+            <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu" onClick={handleMenuClick}>
+              <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
+                <path fillRule="evenodd" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
           </div>
-          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0">
-              <Logo />
-            </div>
-            <div className="hidden sm:block sm:ml-6">
-              <div className="flex">
-                {pages.map((page, index) => (
-                  <a href="#" key={index} onClick={() => handlePageChange(page)} className={`mx-4 px-3 py-2 rounded-md text-sm font-medium ${currentPage === page ? 'bg-gray-900 text-white' : 'text-gray-700 hover:text-white hover:bg-gray-700'}`}>{page}</a>
-                ))}
-              </div>
-            </div>
+        </div>
+        <div className={`md:flex items-center ${isOpen ? 'block' : 'hidden'}`}>
+          <div className="flex flex-col md:flex-row md:mx-6">
+            <a className={`my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0 ${currentPage === 'home_page' ? 'text-indigo-500' : ''}`} 
+               href="#" onClick={() => handleLinkClick('home_page')}>Home</a>
+            <a className={`my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0 ${currentPage === 'user_dashboard' ? 'text-indigo-500' : ''}`} 
+               href="#" onClick={() => handleLinkClick('user_dashboard')}>Dashboard</a>
           </div>
         </div>
       </div>
-      {isOpen && (
-        <div className="sm:hidden">
-          <div className="px-2 pt-2 pb-3">
-            {pages.map((page, index) => (
-              <a href="#" key={index} onClick={() => handlePageChange(page)} className={`block px-3 py-2 rounded-md text-base font-medium ${currentPage === page ? 'bg-gray-900 text-white' : 'text-gray-700 hover:text-white hover:bg-gray-700'}`}>{page}</a>
-            ))}
-          </div>
-        </div>
-      )}
     </nav>
   );
 }

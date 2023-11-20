@@ -1,52 +1,54 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Train Station Management</title>
+  <title>Nutrition Tracker</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-gray-100 text-gray-800">
 
   <header class="bg-blue-500 text-white py-4 text-center">
-    <h1 class="text-2xl font-bold">Train Station Management</h1>
+    <h1 class="text-2xl font-bold">Nutrition Tracker</h1>
   </header>
 
   <nav class="bg-gray-800 text-white">
     <a href="#home" class="block py-2 px-4 hover:bg-gray-700">Home</a>
     <a href="#about" class="block py-2 px-4 hover:bg-gray-700">About Us</a>
     <a href="#contact" class="block py-2 px-4 hover:bg-gray-700">Contact</a>
-    <a href="#stations" class="block py-2 px-4 hover:bg-gray-700">Stations</a>
+    <a href="#nutrition" class="block py-2 px-4 hover:bg-gray-700">Nutrition</a>
   </nav>
 
   <section id="home" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
 
-    <!-- Form for creating stations -->
-    <form id="stationForm" class="flex flex-col items-center mb-4">
-      <label for="stationId" class="mb-2 text-blue-500">Station ID:</label>
-      <input type="number" id="stationId" class="p-2 mb-4 w-64 border rounded-md" required />
+    <!-- Form for creating nutrition entries -->
+    <form id="nutritionForm" class="flex flex-col items-center mb-4">
+      <label for="nutritionId" class="mb-2 text-blue-500">Nutrition ID:</label>
+      <input type="number" id="nutritionId" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="stationName" class="mb-2 text-blue-500">Station Name:</label>
-      <input type="text" id="stationName" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="nutritionName" class="mb-2 text-blue-500">Name:</label>
+      <input type="text" id="nutritionName" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <label for="trains" class="mb-2 text-blue-500">Trains:</label>
-      <input type="text" id="trains" class="p-2 mb-4 w-64 border rounded-md" required />
+      <label for="requirements" class="mb-2 text-blue-500">Requirements:</label>
+      <input type="text" id="requirements" class="p-2 mb-4 w-64 border rounded-md" required />
 
-      <!-- Button to trigger the createStation function -->
-      <button type="button" onclick="createStation()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
-        Create Station
+      <label for="allergies" class="mb-2 text-blue-500">Allergies:</label>
+      <input type="text" id="allergies" class="p-2 mb-4 w-64 border rounded-md" required />
+
+      <!-- Button to trigger the createNutrition function -->
+      <button type="button" onclick="createNutrition()" class="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-700">
+        Create Nutrition Entry
       </button>
     </form>
 
-    <!-- List to display stations -->
-    <ul id="stationList" class="list-none"></ul>
+    <!-- List to display nutrition entries -->
+    <ul id="nutritionList" class="list-none"></ul>
   </section>
 
   <!-- About Us Section -->
   <section id="about" class="bg-white border rounded-md p-4 shadow-md my-4 mx-2">
     <h2 class="text-2xl text-blue-500 mb-4">About Us</h2>
-    <p>Welcome to Train Station Management, powered by Startright - Your AI full-stack website code generation tool.</p>
+    <p>Welcome to Nutrition Tracker, powered by Startright - Your AI full-stack website code generation tool.</p>
     <p>Startright simplifies the process of building robust web applications. With just one instance, we generate a full-stack boilerplate tailored to your needs.</p>
     <p>Explore the power of AI-driven development and streamline your projects with Startright.</p>
   </section>
@@ -63,87 +65,89 @@
   <script>
     // Event listener for when the page is loaded
     document.addEventListener("DOMContentLoaded", function () {
-      // Load stations when the page is loaded
-      loadStations();
+      // Load nutrition entries when the page is loaded
+      loadNutritionEntries();
     });
 
-    // Function to fetch and display stations from the backend
-    async function loadStations() {
+    // Function to fetch and display nutrition entries from the backend
+    async function loadNutritionEntries() {
       try {
-        const response = await fetch("/api/v1/stations");
-        const stations = await response.json();
+        const response = await fetch("/api/v1/nutrition");
+        const nutritionEntries = await response.json();
 
-        const stationList = document.getElementById("stationList");
-        stationList.innerHTML = "";
+        const nutritionList = document.getElementById("nutritionList");
+        nutritionList.innerHTML = "";
 
-        // Loop through stations and create list items
-        stations.forEach((station) => {
+        // Loop through nutrition entries and create list items
+        nutritionEntries.forEach((entry) => {
           const li = document.createElement("li");
-          li.innerHTML = `<span class="font-bold">ID: ${station.id}, Station Name: ${station.name}, Trains: ${JSON.stringify(station.trains)}</span> <button onclick="deleteStation(${station.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
-          stationList.appendChild(li);
+          li.innerHTML = `<span class="font-bold">ID: ${entry.id}, Name: ${entry.name}, Requirements: ${entry.requirements}, Allergies: ${entry.allergies}</span> <button onclick="deleteNutritionEntry(${entry.id})" class="bg-red-500 text-white py-1 px-2 rounded-md cursor-pointer hover:bg-red-700">Delete</button>`;
+          nutritionList.appendChild(li);
         });
       } catch (error) {
         // Handle errors if any occur during fetching
-        console.error("Error fetching stations:", error);
+        console.error("Error fetching nutrition entries:", error);
       }
     }
 
-    // Function to create a new station
-    async function createStation() {
-      const stationId = document.getElementById("stationId").value;
-      const stationName = document.getElementById("stationName").value;
-      const trains = JSON.parse(document.getElementById("trains").value);
+    // Function to create a new nutrition entry
+    async function createNutrition() {
+      const nutritionId = document.getElementById("nutritionId").value;
+      const nutritionName = document.getElementById("nutritionName").value;
+      const requirements = document.getElementById("requirements").value;
+      const allergies = document.getElementById("allergies").value;
 
       try {
-        const response = await fetch("/api/v1/stations", {
+        const response = await fetch("/api/v1/nutrition", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json", // Include Accept header for CORS
           },
           body: JSON.stringify({
-            id: parseInt(stationId),
-            name: stationName,
-            trains: trains,
+            id: parseInt(nutritionId),
+            name: nutritionName,
+            requirements: requirements,
+            allergies: allergies,
           }),
         });
 
         if (response.ok) {
-          // Reload stations and reset input values if successful
-          loadStations();
-          document.getElementById("stationId").value = "";
-          document.getElementById("stationName").value = "";
-          document.getElementById("trains").value = "";
+          // Reload nutrition entries and reset input values if successful
+          loadNutritionEntries();
+          document.getElementById("nutritionId").value = "";
+          document.getElementById("nutritionName").value = "";
+          document.getElementById("requirements").value = "";
+          document.getElementById("allergies").value = "";
         } else {
-          // Handle errors if station creation fails
-          console.error("Failed to create station:", response.statusText);
+          // Handle errors if nutrition entry creation fails
+          console.error("Failed to create nutrition entry:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during station creation
-        console.error("Error creating station:", error);
+        // Handle errors if any occur during nutrition entry creation
+        console.error("Error creating nutrition entry:", error);
       }
     }
 
-    // Function to delete a station
-    async function deleteStation(stationId) {
+    // Function to delete a nutrition entry
+    async function deleteNutritionEntry(nutritionId) {
       try {
-        const response = await fetch(`/api/v1/stations/${stationId}`, {
+        const response = await fetch(`/api/v1/nutrition/${nutritionId}`, {
           method: "DELETE",
         });
 
         if (response.ok) {
-          // Reload stations if deletion is successful
-          loadStations();
+          // Reload nutrition entries if deletion is successful
+          loadNutritionEntries();
         } else {
-          // Handle errors if station deletion fails
-          console.error("Failed to delete station:", response.statusText);
+          // Handle errors if nutrition entry deletion fails
+          console.error("Failed to delete nutrition entry:", response.statusText);
         }
       } catch (error) {
-        // Handle errors if any occur during station deletion
-        console.error("Error deleting station:", error);
+        // Handle errors if any occur during nutrition entry deletion
+        console.error("Error deleting nutrition entry:", error);
       }
     }
   </script>
 </body>
 </html>
-```
