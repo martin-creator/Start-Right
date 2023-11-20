@@ -48,7 +48,7 @@ pub async fn call_gpt(messages: Vec<Message>) -> Result<String, Box<dyn std::err
     let chat_completion: ChatCompletion = ChatCompletion {
         model: "gpt-4".to_string(),
         messages,
-        temperature: 0.1,
+        temperature: 0.1, // test various values
     };
 
     // // Troubleshooting
