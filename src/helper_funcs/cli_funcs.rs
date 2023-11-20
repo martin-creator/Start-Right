@@ -98,7 +98,59 @@ pub fn confirm_safe_code() -> bool {
             }
         }
     }
+
+    
 }
+
+
+/// Get human user response that code is safe to execute from terminal
+pub fn confirm_type_app() -> bool {
+    let mut stdout: std::io::Stdout = stdout();
+    loop {
+        // Print the question in specified color
+        stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
+        println!("");
+        print!("What kind of app are we building today? \n");
+        println!(" At the moment we can build fullstack apps or just backend apps. \n");
+        println!(" You can only build a frontend app if you build a backend app first. \n");
+
+        // Reset Color
+        stdout.execute(ResetColor).unwrap();
+
+        //Present Options with different colors
+        stdout.execute(SetForegroundColor(Color::Green)).unwrap();
+        println!("[1] Fullstack App [Fronted(HTML, JAVASCRIPT, TAILWINDCSS)+ (REACT) + Backend(RUST, ACTIX)]");
+        stdout.execute(SetForegroundColor(Color::DarkRed)).unwrap();
+        println!("[2] BACKEND APP [RUST, ACTIX]");
+        stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
+        println!("Rewrite prompt for generating web app");
+
+        // Reset Color
+        stdout.execute(ResetColor).unwrap();
+
+        // Read user input
+        let mut human_response: String = String::new();
+        stdin()
+            .read_line(&mut human_response)
+            .expect("Failed to read response");
+
+        // Trim whitespace and convert to lowercase
+        let human_response: String = human_response.trim().to_lowercase();
+
+        // Match response
+        match human_response.as_str() {
+            "1" | "ok" | "y" => return true,
+            "2" | "no" | "n" => return false,
+            "3" | "no" | "n" => return true,
+            _ => {
+                println!("Invalid input. Please select '1' or '2'")
+            }
+        }
+    }
+
+    
+}
+
 
 #[cfg(test)]
 mod tests {

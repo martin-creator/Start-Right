@@ -74,9 +74,17 @@ async fn main() {
     print_logo();
     print_welcome_message();
 
+
+    
+
     // Get user input for the project name
     let usr_req: String = get_user_response("What project are we starting today?");
 
+    // Do you want to build a full stack app or just a backend?
+    let usr_app_type: String = get_user_response("What type of app are we building today?");
+
+    // add logic to determine if we are building a full stack app or just a backend
+    
     // Create and initialize the ManagingAgent
     let mut manage_agent: ManagingAgent = ManagingAgent::new(usr_req)
         .await
