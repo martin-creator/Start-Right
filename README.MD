@@ -70,10 +70,11 @@ Follow these comprehensive steps to seamlessly set up StartRight on your machine
     ```bash
     cargo run --bin main_web_template
     ```
+    - Navigate to localhost:8080 to see the StartRight generated index.html file
 
 8. **React Frontend:** For React frontend, navigate to `frontend_react_templates` (Vite-based) and run:
     ```bash
-    cargo run http://localhost:5173/
+    npm run dev
     ```
 
 ## Usage
