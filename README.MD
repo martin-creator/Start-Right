@@ -40,7 +40,7 @@ StartRight has a forward-looking approach, with plans to support emerging open-s
 
 Follow these comprehensive steps to seamlessly set up StartRight on your machine:
 
-1. **Rust Installation:** Install Rust on Linux. Ensure that your Rust version is at least `rustc 1.69.0 (84c898d65 2023-04-16)` or a later version.
+1. **Rust Installation:** Install Rust on Linux. Ensure that your Rust version is at least `rustc 1.69.0 (84c898d65 2023-04-16)` or a later version. [visit the rust website for more information on how to install rust on your machine](https://www.rust-lang.org/tools/install).
 
 2. **Repository Cloning:** Clone the StartRight repository using the following command:
     ```bash
