@@ -59,7 +59,7 @@ Follow these comprehensive steps to seamlessly set up StartRight on your machine
     cargo build
     ```
 
-5. **Environment Configuration:** Rename `sample_env` to `.env` and replace it with your OpenAI secret keys and organization ID.
+5. **Environment Configuration:** Rename `sample_env` to `.env` and replace it with your OpenAI secret keys and organization ID.  For best results, we advice          that you use GPT4. 
 
 6. **Run Application:** After setting up, initiate the console application with:
     ```bash
