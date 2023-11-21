@@ -3,7 +3,7 @@
 
 > Let our AI Agents do the heavy lifting for you!
 > [Check out our pitch deck ](https://www.canva.com/design/DAF0DfRWonk/NkQYzdoUlKANUDBA6yGp6g/view?utm_content=DAF0DfRWonk&utm_campaign=designshare&utm_medium=link&utm_source=editor)
-> Check out our ![ StartRight Demo Video](https://www.youtube.com/watch?v=eyC-fWz27rI)
+> Check out our [ StartRight Demo Video](https://www.youtube.com/watch?v=eyC-fWz27rI)
 
 StartRight is a cutting-edge AI-driven fullstack template app generation tool that aims to revolutionize your development process. With a focus on simplicity, flexibility, and customization, StartRight currently supports HTML, Tailwind CSS, and JavaScript or React for the frontend, complemented by Rust Actix for backend CRUD operations. Our roadmap includes plans to extend support for additional programming languages and frameworks.
 
